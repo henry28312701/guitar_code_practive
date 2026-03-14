@@ -760,7 +760,7 @@ function checkAnswer(btn, chosen, correct, pool) {
     document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b => {
       if (b.dataset.chord === correct) b.classList.add('correct');
     });
-    feedback.textContent = `❌ 에휴~ 넌 코드 공부 좀 더 해야겠다... ${correct}`;
+    feedback.textContent = `❌ 에휴~ 넌 코드 공부 좀 더 해야겠다...`;
     feedback.className = 'quiz-feedback bad';
   }
   nextBtn.style.display = 'inline-block';
