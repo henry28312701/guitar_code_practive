@@ -752,7 +752,7 @@ function checkAnswer(btn, chosen, correct, pool) {
 
   if (chosen === correct) {
     btn.classList.add('correct');
-    feedback.textContent = '🎉 정답이에요!';
+    feedback.textContent = '🎉 이욜~~좀 친다 이거지?';
     feedback.className = 'quiz-feedback ok';
     quizState[pool].score++;
   } else {
@@ -760,7 +760,7 @@ function checkAnswer(btn, chosen, correct, pool) {
     document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b => {
       if (b.dataset.chord === correct) b.classList.add('correct');
     });
-    feedback.textContent = `❌ 아쉬워요! 정답은 ${correct}`;
+    feedback.textContent = `❌ 에휴~ 넌 코드 공부 좀 더 해야겠다ㅎ ${correct}`;
     feedback.className = 'quiz-feedback bad';
   }
   nextBtn.style.display = 'inline-block';
@@ -776,9 +776,9 @@ function showResult(pool) {
   const rb = document.getElementById(`${pool}ResultBox`);
   document.getElementById(`${pool}QuizCard`).innerHTML = '';
   const pct = Math.round(st.score / st.total * 100);
-  let msg = pct === 100 ? '완벽해요! 🎸 기타 마스터!' :
-            pct >= 80   ? '훌륭해요! 조금만 더!' :
-            pct >= 60   ? '좋아요! 계속 연습해봐요!' : '다시 한번 도전해봐요! 💪';
+  let msg = pct === 100 ? '잘했어!! 🎸 이젠 노래 연습을 해볼까?' :
+            pct >= 80   ? '쓰읍...노오력이 조금 부족해' :
+            pct >= 60   ? '흠...연습 더 해야겠지?' : '좀 많이 아쉬운데?';
   rb.innerHTML = `
     <h2>결과 발표!</h2>
     <div class="result-score">${st.score} / ${st.total}</div>
