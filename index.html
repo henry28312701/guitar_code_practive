@@ -768,8 +768,8 @@ const CORNERS = {
   beginner: {
     label: '🎵 기타 입문',
     tabs: [
-      { id:'learn-open',  label:'🎵 오픈 코드 배우기', sub:'C D E G A Dm Em Am', cls:'open-tab' },
-      { id:'quiz-open',   label:'✅ 오픈 코드 테스트',  sub:'8개 코드 퀴즈',     cls:'quiz-open' },
+      { id:'learn-open',  label:'🎵 오픈 코드 배우기', sub:'C D E G A Dm Em Am Bm7', cls:'open-tab' },
+      { id:'quiz-open',   label:'✅ 오픈 코드 테스트',  sub:'9개 코드 퀴즈',     cls:'quiz-open' },
     ],
     onEnter: () => {
       renderGrid(OPEN_CHORDS, 'openGrid', null, 'open');
@@ -778,8 +778,8 @@ const CORNERS = {
   beginnerPlus: {
     label: '⭐ 기타 입문+',
     tabs: [
-      { id:'learn-akey', label:'🅐 A키 쉬운 코드', sub:'♯♯♯ 3샵', cls:'akey-tab' },
-      { id:'learn-ekey', label:'🎵 E키 쉬운 코드', sub:'♯♯♯♯ 4샵', cls:'ekey-tab' },
+      { id:'learn-akey', label:'🅐 A키 쉬운 코드', sub:'♯3개', cls:'akey-tab' },
+      { id:'learn-ekey', label:'🎵 E키 쉬운 코드', sub:'♯4개', cls:'ekey-tab' },
     ],
     onEnter: () => {
       renderGrid(AKEY_CHORDS, 'akeyGrid', null, 'akey');
