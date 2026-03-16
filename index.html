@@ -5,682 +5,856 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎸 기타 코드 마스터</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
-    background: #f5f0fa;
-    min-height: 100vh;
-    color: #444;
-  }
-  /* ── 헤더 ── */
-  header {
-    background: linear-gradient(135deg, #d4e4ff, #e8d8f8, #fde8d8);
-    padding: 22px 20px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-  }
-  header h1 { font-size: 2rem; color: #7070c8; letter-spacing: 1px; }
-  header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
-  /* ── 탭 ── */
-  .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 18px 12px;
-    flex-wrap: wrap;
-    background: #fff;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
-  }
-  .tab-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background: #f0eeff;
-    color: #8888c0;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    transition: all .2s;
-  }
-  .tab-btn:hover { background: #e0dbff; }
-  .tab-btn.active { background: #b0a8ff; color: #fff; box-shadow: 0 3px 10px rgba(140,130,255,0.3); }
-  /* 탭 색상 구분 */
-  .tab-btn.open-tab.active  { background: #a0c8ff; box-shadow: 0 3px 10px rgba(120,170,255,0.3); }
-  .tab-btn.barre-tab.active { background: #f0a8c0; box-shadow: 0 3px 10px rgba(240,130,170,0.3); }
-  .tab-btn.quiz-open.active { background: #90d8b0; box-shadow: 0 3px 10px rgba(100,200,150,0.3); }
-  .tab-btn.quiz-barre.active{ background: #f8c080; box-shadow: 0 3px 10px rgba(240,180,100,0.3); }
-  .tab-btn.akey-tab.active  { background: #f0c060; color: #fff; box-shadow: 0 3px 10px rgba(240,190,80,0.3); }
-  .tab-btn.ekey-tab.active  { background: #60c8a8; color: #fff; box-shadow: 0 3px 10px rgba(80,200,170,0.3); }
+/* ═══════════════════════════════
+   BASE
+═══════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+  background: #f5f0fa;
+  min-height: 100vh;
+  color: #444;
+}
  
-  .tab-label {
-    display: block;
-    font-size: 0.72rem;
-    font-weight: 400;
-    opacity: 0.8;
-    margin-top: 2px;
-  }
-  /* ── 섹션 ── */
-  .section { display: none; padding: 16px 16px 40px; max-width: 980px; margin: 0 auto; }
-  .section.active { display: block; }
-  /* ── 섹션 제목 배너 ── */
-  .section-banner {
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-banner.open-style  { background: linear-gradient(120deg, #dceeff, #eef8ff); border-left: 5px solid #90c0f0; }
-  .section-banner.barre-style { background: linear-gradient(120deg, #fde8f0, #fff0f5); border-left: 5px solid #f0a0b8; }
-  .section-banner.quiz-open-style  { background: linear-gradient(120deg, #d8f5e8, #eefff5); border-left: 5px solid #70c898; }
-  .section-banner.quiz-barre-style { background: linear-gradient(120deg, #fef0d8, #fff8ee); border-left: 5px solid #f0b870; }
-  .section-banner.akey-style { background: linear-gradient(120deg, #fff5d8, #fffaee); border-left: 5px solid #f0c060; }
-  .section-banner.ekey-style { background: linear-gradient(120deg, #d8f5ee, #eefff8); border-left: 5px solid #60c8a8; }
-  .section-banner .banner-icon { font-size: 2rem; }
-  .section-banner h2 { font-size: 1.2rem; color: #5a6090; }
-  .section-banner p  { font-size: 0.82rem; color: #9090b0; margin-top: 2px; }
-  /* ── 코드 그리드 ── */
-  .chord-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
-    gap: 14px;
-  }
-  .chord-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 14px 10px 10px;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: transform .15s, box-shadow .15s;
-    border: 2px solid transparent;
-  }
-  .chord-card:hover  { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
-  .chord-card.selected-open  { border-color: #90c0f0; background: #f0f7ff; }
-  .chord-card.selected-barre { border-color: #f0a0b8; background: #fff0f5; }
-  .chord-card.selected-akey  { border-color: #f0c060; background: #fffae8; }
-  .chord-card.selected-ekey  { border-color: #60c8a8; background: #eafff8; }
-  .chord-card h3 { font-size: 1.3rem; color: #6060c8; margin-bottom: 8px; }
-  .chord-card .chord-type { font-size: 0.68rem; color: #bbb; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
-  /* ── 다이어그램 상세 ── */
-  .detail-panel {
-    background: #fff;
-    border-radius: 20px;
-    padding: 26px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    margin-top: 18px;
-    display: none;
-  }
-  .detail-panel.active { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; justify-content: center; }
-  .detail-panel h2 { font-size: 1.9rem; color: #5a5fcf; }
-  .detail-text { flex: 1; min-width: 200px; }
-  .detail-text .chord-desc { color: #888; margin: 6px 0 14px; font-size: 0.88rem; }
-  .finger-guide { list-style: none; }
-  .finger-guide li {
-    padding: 6px 0;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 0.86rem;
-    color: #555;
-  }
-  .finger-guide li:last-child { border-bottom: none; }
-  .finger-num {
-    display: inline-block;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: #b0a8ff;
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-align: center;
-    line-height: 22px;
-    margin-right: 8px;
-  }
-  .barre-badge {
-    display: inline-block;
-    background: #ffdce8;
-    color: #c06080;
-    border-radius: 8px;
-    padding: 2px 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
-  .tip-box {
-    background: #fffae8;
-    border-left: 4px solid #ffd080;
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 14px;
-    font-size: 0.85rem;
-    color: #7a6020;
-  }
-  /* ── SVG 다이어그램 ── */
-  .diagram-wrap { flex: 0 0 auto; }
-  .diagram-wrap svg { display: block; }
-  /* ── 퀴즈 ── */
-  .quiz-area { max-width: 600px; margin: 0 auto; }
-  .quiz-status {
-    display: flex; gap: 12px; justify-content: center;
-    margin-bottom: 18px; flex-wrap: wrap;
-  }
-  .status-badge {
-    background: #fff;
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
-    color: #6060c8;
-  }
-  .quiz-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 26px 22px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    text-align: center;
-  }
-  .quiz-question { font-size: 1rem; color: #888; margin-bottom: 6px; }
-  .quiz-chord-name { font-size: 3.4rem; font-weight: 800; color: #6060c8; margin: 10px 0 18px; }
-  .quiz-diagram-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
-  .answer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 10px;
-  }
-  .ans-btn {
-    padding: 14px;
-    border: 2px solid #ddd8ff;
-    border-radius: 14px;
-    background: #faf9ff;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #6060c8;
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .ans-btn:hover:not(:disabled) { background: #eae6ff; border-color: #b0a8ff; transform: scale(1.03); }
-  .ans-btn.correct { background: #d8f5e4; border-color: #78d8a0; color: #2a7a4a; }
-  .ans-btn.wrong   { background: #ffe0e8; border-color: #f09090; color: #b04040; }
-  .ans-btn:disabled { cursor: default; }
-  .quiz-feedback {
-    margin-top: 16px;
-    font-size: 1rem;
-    font-weight: 600;
-    min-height: 28px;
-  }
-  .quiz-feedback.ok  { color: #40a060; }
-  .quiz-feedback.bad { color: #c04040; }
-  .next-btn {
-    margin-top: 14px;
-    padding: 12px 32px;
-    background: #b0a8ff;
-    border: none;
-    border-radius: 25px;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 3px 10px rgba(140,130,255,.28);
-    transition: transform .1s;
-    display: none;
-  }
-  .next-btn:hover { transform: scale(1.04); }
-  /* 퀴즈 색상 구분 */
-  .quiz-open-mode  .next-btn { background: #78c898; box-shadow: 0 3px 10px rgba(100,200,150,.28); }
-  .quiz-barre-mode .next-btn { background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,.28); }
-  .result-box {
-    display: none;
-    background: #fff;
-    border-radius: 20px;
-    padding: 36px 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    text-align: center;
-  }
-  .result-box h2 { font-size: 1.9rem; color: #5a5fcf; margin-bottom: 10px; }
-  .result-score { font-size: 3rem; font-weight: 800; color: #b0a8ff; margin: 16px 0; }
-  .result-msg { font-size: 1rem; color: #666; margin-bottom: 20px; }
-  .restart-btn {
-    padding: 12px 30px;
-    background: #c8d8ff;
-    border: none;
-    border-radius: 25px;
-    color: #4a50a0;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background .15s;
-  }
-  .restart-btn:hover { background: #b0a8ff; color: #fff; }
-  /* ── 모드 선택 ── */
-  .mode-select {
-    background: #fff;
-    border-radius: 18px;
-    padding: 24px 22px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.07);
-    text-align: center;
-    margin-bottom: 18px;
-  }
-  .mode-select h3 { font-size: 1.05rem; color: #6060c8; margin-bottom: 14px; }
-  .mode-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .mode-btn {
-    padding: 11px 22px;
-    border: 2px solid #ddd8ff;
-    border-radius: 14px;
-    background: #faf9ff;
-    color: #6060c8;
-    font-weight: 700;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .mode-btn:hover  { background: #eae6ff; }
-  .mode-btn.active { background: #b0a8ff; border-color: #b0a8ff; color: #fff; }
-  .quiz-open-mode  .mode-btn.active { background: #78c898; border-color: #78c898; }
-  .quiz-barre-mode .mode-btn.active { background: #f0b870; border-color: #f0b870; }
-  @media (max-width: 480px) {
-    header h1 { font-size: 1.5rem; }
-    .chord-grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
-    .detail-panel.active { flex-direction: column; align-items: center; }
-    .quiz-chord-name { font-size: 2.8rem; }
-    .tabs { gap: 6px; }
-    .tab-btn { padding: 8px 14px; font-size: 0.82rem; }
-  }
+/* ── 공통 헤더 ── */
+header {
+  background: linear-gradient(135deg, #d4e4ff, #e8d8f8, #fde8d8);
+  padding: 22px 20px 18px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  position: relative;
+}
+header h1 { font-size: 2rem; color: #7070c8; letter-spacing: 1px; }
+header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
+ 
+/* ── 뒤로가기 버튼 (코너 화면) ── */
+.back-bar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+.back-bar.visible { display: flex; }
+.back-btn {
+  padding: 7px 18px;
+  border: none;
+  border-radius: 20px;
+  background: #ede9ff;
+  color: #7070c8;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+  white-space: nowrap;
+}
+.back-btn:hover { background: #d8d2ff; }
+.corner-title-badge {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #5a5fcc;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: #f0eeff;
+}
+ 
+/* ═══════════════════════════════
+   HOME SCREEN
+═══════════════════════════════ */
+#homeScreen { padding: 32px 18px 60px; max-width: 960px; margin: 0 auto; }
+ 
+.home-intro {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.home-intro h2 {
+  font-size: 1.4rem;
+  color: #6060c8;
+  margin-bottom: 8px;
+}
+.home-intro p { color: #9090b8; font-size: 0.92rem; }
+ 
+.corner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 640px) {
+  .corner-grid { grid-template-columns: 1fr; }
+}
+ 
+.corner-card {
+  border-radius: 22px;
+  padding: 28px 22px 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  transition: transform .18s, box-shadow .18s;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.corner-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+.corner-card .card-icon { font-size: 2.8rem; line-height: 1; }
+.corner-card .card-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.corner-card .card-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.7;
+  margin-top: -10px;
+}
+.corner-card .card-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.corner-card .card-items li {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.corner-card .card-items li .item-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.corner-card .card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+.corner-card .tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 10px;
+}
+.corner-card .go-btn {
+  margin-top: 6px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+  width: 100%;
+}
+.corner-card .go-btn:hover { opacity: 0.88; }
+ 
+/* 기타 입문 — 파란 계열 */
+.card-beginner {
+  background: linear-gradient(145deg, #e8f4ff, #f0e8ff);
+  border-color: #c0d8ff;
+}
+.card-beginner .card-title { color: #4a7ec8; }
+.card-beginner .card-sub   { color: #6898d8; }
+.card-beginner .item-dot   { background: #7ab0f0; }
+.card-beginner .card-items li { color: #5a80b8; }
+.card-beginner .tag { background: #d4eaff; color: #4a7ec8; }
+.card-beginner .go-btn { background: #7ab0f0; color: #fff; box-shadow: 0 3px 10px rgba(100,160,240,.3); }
+ 
+/* 기타 입문+ — 골드 계열 */
+.card-beginner-plus {
+  background: linear-gradient(145deg, #fff8e0, #fff0f8);
+  border-color: #ffe0a0;
+}
+.card-beginner-plus .card-title { color: #c88020; }
+.card-beginner-plus .card-sub   { color: #d89840; }
+.card-beginner-plus .item-dot   { background: #f0c060; }
+.card-beginner-plus .card-items li { color: #a87030; }
+.card-beginner-plus .tag { background: #fff0c0; color: #b07020; }
+.card-beginner-plus .go-btn { background: #f0c060; color: #fff; box-shadow: 0 3px 10px rgba(240,192,80,.3); }
+ 
+/* 기타 심화 — 핑크 계열 */
+.card-advanced {
+  background: linear-gradient(145deg, #ffe8f0, #f8e8ff);
+  border-color: #f0c0d8;
+}
+.card-advanced .card-title { color: #c04878; }
+.card-advanced .card-sub   { color: #d06888; }
+.card-advanced .item-dot   { background: #f08aaa; }
+.card-advanced .card-items li { color: #a04060; }
+.card-advanced .tag { background: #ffd8e8; color: #c04878; }
+.card-advanced .go-btn { background: #f08aaa; color: #fff; box-shadow: 0 3px 10px rgba(240,120,160,.3); }
+ 
+/* ═══════════════════════════════
+   CORNER SCREEN
+═══════════════════════════════ */
+#cornerScreen { display: none; }
+ 
+/* ── 코너 내 탭 ── */
+.corner-tabs-bar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 12px;
+  flex-wrap: wrap;
+  background: #fff;
+  border-bottom: 1px solid #f0eeff;
+}
+.tab-btn {
+  padding: 9px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #f0eeff;
+  color: #8888c0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  transition: all .2s;
+}
+.tab-btn:hover { background: #e0dbff; }
+.tab-btn.active { background: #b0a8ff; color: #fff; box-shadow: 0 3px 10px rgba(140,130,255,0.3); }
+.tab-btn.open-tab.active  { background: #7ab0f0; box-shadow: 0 3px 10px rgba(100,160,240,0.3); }
+.tab-btn.quiz-open.active { background: #90d8b0; box-shadow: 0 3px 10px rgba(100,200,150,0.3); }
+.tab-btn.akey-tab.active  { background: #f0c060; box-shadow: 0 3px 10px rgba(240,190,80,0.3); }
+.tab-btn.ekey-tab.active  { background: #60c8a8; box-shadow: 0 3px 10px rgba(80,200,170,0.3); }
+.tab-btn.barre-tab.active { background: #f08aaa; box-shadow: 0 3px 10px rgba(240,120,160,0.3); }
+.tab-btn.quiz-barre.active{ background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,0.3); }
+.tab-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+ 
+/* ── 섹션 ── */
+.section { display: none; padding: 16px 16px 40px; max-width: 980px; margin: 0 auto; }
+.section.active { display: block; }
+ 
+/* ── 섹션 배너 ── */
+.section-banner {
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-banner.open-style      { background: linear-gradient(120deg,#dceeff,#eef8ff); border-left:5px solid #90c0f0; }
+.section-banner.quiz-open-style { background: linear-gradient(120deg,#d8f5e8,#eefff5); border-left:5px solid #70c898; }
+.section-banner.barre-style     { background: linear-gradient(120deg,#fde8f0,#fff0f5); border-left:5px solid #f0a0b8; }
+.section-banner.quiz-barre-style{ background: linear-gradient(120deg,#fef0d8,#fff8ee); border-left:5px solid #f0b870; }
+.section-banner.akey-style      { background: linear-gradient(120deg,#fff5d8,#fffaee); border-left:5px solid #f0c060; }
+.section-banner.ekey-style      { background: linear-gradient(120deg,#d8f5ee,#eefff8); border-left:5px solid #60c8a8; }
+.section-banner .banner-icon { font-size: 2rem; }
+.section-banner h2 { font-size: 1.2rem; color: #5a6090; }
+.section-banner p  { font-size: 0.82rem; color: #9090b0; margin-top: 2px; }
+ 
+/* ── 코드 그리드 ── */
+.chord-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+  gap: 14px;
+}
+.chord-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 10px 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform .15s, box-shadow .15s;
+  border: 2px solid transparent;
+}
+.chord-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+.chord-card.selected-open  { border-color: #90c0f0; background: #f0f7ff; }
+.chord-card.selected-barre { border-color: #f0a0b8; background: #fff0f5; }
+.chord-card.selected-akey  { border-color: #f0c060; background: #fffae8; }
+.chord-card.selected-ekey  { border-color: #60c8a8; background: #eafff8; }
+.chord-card h3 { font-size: 1.3rem; color: #6060c8; margin-bottom: 8px; }
+.chord-card .chord-type { font-size: 0.68rem; color: #bbb; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+ 
+/* ── 상세 패널 ── */
+.detail-panel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  margin-top: 18px;
+  display: none;
+}
+.detail-panel.active { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; justify-content: center; }
+.detail-panel h2 { font-size: 1.9rem; color: #5a5fcf; }
+.detail-text { flex: 1; min-width: 200px; }
+.detail-text .chord-desc { color: #888; margin: 6px 0 14px; font-size: 0.88rem; }
+.finger-guide { list-style: none; }
+.finger-guide li {
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.86rem;
+  color: #555;
+}
+.finger-guide li:last-child { border-bottom: none; }
+.finger-num {
+  display: inline-block;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #b0a8ff;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 22px;
+  margin-right: 8px;
+}
+.barre-badge {
+  display: inline-block;
+  background: #ffdce8;
+  color: #c06080;
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.tip-box {
+  background: #fffae8;
+  border-left: 4px solid #ffd080;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #7a6020;
+}
+.diagram-wrap { flex: 0 0 auto; }
+.diagram-wrap svg { display: block; }
+ 
+/* ── 퀴즈 ── */
+.quiz-area { max-width: 600px; margin: 0 auto; }
+.quiz-status {
+  display: flex; gap: 12px; justify-content: center;
+  margin-bottom: 18px; flex-wrap: wrap;
+}
+.status-badge {
+  background: #fff;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  color: #6060c8;
+}
+.quiz-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px 22px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  text-align: center;
+}
+.quiz-question { font-size: 1rem; color: #888; margin-bottom: 6px; }
+.quiz-chord-name { font-size: 3.4rem; font-weight: 800; color: #6060c8; margin: 10px 0 18px; }
+.quiz-diagram-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+.ans-btn {
+  padding: 14px;
+  border: 2px solid #ddd8ff;
+  border-radius: 14px;
+  background: #faf9ff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #6060c8;
+  cursor: pointer;
+  transition: all .15s;
+}
+.ans-btn:hover:not(:disabled) { background: #eae6ff; border-color: #b0a8ff; transform: scale(1.03); }
+.ans-btn.correct { background: #d8f5e4; border-color: #78d8a0; color: #2a7a4a; }
+.ans-btn.wrong   { background: #ffe0e8; border-color: #f09090; color: #b04040; }
+.ans-btn:disabled { cursor: default; }
+.quiz-feedback {
+  margin-top: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 28px;
+}
+.quiz-feedback.ok  { color: #40a060; }
+.quiz-feedback.bad { color: #c04040; }
+.next-btn {
+  margin-top: 14px;
+  padding: 12px 32px;
+  background: #b0a8ff;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(140,130,255,.28);
+  transition: transform .1s;
+  display: none;
+}
+.next-btn:hover { transform: scale(1.04); }
+.quiz-open-mode  .next-btn { background: #78c898; box-shadow: 0 3px 10px rgba(100,200,150,.28); }
+.quiz-barre-mode .next-btn { background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,.28); }
+.result-box {
+  display: none;
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  text-align: center;
+}
+.result-box h2 { font-size: 1.9rem; color: #5a5fcf; margin-bottom: 10px; }
+.result-score { font-size: 3rem; font-weight: 800; color: #b0a8ff; margin: 16px 0; }
+.result-msg { font-size: 1rem; color: #666; margin-bottom: 20px; }
+.restart-btn {
+  padding: 12px 30px;
+  background: #c8d8ff;
+  border: none;
+  border-radius: 25px;
+  color: #4a50a0;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+}
+.restart-btn:hover { background: #b0a8ff; color: #fff; }
+.mode-select {
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px 22px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  text-align: center;
+  margin-bottom: 18px;
+}
+.mode-select h3 { font-size: 1.05rem; color: #6060c8; margin-bottom: 14px; }
+.mode-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.mode-btn {
+  padding: 11px 22px;
+  border: 2px solid #ddd8ff;
+  border-radius: 14px;
+  background: #faf9ff;
+  color: #6060c8;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.mode-btn:hover { background: #eae6ff; }
+.mode-btn.active { background: #b0a8ff; border-color: #b0a8ff; color: #fff; }
+.quiz-open-mode  .mode-btn.active { background: #78c898; border-color: #78c898; }
+.quiz-barre-mode .mode-btn.active { background: #f0b870; border-color: #f0b870; }
+ 
+@media (max-width: 480px) {
+  header h1 { font-size: 1.5rem; }
+  .chord-grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
+  .detail-panel.active { flex-direction: column; align-items: center; }
+  .quiz-chord-name { font-size: 2.6rem; }
+  .corner-tabs-bar { gap: 6px; }
+  .tab-btn { padding: 8px 13px; font-size: 0.82rem; }
+}
 </style>
 </head>
 <body>
+ 
+<!-- ══════════════ 공통 헤더 ══════════════ -->
 <header>
   <h1>🎸 기타 코드 마스터</h1>
-  <p>오픈 코드 & 바렛 코드를 단계별로 배워요!</p>
+  <p>코너를 선택해서 시작해봐요!</p>
 </header>
-<div class="tabs">
-  <button class="tab-btn open-tab active" onclick="showTab('learn-open', this)">
-    🎵 오픈 코드 배우기
-    <span class="tab-label">C D E G A Dm Em Am</span>
-  </button>
-  <button class="tab-btn barre-tab" onclick="showTab('learn-barre', this)">
-    🎸 바렛 코드 배우기
-    <span class="tab-label">F B Cm Fm Gm Bm</span>
-  </button>
-  <button class="tab-btn quiz-open" onclick="showTab('quiz-open', this)">
-    ✅ 오픈 코드 테스트
-    <span class="tab-label">8개 코드 퀴즈</span>
-  </button>
-  <button class="tab-btn quiz-barre" onclick="showTab('quiz-barre', this)">
-    🔥 바렛 코드 테스트
-    <span class="tab-label">6개 코드 퀴즈</span>
-  </button>
-  <button class="tab-btn akey-tab" onclick="showTab('learn-akey', this)">
-    🅐 A키 쉬운 코드
-    <span class="tab-label">A키(#3개)의 개방현 코드 연습</span>
-  </button>
-  <button class="tab-btn ekey-tab" onclick="showTab('learn-ekey', this)">
-    🎵 E키 쉬운 코드
-    <span class="tab-label">E키(#4개)의 개방현 코드 연습</span>
-  </button>
+ 
+<!-- 코너 내부 뒤로가기 바 -->
+<div class="back-bar" id="backBar">
+  <button class="back-btn" onclick="goHome()">← 홈으로</button>
+  <span class="corner-title-badge" id="cornerTitleBadge"></span>
 </div>
  
-<!-- ────────────── 오픈 코드 배우기 ────────────── -->
-<div id="learn-open" class="section active">
-  <div class="section-banner open-style">
-    <div class="banner-icon">🎵</div>
-    <div>
-      <h2>오픈 코드 배우기</h2>
-      <p>개방줄을 활용한 기초 코드 · C D E G A Dm Em Am</p>
-    </div>
+<!-- ══════════════ 홈 화면 ══════════════ -->
+<div id="homeScreen">
+  <div style="padding: 28px 18px 10px; text-align:center;">
+    <h2 style="font-size:1.3rem; color:#6060c8; margin-bottom:8px;">코너를 선택하세요</h2>
+    <p style="color:#9090b8; font-size:0.9rem;">나의 레벨에 맞는 코너로 입장!</p>
   </div>
-  <div class="chord-grid" id="openGrid"></div>
-  <div class="detail-panel" id="openDetailPanel"></div>
+  <div class="corner-grid" style="padding: 18px 18px 60px; max-width: 960px; margin: 0 auto;">
+ 
+    <!-- 기타 입문 -->
+    <div class="corner-card card-beginner" onclick="enterCorner('beginner')">
+      <div class="card-icon">🎵</div>
+      <div class="card-title">기타 입문</div>
+      <div class="card-sub">오픈 코드 마스터하기</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>오픈 코드 배우기</li>
+        <li><span class="item-dot"></span>오픈 코드 테스트</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">C</span><span class="tag">D</span><span class="tag">E</span>
+        <span class="tag">G</span><span class="tag">A</span><span class="tag">Dm</span>
+        <span class="tag">Em</span><span class="tag">Am</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+ 
+    <!-- 기타 입문+ -->
+    <div class="corner-card card-beginner-plus" onclick="enterCorner('beginnerPlus')">
+      <div class="card-icon">⭐</div>
+      <div class="card-title">기타 입문+</div>
+      <div class="card-sub">샵 조성 쉬운 코드 연습</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>A키 쉬운 코드 <span style="font-size:0.75rem;opacity:0.7">(♯♯♯)</span></li>
+        <li><span class="item-dot"></span>E키 쉬운 코드 <span style="font-size:0.75rem;opacity:0.7">(♯♯♯♯)</span></li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">Aadd9</span><span class="tag">G#m7</span>
+        <span class="tag">F#m7</span><span class="tag">C#m7</span>
+        <span class="tag">B</span><span class="tag">E</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+ 
+    <!-- 기타 심화 -->
+    <div class="corner-card card-advanced" onclick="enterCorner('advanced')">
+      <div class="card-icon">🔥</div>
+      <div class="card-title">기타 심화</div>
+      <div class="card-sub">바렛 코드 정복하기</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>바렛 코드 배우기</li>
+        <li><span class="item-dot"></span>바렛 코드 테스트</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">F</span><span class="tag">B</span><span class="tag">Cm</span>
+        <span class="tag">Fm</span><span class="tag">Gm</span><span class="tag">Bm</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+ 
+  </div>
 </div>
  
-<!-- ────────────── 바렛 코드 배우기 ────────────── -->
-<div id="learn-barre" class="section">
-  <div class="section-banner barre-style">
-    <div class="banner-icon">🎸</div>
-    <div>
-      <h2>바렛 코드 배우기</h2>
-      <p>검지로 전체 바렛! 조금 어렵지만 중요한 코드 · F B Cm Fm Gm Bm</p>
-    </div>
-  </div>
-  <div class="chord-grid" id="barreGrid"></div>
-  <div class="detail-panel" id="barreDetailPanel"></div>
-</div>
+<!-- ══════════════ 코너 화면 ══════════════ -->
+<div id="cornerScreen">
  
-<!-- ────────────── 오픈 코드 테스트 ────────────── -->
-<div id="quiz-open" class="section">
-  <div class="section-banner quiz-open-style">
-    <div class="banner-icon">✅</div>
-    <div>
-      <h2>오픈 코드 테스트</h2>
-      <p>배운 오픈 코드를 퀴즈로 확인해봐요!</p>
-    </div>
-  </div>
-  <div class="quiz-area quiz-open-mode" id="quizOpenArea">
-    <div class="mode-select" id="openModeSelect">
-      <h3>퀴즈 방식을 골라봐요!</h3>
-      <div class="mode-btns">
-        <button class="mode-btn active" id="openModeNameBtn" onclick="setQuizMode('open','name')">코드명 보고 운지법 찾기</button>
-        <button class="mode-btn" id="openModeDiagBtn" onclick="setQuizMode('open','diagram')">운지법 보고 코드명 찾기</button>
+  <!-- 탭 바 (JS로 내용 채움) -->
+  <div class="corner-tabs-bar" id="cornerTabsBar"></div>
+ 
+  <!-- ── 오픈 코드 배우기 ── -->
+  <div id="learn-open" class="section">
+    <div class="section-banner open-style">
+      <div class="banner-icon">🎵</div>
+      <div>
+        <h2>오픈 코드 배우기</h2>
+        <p>개방줄을 활용한 기초 코드 · C D E G A Dm Em Am</p>
       </div>
     </div>
-    <div id="openQuizCard"></div>
-    <div id="openResultBox" class="result-box"></div>
+    <div class="chord-grid" id="openGrid"></div>
+    <div class="detail-panel" id="openDetailPanel"></div>
   </div>
-</div>
  
-<!-- ────────────── 바렛 코드 테스트 ────────────── -->
-<div id="quiz-barre" class="section">
-  <div class="section-banner quiz-barre-style">
-    <div class="banner-icon">🔥</div>
-    <div>
-      <h2>바렛 코드 테스트</h2>
-      <p>배운 바렛 코드를 퀴즈로 확인해봐요!</p>
-    </div>
-  </div>
-  <div class="quiz-area quiz-barre-mode" id="quizBarreArea">
-    <div class="mode-select" id="barreModeSelect">
-      <h3>퀴즈 방식을 골라봐요!</h3>
-      <div class="mode-btns">
-        <button class="mode-btn active" id="barreModeNameBtn" onclick="setQuizMode('barre','name')">코드명 보고 운지법 찾기</button>
-        <button class="mode-btn" id="barreModeDiagBtn" onclick="setQuizMode('barre','diagram')">운지법 보고 코드명 찾기</button>
+  <!-- ── 오픈 코드 테스트 ── -->
+  <div id="quiz-open" class="section">
+    <div class="section-banner quiz-open-style">
+      <div class="banner-icon">✅</div>
+      <div>
+        <h2>오픈 코드 테스트</h2>
+        <p>배운 오픈 코드를 퀴즈로 확인해봐요!</p>
       </div>
     </div>
-    <div id="barreQuizCard"></div>
-    <div id="barreResultBox" class="result-box"></div>
-  </div>
-</div>
- 
-<!-- ────────────── A키 쉬운 코드 ────────────── -->
-<div id="learn-akey" class="section">
-  <div class="section-banner akey-style">
-    <div class="banner-icon">🅐</div>
-    <div>
-      <h2>A키 쉬운 코드 (♯3개)</h2>
-      <p>개방줄을 활용한 A키 (#3개) 코드 · Aadd9 · G#m7 · F#m7 · D · C#m7· Bm7</p>
+    <div class="quiz-area quiz-open-mode" id="quizOpenArea">
+      <div class="mode-select" id="openModeSelect">
+        <h3>퀴즈 방식을 골라봐요!</h3>
+        <div class="mode-btns">
+          <button class="mode-btn active" id="openModeNameBtn" onclick="setQuizMode('open','name')">코드명 보고 운지법 찾기</button>
+          <button class="mode-btn" id="openModeDiagBtn" onclick="setQuizMode('open','diagram')">운지법 보고 코드명 찾기</button>
+        </div>
+      </div>
+      <div id="openQuizCard"></div>
+      <div id="openResultBox" class="result-box"></div>
     </div>
   </div>
-  <div class="chord-grid" id="akeyGrid"></div>
-  <div class="detail-panel" id="akeyDetailPanel"></div>
-</div>
  
-<!-- ────────────── E키 쉬운 코드 ────────────── -->
-<div id="learn-ekey" class="section">
-  <div class="section-banner ekey-style">
-    <div class="banner-icon">🎵</div>
-    <div>
-      <h2>E키 쉬운 코드 (♯4개)</h2>
-      <p>개방줄을 활용한 E키 (#4개) 코드 · E · C#m7 · B · Aadd9 · G#m7 · F#m7</p>
+  <!-- ── A키 쉬운 코드 ── -->
+  <div id="learn-akey" class="section">
+    <div class="section-banner akey-style">
+      <div class="banner-icon">🅐</div>
+      <div>
+        <h2>A키 쉬운 코드 (♯♯♯)</h2>
+        <p>개방줄 활용 A키 코드 · Aadd9 · G#m7 · F#m7 · D · C#m7</p>
+      </div>
+    </div>
+    <div class="chord-grid" id="akeyGrid"></div>
+    <div class="detail-panel" id="akeyDetailPanel"></div>
+  </div>
+ 
+  <!-- ── E키 쉬운 코드 ── -->
+  <div id="learn-ekey" class="section">
+    <div class="section-banner ekey-style">
+      <div class="banner-icon">🎵</div>
+      <div>
+        <h2>E키 쉬운 코드 (♯♯♯♯)</h2>
+        <p>개방줄 활용 E키 코드 · E · C#m7 · B · Aadd9 · G#m7 · F#m7</p>
+      </div>
+    </div>
+    <div class="chord-grid" id="ekeyGrid"></div>
+    <div class="detail-panel" id="ekeyDetailPanel"></div>
+  </div>
+ 
+  <!-- ── 바렛 코드 배우기 ── -->
+  <div id="learn-barre" class="section">
+    <div class="section-banner barre-style">
+      <div class="banner-icon">🎸</div>
+      <div>
+        <h2>바렛 코드 배우기</h2>
+        <p>검지로 전체 바렛! 중요한 코드 · F B Cm Fm Gm Bm</p>
+      </div>
+    </div>
+    <div class="chord-grid" id="barreGrid"></div>
+    <div class="detail-panel" id="barreDetailPanel"></div>
+  </div>
+ 
+  <!-- ── 바렛 코드 테스트 ── -->
+  <div id="quiz-barre" class="section">
+    <div class="section-banner quiz-barre-style">
+      <div class="banner-icon">🔥</div>
+      <div>
+        <h2>바렛 코드 테스트</h2>
+        <p>배운 바렛 코드를 퀴즈로 확인해봐요!</p>
+      </div>
+    </div>
+    <div class="quiz-area quiz-barre-mode" id="quizBarreArea">
+      <div class="mode-select" id="barreModeSelect">
+        <h3>퀴즈 방식을 골라봐요!</h3>
+        <div class="mode-btns">
+          <button class="mode-btn active" id="barreModeNameBtn" onclick="setQuizMode('barre','name')">코드명 보고 운지법 찾기</button>
+          <button class="mode-btn" id="barreModeDiagBtn" onclick="setQuizMode('barre','diagram')">운지법 보고 코드명 찾기</button>
+        </div>
+      </div>
+      <div id="barreQuizCard"></div>
+      <div id="barreResultBox" class="result-box"></div>
     </div>
   </div>
-  <div class="chord-grid" id="ekeyGrid"></div>
-  <div class="detail-panel" id="ekeyDetailPanel"></div>
-</div>
+ 
+</div><!-- /cornerScreen -->
  
 <script>
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 //  코드 데이터
-//  frets: [1번줄(high e) ~ 6번줄(low E)], -1=뮤트, 0=개방
-//  fingers: [손가락번호, 줄(1=high e), 프렛]
-//  barre: {finger, fret, from, to}  줄번호(1=highE)
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 const CHORDS = [
   // ─── 오픈 코드 ───
-  {
-    name:'C', type:'open',
-    frets:[0,1,0,2,3,0],
-    fingers:[[1,2,1],[2,4,2],[3,5,3]],
-    open:[1,3,6], mute:[],
+  { name:'C',  type:'open',  frets:[0,1,0,2,3,0],  fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3,6], mute:[],
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3·6번 줄은 개방'],
-    tip:'5번 줄(A)부터 스트럼하세요. 6번 줄은 뮤트!'
-  },
-  {
-    name:'D', type:'open',
-    frets:[2,3,2,0,-1,-1],
-    fingers:[[1,3,2],[2,1,2],[3,2,3]],
-    open:[4], mute:[5,6],
+    tip:'5번 줄(A)부터 스트럼하세요. 6번 줄은 뮤트!' },
+  { name:'D',  type:'open',  frets:[2,3,2,0,-1,-1], fingers:[[1,3,2],[2,1,2],[3,2,3]], open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
-    tip:'4번 줄(D)부터 스트럼하세요!'
-  },
-  {
-    name:'E', type:'open',
-    frets:[0,0,1,2,2,0],
-    fingers:[[1,3,1],[2,5,2],[3,4,2]],
-    open:[1,2,6], mute:[],
+    tip:'4번 줄(D)부터 스트럼하세요!' },
+  { name:'E',  type:'open',  frets:[0,0,1,2,2,0],  fingers:[[1,3,1],[2,5,2],[3,4,2]], open:[1,2,6], mute:[],
     guide:['1번 손가락 → 3번 줄 1프렛','2번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 2프렛','1·2·6번 줄 개방'],
-    tip:'6줄 모두 스트럼할 수 있어요!'
-  },
-  {
-    name:'G', type:'open',
-    frets:[3,0,0,0,2,3],
-    fingers:[[2,6,3],[3,5,2],[4,1,3]],
-    open:[2,3,4], mute:[],
+    tip:'6줄 모두 스트럼할 수 있어요!' },
+  { name:'G',  type:'open',  frets:[3,0,0,0,2,3],  fingers:[[2,6,3],[3,5,2],[4,1,3]], open:[2,3,4], mute:[],
     guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
-    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.'
-  },
-  {
-    name:'A', type:'open',
-    frets:[0,2,2,2,0,-1],
-    fingers:[[1,4,2],[2,3,2],[3,2,2]],
-    open:[1,5], mute:[6],
+    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+  { name:'A',  type:'open',  frets:[0,2,2,2,0,-1], fingers:[[1,4,2],[2,3,2],[3,2,2]], open:[1,5], mute:[6],
     guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 2프렛','1·5번 줄 개방'],
-    tip:'5번 줄(A)부터 스트럼! 손가락 3개를 세로로 가지런히.'
-  },
-  {
-    name:'Dm', type:'open',
-    frets:[1,3,2,0,-1,-1],
-    fingers:[[1,1,1],[2,3,2],[3,2,3]],
-    open:[4], mute:[5,6],
+    tip:'5번 줄(A)부터 스트럼! 손가락 3개를 세로로 가지런히.' },
+  { name:'Dm', type:'open',  frets:[1,3,2,0,-1,-1], fingers:[[1,1,1],[2,3,2],[3,2,3]], open:[4], mute:[5,6],
     guide:['1번 손가락 → 1번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
-    tip:'4번 줄(D)부터 스트럼!'
-  },
-  {
-    name:'Em', type:'open',
-    frets:[0,0,0,2,2,0],
-    fingers:[[2,4,2],[3,5,2]],
-    open:[1,2,3,6], mute:[],
+    tip:'4번 줄(D)부터 스트럼!' },
+  { name:'Em', type:'open',  frets:[0,0,0,2,2,0],  fingers:[[2,4,2],[3,5,2]], open:[1,2,3,6], mute:[],
     guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
-    tip:'가장 쉬운 코드! 6줄 모두 스트럼 가능.'
-  },
-  {
-    name:'Am', type:'open',
-    frets:[0,1,2,2,0,-1],
-    fingers:[[1,2,1],[2,4,2],[3,3,2]],
-    open:[1,5], mute:[6],
+    tip:'가장 쉬운 코드! 6줄 모두 스트럼 가능.' },
+  { name:'Am', type:'open',  frets:[0,1,2,2,0,-1], fingers:[[1,2,1],[2,4,2],[3,3,2]], open:[1,5], mute:[6],
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·5번 줄 개방'],
-    tip:'5번 줄(A)부터 스트럼!'
-  },
+    tip:'5번 줄(A)부터 스트럼!' },
   // ─── 바렛 코드 ───
-  {
-    name:'F', type:'barre',
-    frets:[1,1,2,3,3,1],
-    fingers:[[1,1,1],[1,2,1],[1,6,1],[2,3,2],[3,5,3],[4,4,3]],
-    open:[], mute:[],
-    barre:{finger:1, fret:1, from:1, to:6},
+  { name:'F',  type:'barre', frets:[1,1,2,3,3,1],  fingers:[[1,1,1],[1,2,1],[1,6,1],[2,3,2],[3,5,3],[4,4,3]], open:[], mute:[],
+    barre:{finger:1,fret:1,from:1,to:6},
     guide:['1번 손가락 → 1프렛 전체 바렛(1~6번 줄)','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','4번 손가락 → 4번 줄 3프렛'],
-    tip:'바렛이 가장 어렵지만 자주 쓰이는 코드! 1번 손가락이 모든 줄을 눌러야 해요.'
-  },
-  {
-    name:'B', type:'barre',
-    frets:[2,4,4,4,2,-1],
-    fingers:[[1,5,2],[1,4,2],[1,3,2],[1,2,2],[1,1,2],[2,4,4],[3,3,4],[4,2,4]],
-    open:[], mute:[6],
-    barre:{finger:1, fret:2, from:1, to:5},
+    tip:'바렛이 가장 어렵지만 자주 쓰이는 코드! 1번 손가락이 모든 줄을 눌러야 해요.' },
+  { name:'B',  type:'barre', frets:[2,4,4,4,2,-1], fingers:[[1,5,2],[1,4,2],[1,3,2],[1,2,2],[1,1,2],[2,4,4],[3,3,4],[4,2,4]], open:[], mute:[6],
+    barre:{finger:1,fret:2,from:1,to:5},
     guide:['1번 손가락 → 2프렛 바렛(1~5번 줄)','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 3번 줄 4프렛','4번 손가락 → 2번 줄 4프렛'],
-    tip:'5번 줄(A)부터 스트럼! 6번 줄은 뮤트.'
-  },
-  {
-    name:'Cm', type:'barre',
-    frets:[3,4,5,5,3,-1],
-    fingers:[[1,5,3],[1,4,3],[1,3,3],[1,2,3],[1,1,3],[2,2,4],[3,4,5],[4,3,5]],
-    open:[], mute:[6],
-    barre:{finger:1, fret:3, from:1, to:5},
+    tip:'5번 줄(A)부터 스트럼! 6번 줄은 뮤트.' },
+  { name:'Cm', type:'barre', frets:[3,4,5,5,3,-1], fingers:[[1,5,3],[1,4,3],[1,3,3],[1,2,3],[1,1,3],[2,2,4],[3,4,5],[4,3,5]], open:[], mute:[6],
+    barre:{finger:1,fret:3,from:1,to:5},
     guide:['1번 손가락 → 3프렛 바렛(1~5번 줄)','2번 손가락 → 2번 줄 4프렛','3번 손가락 → 4번 줄 5프렛','4번 손가락 → 3번 줄 5프렛'],
-    tip:'Am 코드 폼을 3프렛으로 이동한 형태예요! 6번 줄은 뮤트.'
-  },
-  {
-    name:'Fm', type:'barre',
-    frets:[1,1,1,3,3,1],
-    fingers:[[1,1,1],[1,2,1],[1,3,1],[1,6,1],[3,5,3],[4,4,3]],
-    open:[], mute:[],
-    barre:{finger:1, fret:1, from:1, to:6},
+    tip:'Am 코드 폼을 3프렛으로 이동한 형태예요! 6번 줄은 뮤트.' },
+  { name:'Fm', type:'barre', frets:[1,1,1,3,3,1],  fingers:[[1,1,1],[1,2,1],[1,3,1],[1,6,1],[3,5,3],[4,4,3]], open:[], mute:[],
+    barre:{finger:1,fret:1,from:1,to:6},
     guide:['1번 손가락 → 1프렛 전체 바렛','3번 손가락 → 5번 줄 3프렛','4번 손가락 → 4번 줄 3프렛'],
-    tip:'Em 코드 폼을 1프렛 바렛으로! 간단한 구조예요.'
-  },
-  {
-    name:'Gm', type:'barre',
-    frets:[3,3,3,5,5,3],
-    fingers:[[1,1,3],[1,2,3],[1,3,3],[1,6,3],[3,5,5],[4,4,5]],
-    open:[], mute:[],
-    barre:{finger:1, fret:3, from:1, to:6},
+    tip:'Em 코드 폼을 1프렛 바렛으로! 간단한 구조예요.' },
+  { name:'Gm', type:'barre', frets:[3,3,3,5,5,3],  fingers:[[1,1,3],[1,2,3],[1,3,3],[1,6,3],[3,5,5],[4,4,5]], open:[], mute:[],
+    barre:{finger:1,fret:3,from:1,to:6},
     guide:['1번 손가락 → 3프렛 전체 바렛','3번 손가락 → 5번 줄 5프렛','4번 손가락 → 4번 줄 5프렛'],
-    tip:'Em 코드 폼을 3프렛 바렛으로 이동!'
-  },
-  {
-    name:'Bm', type:'barre',
-    frets:[2,3,4,4,2,-1],
-    fingers:[[1,5,2],[1,4,2],[1,3,2],[1,2,2],[1,1,2],[2,2,3],[3,4,4],[4,3,4]],
-    open:[], mute:[6],
-    barre:{finger:1, fret:2, from:1, to:5},
+    tip:'Em 코드 폼을 3프렛 바렛으로 이동!' },
+  { name:'Bm', type:'barre', frets:[2,3,4,4,2,-1], fingers:[[1,5,2],[1,4,2],[1,3,2],[1,2,2],[1,1,2],[2,2,3],[3,4,4],[4,3,4]], open:[], mute:[6],
+    barre:{finger:1,fret:2,from:1,to:5},
     guide:['1번 손가락 → 2프렛 바렛(1~5번 줄)','2번 손가락 → 2번 줄 3프렛','3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛'],
-    tip:'5번 줄(A)부터 스트럼! 6번 줄은 뮤트.'
-  },
+    tip:'5번 줄(A)부터 스트럼! 6번 줄은 뮤트.' },
 ];
  
 const OPEN_CHORDS  = CHORDS.filter(c => c.type === 'open');
 const BARRE_CHORDS = CHORDS.filter(c => c.type === 'barre');
  
-// ─── A키(♯ 3개!!) 쉽게 잡는 코드 ───
+// ─── A키 쉬운 코드 ───
 const AKEY_CHORDS = [
-  {
-    name:'Aadd9', type:'open',
-    frets:[0,0,2,2,0,0],
-    fingers:[[2,4,2],[3,3,2]],
-    open:[1,2,4,5,6], mute:[],
+  { name:'Aadd9.sim', type:'open', frets:[0,0,2,2,0,0], fingers:[[2,4,2],[3,3,2]], open:[1,2,4,5,6], mute:[],
     guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'G#m7', type:'open',
-    frets:[0,0,4,4,0,4],
-    fingers:[[1,6,4],[2,4,4],[3,3,4]],
-    open:[1,2,5], mute:[],
-    guide:['1번 손가락 → 6번 줄 4프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 4번 줄 2프렛','1·2·5번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!! E/G#에도 사용할 수 있어요!!'
-  },
-  {
-    name:'F#m7', type:'open',
-    frets:[0,0,2,2,0,2],
-    fingers:[[1,6,2],[2,4,2],[3,3,2]],
-    open:[1,2,5], mute:[],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'G#m7&E/G#.sim', type:'open', frets:[0,0,4,4,0,4], fingers:[[1,6,4],[2,4,4],[3,3,4]], open:[1,2,5], mute:[],
+    guide:['1번 손가락 → 6번 줄 4프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 3번 줄 4프렛','1·2·5번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'F#m7.sim', type:'open', frets:[0,0,2,2,0,2], fingers:[[1,6,2],[2,4,2],[3,3,2]], open:[1,2,5], mute:[],
     guide:['1번 손가락 → 6번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'D', type:'open',
-    frets:[0,3,2,0,-1,-1],
-    fingers:[[1,3,2],[3,2,3]],
-    open:[1,4], mute:[5,6],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'D.sim', type:'open', frets:[0,3,2,0,-1,-1], fingers:[[1,3,2],[3,2,3]], open:[1,4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','1·4번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!! 5·6번 줄은 뮤트!'
-  },
-  {
-    name:'C#m7', type:'open',
-    frets:[0,0,6,6,4,0],
-    fingers:[[1,5,4],[3,4,6],[4,3,6]],
-    open:[1,2,6], mute:[],
+    tip:'6번 줄(E)부터 스트럼하세요!! 5·6번 줄은 뮤트!' },
+  { name:'C#m7.sim', type:'open', frets:[0,0,6,6,4,0], fingers:[[1,5,4],[3,4,6],[4,3,6]], open:[1,2,6], mute:[],
     guide:['1번 손가락 → 5번 줄 4프렛','3번 손가락 → 4번 줄 6프렛','4번 손가락 → 3번 줄 6프렛','1·2·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
- {
-    name:'Bm7', type:'open',
-    frets:[-1,3,2,0,2,-1],
-    fingers:[[1,5,2],[2,3,2],[3,2,3]],
-    open:[4], mute:[1,6],
-    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!! 1·6번 줄은 뮤트!'
-  }
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
 ];
  
-// ─── E키(♯4개) 쉽게 잡는 코드 ───
+// ─── E키 쉬운 코드 ───
 const EKEY_CHORDS = [
-  {
-    name:'E (type1)', type:'open',
-    frets:[0,0,1,2,2,0],
-    fingers:[[1,3,1],[2,5,2],[3,4,2]],
-    open:[1,2,6], mute:[],
-    guide:['1번 손가락 → 3번 줄 1프렛','2번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 2프렛','1·2·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'E (type2)', type:'open',
-    frets:[0,0,9,9,7,0],
-    fingers:[[1,5,7],[3,4,9],[4,3,9]],
-    open:[1,2,6], mute:[],
+  { name:'E.sim', type:'open', frets:[0,0,9,9,7,0], fingers:[[1,5,7],[3,4,9],[4,3,9]], open:[1,2,6], mute:[],
     guide:['1번 손가락 → 5번 줄 7프렛','3번 손가락 → 4번 줄 9프렛','4번 손가락 → 3번 줄 9프렛','1·2·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'C#m7', type:'open',
-    frets:[0,0,6,6,4,0],
-    fingers:[[1,5,4],[3,4,6],[4,3,6]],
-    open:[1,2,6], mute:[],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'C#m7.sim', type:'open', frets:[0,0,6,6,4,0], fingers:[[1,5,4],[3,4,6],[4,3,6]], open:[1,2,6], mute:[],
     guide:['1번 손가락 → 5번 줄 4프렛','3번 손가락 → 4번 줄 6프렛','4번 손가락 → 3번 줄 6프렛','1·2·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'B (type1)', type:'open',
-    frets:[0,0,4,4,2,0],
-    fingers:[[1,5,2],[3,4,4],[4,3,4]],
-    open:[1,2,6], mute:[],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'B.sim1 (6줄)', type:'open', frets:[0,0,4,4,2,0], fingers:[[1,5,2],[3,4,4],[4,3,4]], open:[1,2,6], mute:[],
     guide:['1번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'B (type2)', type:'open',
-    frets:[0,0,4,4,-1,-1],
-    fingers:[[2,4,4],[3,3,4]],
-    open:[1,2], mute:[5,6],
-    guide:['2번 손가락 → 4번 줄 4프렛','3번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
-    tip:'4번 줄(D)부터 스트럼하세요!!'
-  },
-  {
-    name:'Aadd9', type:'open',
-    frets:[0,0,2,2,0,0],
-    fingers:[[2,4,2],[3,3,2]],
-    open:[1,2,4,5,6], mute:[],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'B.sim2 (4줄)', type:'open', frets:[0,0,4,4,-1,-1], fingers:[[3,4,4],[4,3,4]], open:[1,2], mute:[5,6],
+    guide:['3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
+    tip:'4번 줄(D)부터 스트럼하세요!!' },
+  { name:'Aadd9.sim', type:'open', frets:[0,0,2,2,0,0], fingers:[[2,4,2],[3,3,2]], open:[1,2,4,5,6], mute:[],
     guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
-  {
-    name:'G#m7', type:'open',
-    frets:[0,0,4,4,0,4],
-    fingers:[[1,6,4],[2,4,4],[3,3,4]],
-    open:[1,2,5], mute:[],
-    guide:['1번 손가락 → 6번 줄 4프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 4번 줄 2프렛','1·2·5번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!! E/G#에도 사용할 수 있어요!!'
-  },
-  {
-    name:'F#m7', type:'open',
-    frets:[0,0,2,2,0,2],
-    fingers:[[1,6,2],[2,4,2],[3,3,2]],
-    open:[1,2,5], mute:[],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'G#m7&E/G#.sim', type:'open', frets:[0,0,4,4,0,4], fingers:[[1,6,4],[2,4,4],[3,3,4]], open:[1,2,5], mute:[],
+    guide:['1번 손가락 → 6번 줄 4프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 3번 줄 4프렛','1·2·5번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
+  { name:'F#m7.sim', type:'open', frets:[0,0,2,2,0,2], fingers:[[1,6,2],[2,4,2],[3,3,2]], open:[1,2,5], mute:[],
     guide:['1번 손가락 → 6번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트럼하세요!!'
-  },
+    tip:'6번 줄(E)부터 스트럼하세요!!' },
 ];
  
-// ───────────────────────── SVG 다이어그램 생성 ─────────────────────────
+// ═══════════════════════════════════════════════════
+//  코너 설정
+// ═══════════════════════════════════════════════════
+const CORNERS = {
+  beginner: {
+    label: '🎵 기타 입문',
+    tabs: [
+      { id:'learn-open',  label:'🎵 오픈 코드 배우기', sub:'C D E G A Dm Em Am', cls:'open-tab' },
+      { id:'quiz-open',   label:'✅ 오픈 코드 테스트',  sub:'8개 코드 퀴즈',     cls:'quiz-open' },
+    ],
+    onEnter: () => {
+      renderGrid(OPEN_CHORDS, 'openGrid', null, 'open');
+    }
+  },
+  beginnerPlus: {
+    label: '⭐ 기타 입문+',
+    tabs: [
+      { id:'learn-akey', label:'🅐 A키 쉬운 코드', sub:'♯♯♯ 3샵', cls:'akey-tab' },
+      { id:'learn-ekey', label:'🎵 E키 쉬운 코드', sub:'♯♯♯♯ 4샵', cls:'ekey-tab' },
+    ],
+    onEnter: () => {
+      renderGrid(AKEY_CHORDS, 'akeyGrid', null, 'akey');
+      renderGrid(EKEY_CHORDS, 'ekeyGrid', null, 'ekey');
+    }
+  },
+  advanced: {
+    label: '🔥 기타 심화',
+    tabs: [
+      { id:'learn-barre', label:'🎸 바렛 코드 배우기', sub:'F B Cm Fm Gm Bm', cls:'barre-tab' },
+      { id:'quiz-barre',  label:'🔥 바렛 코드 테스트',  sub:'6개 코드 퀴즈',  cls:'quiz-barre' },
+    ],
+    onEnter: () => {
+      renderGrid(BARRE_CHORDS, 'barreGrid', null, 'barre');
+    }
+  }
+};
+ 
+let currentCorner = null;
+ 
+function enterCorner(cornerKey) {
+  const corner = CORNERS[cornerKey];
+  currentCorner = cornerKey;
+ 
+  // 화면 전환
+  document.getElementById('homeScreen').style.display   = 'none';
+  document.getElementById('cornerScreen').style.display = 'block';
+  const backBar = document.getElementById('backBar');
+  backBar.classList.add('visible');
+  document.getElementById('cornerTitleBadge').textContent = corner.label;
+ 
+  // 탭 바 생성
+  const tabsBar = document.getElementById('cornerTabsBar');
+  tabsBar.innerHTML = corner.tabs.map((t, i) => `
+    <button class="tab-btn ${t.cls} ${i === 0 ? 'active' : ''}"
+            onclick="showSection('${t.id}', this)">
+      ${t.label}
+      <span class="tab-label">${t.sub}</span>
+    </button>
+  `).join('');
+ 
+  // 모든 섹션 숨기기
+  document.querySelectorAll('#cornerScreen .section').forEach(s => s.classList.remove('active'));
+ 
+  // onEnter 훅 실행
+  corner.onEnter();
+ 
+  // 첫 번째 탭 활성화
+  const firstTabId = corner.tabs[0].id;
+  document.getElementById(firstTabId).classList.add('active');
+ 
+  // 퀴즈 탭이면 초기화
+  if (firstTabId === 'quiz-open')  startQuiz('open');
+  if (firstTabId === 'quiz-barre') startQuiz('barre');
+ 
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+ 
+function goHome() {
+  document.getElementById('homeScreen').style.display   = 'block';
+  document.getElementById('cornerScreen').style.display = 'none';
+  document.getElementById('backBar').classList.remove('visible');
+  // 상세 패널 닫기
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+  currentCorner = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+ 
+function showSection(id, btn) {
+  // 같은 코너 내 탭 전환
+  const corner = CORNERS[currentCorner];
+  corner.tabs.forEach(t => {
+    document.getElementById(t.id).classList.remove('active');
+  });
+  document.querySelectorAll('#cornerTabsBar .tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'quiz-open')  startQuiz('open');
+  if (id === 'quiz-barre') startQuiz('barre');
+}
+ 
+// ═══════════════════════════════════════════════════
+//  SVG 다이어그램 생성
+// ═══════════════════════════════════════════════════
 function buildDiagram(chord, size = 160) {
-  const S  = size;
-  const sx = S * 0.15;
-  const sy = S * 0.18;
-  const sw = S * 0.70;
-  const sh = S * 0.68;
-  const cs = sw / 5;
-  const rs = sh / 4;
+  const S = size, sx = S*0.15, sy = S*0.18, sw = S*0.70, sh = S*0.68;
+  const cs = sw/5, rs = sh/4;
   let minFret = Math.min(...chord.frets.filter(f => f > 0));
   if (!isFinite(minFret) || minFret <= 0) minFret = 1;
   let startFret = minFret > 1 ? minFret : 1;
@@ -699,12 +873,10 @@ function buildDiagram(chord, size = 160) {
     svg += `<line x1="${x}" y1="${sy}" x2="${x}" y2="${sy+sh}" stroke="#ccc" stroke-width="1.2"/>`;
   }
   if (chord.barre) {
-    const b = chord.barre;
-    const bfret = b.fret - startFret;
+    const b = chord.barre, bfret = b.fret - startFret;
     if (bfret >= 0 && bfret < 4) {
-      const y  = sy + (bfret + 0.5) * rs;
-      const x1 = sx + (6 - b.from) * cs;
-      const x2 = sx + (6 - b.to) * cs;
+      const y = sy + (bfret+0.5)*rs;
+      const x1 = sx + (6-b.from)*cs, x2 = sx + (6-b.to)*cs;
       svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#c090e0" stroke-width="${S*0.065}" stroke-linecap="round" opacity="0.65"/>`;
     }
   }
@@ -715,15 +887,12 @@ function buildDiagram(chord, size = 160) {
     drawn.add(key);
     const relFret = fret - startFret;
     if (relFret < 0 || relFret >= 4) return;
-    const x = sx + (6 - str) * cs;
-    const y = sy + (relFret + 0.5) * rs;
+    const x = sx + (6-str)*cs, y = sy + (relFret+0.5)*rs;
     svg += `<circle cx="${x}" cy="${y}" r="${S*0.055}" fill="#7878d0"/>`;
     svg += `<text x="${x}" y="${y+S*0.02}" font-size="${S*0.075}" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="bold" font-family="sans-serif">${f}</text>`;
   });
   for (let s = 0; s < 6; s++) {
-    const f = chord.frets[5 - s];
-    const x = sx + s * cs;
-    const y = sy - S * 0.08;
+    const f = chord.frets[5-s], x = sx+s*cs, y = sy-S*0.08;
     if (f === -1) {
       svg += `<text x="${x}" y="${y+S*0.01}" font-size="${S*0.09}" fill="#e09090" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif">✕</text>`;
     } else if (f === 0) {
@@ -732,27 +901,27 @@ function buildDiagram(chord, size = 160) {
   }
   const strNames = ['E','A','D','G','B','e'];
   for (let s = 0; s < 6; s++) {
-    const x = sx + s * cs;
-    const y = sy + sh + S * 0.08;
+    const x = sx+s*cs, y = sy+sh+S*0.08;
     svg += `<text x="${x}" y="${y}" font-size="${S*0.065}" fill="#ccc" text-anchor="middle" font-family="sans-serif">${strNames[s]}</text>`;
   }
   svg += `</svg>`;
   return svg;
 }
  
-// ───────────────────────── 배우기 ─────────────────────────
-const SECTION_CONFIG = {
-  open:  { chordsRef: () => OPEN_CHORDS,  gridId: 'openGrid',  panelId: 'openDetailPanel',  selClass: 'selected-open',  desc: '오픈 코드 — 개방줄을 활용한 코드' },
-  barre: { chordsRef: () => BARRE_CHORDS, gridId: 'barreGrid', panelId: 'barreDetailPanel', selClass: 'selected-barre', desc: '바렛 코드 — 검지로 전체 프렛을 바렛' },
-  akey:  { chordsRef: () => AKEY_CHORDS,  gridId: 'akeyGrid',  panelId: 'akeyDetailPanel',  selClass: 'selected-akey',  desc: 'A키 (#3개) — 개방줄 활용 쉬운 코드' },
-  ekey:  { chordsRef: () => EKEY_CHORDS,  gridId: 'ekeyGrid',  panelId: 'ekeyDetailPanel',  selClass: 'selected-ekey',  desc: 'E키 (#4개) — 개방줄 활용 쉬운 코드' },
+// ═══════════════════════════════════════════════════
+//  배우기 — 그리드 & 상세 패널
+// ═══════════════════════════════════════════════════
+const SECTION_META = {
+  open:  { chordsRef:()=>OPEN_CHORDS,  selClass:'selected-open',  desc:'오픈 코드 — 개방줄을 활용한 코드' },
+  barre: { chordsRef:()=>BARRE_CHORDS, selClass:'selected-barre', desc:'바렛 코드 — 검지로 전체 프렛을 바렛' },
+  akey:  { chordsRef:()=>AKEY_CHORDS,  selClass:'selected-akey',  desc:'A키 (#3개) — 개방줄 활용 쉬운 코드' },
+  ekey:  { chordsRef:()=>EKEY_CHORDS,  selClass:'selected-ekey',  desc:'E키 (#4개) — 개방줄 활용 쉬운 코드' },
 };
  
 function renderGrid(chords, gridId, selectedName, sectionType) {
-  const grid = document.getElementById(gridId);
-  const cfg = SECTION_CONFIG[sectionType] || SECTION_CONFIG.open;
-  grid.innerHTML = chords.map(c => `
-    <div class="chord-card ${selectedName === c.name ? cfg.selClass : ''}"
+  const meta = SECTION_META[sectionType];
+  document.getElementById(gridId).innerHTML = chords.map(c => `
+    <div class="chord-card ${selectedName === c.name ? meta.selClass : ''}"
          onclick="showDetail('${c.name}','${sectionType}')">
       <div class="chord-type">${c.type === 'open' ? 'Open Chord' : 'Barre Chord'}</div>
       <h3>${c.name}</h3>
@@ -762,64 +931,60 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
 }
  
 function showDetail(name, sectionType) {
-  const cfg = SECTION_CONFIG[sectionType];
-  if (!cfg) return;
-  const chords = cfg.chordsRef();
-  const c = chords.find(x => x.name === name);
+  const meta   = SECTION_META[sectionType];
+  const chords = meta.chordsRef();
+  const c      = chords.find(x => x.name === name);
   if (!c) return;
-  renderGrid(chords, cfg.gridId, name, sectionType);
-  renderDetailPanel(c, cfg.panelId, cfg.desc);
-}
- 
-function renderDetailPanel(c, panelId, desc) {
+  const gridId  = sectionType === 'open'  ? 'openGrid'
+                : sectionType === 'barre' ? 'barreGrid'
+                : sectionType === 'akey'  ? 'akeyGrid'  : 'ekeyGrid';
+  const panelId = sectionType === 'open'  ? 'openDetailPanel'
+                : sectionType === 'barre' ? 'barreDetailPanel'
+                : sectionType === 'akey'  ? 'akeyDetailPanel' : 'ekeyDetailPanel';
+  renderGrid(chords, gridId, name, sectionType);
   const panel = document.getElementById(panelId);
-  const barreHtml = c.barre ? `<span class="barre-badge">바렛 코드</span>` : '';
-  const descText = desc || (c.type === 'open' ? '오픈 코드 — 개방줄을 활용한 코드' : '바렛 코드 — 검지로 전체 프렛을 바렛');
   panel.innerHTML = `
     <div class="diagram-wrap">${buildDiagram(c, 200)}</div>
     <div class="detail-text">
-      <h2>${c.name} ${barreHtml}</h2>
-      <p class="chord-desc">${descText}</p>
+      <h2>${c.name}${c.barre ? '<span class="barre-badge">바렛 코드</span>' : ''}</h2>
+      <p class="chord-desc">${meta.desc}</p>
       <ul class="finger-guide">
-        ${c.guide.map((g, i) => `<li><span class="finger-num">${i+1}</span>${g}</li>`).join('')}
+        ${c.guide.map((g,i) => `<li><span class="finger-num">${i+1}</span>${g}</li>`).join('')}
       </ul>
       <div class="tip-box">💡 ${c.tip}</div>
     </div>
   `;
   panel.classList.add('active');
-  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
  
-// ───────────────────────── 퀴즈 ─────────────────────────
+// ═══════════════════════════════════════════════════
+//  퀴즈
+// ═══════════════════════════════════════════════════
 const quizState = {
-  open:  { mode: 'name', q: [], idx: 0, score: 0, total: 8 },
-  barre: { mode: 'name', q: [], idx: 0, score: 0, total: 6 },
+  open:  { mode:'name', q:[], idx:0, score:0, total:8 },
+  barre: { mode:'name', q:[], idx:0, score:0, total:6 },
 };
 function setQuizMode(pool, mode) {
   quizState[pool].mode = mode;
-  const nameBtn = document.getElementById(`${pool}ModeNameBtn`);
-  const diagBtn = document.getElementById(`${pool}ModeDiagBtn`);
-  nameBtn.classList.toggle('active', mode === 'name');
-  diagBtn.classList.toggle('active', mode === 'diagram');
+  document.getElementById(`${pool}ModeNameBtn`).classList.toggle('active', mode==='name');
+  document.getElementById(`${pool}ModeDiagBtn`).classList.toggle('active', mode==='diagram');
   startQuiz(pool);
 }
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
   }
   return a;
 }
 function startQuiz(pool) {
   const st = quizState[pool];
-  const poolChords = pool === 'open' ? OPEN_CHORDS : BARRE_CHORDS;
+  const poolChords = pool==='open' ? OPEN_CHORDS : BARRE_CHORDS;
   st.q = shuffle(poolChords).slice(0, st.total);
-  while (st.q.length < st.total) {
-    st.q = [...st.q, ...shuffle(poolChords)].slice(0, st.total);
-  }
-  st.idx = 0;
-  st.score = 0;
+  while (st.q.length < st.total) st.q = [...st.q,...shuffle(poolChords)].slice(0,st.total);
+  st.idx = 0; st.score = 0;
   document.getElementById(`${pool}ResultBox`).style.display = 'none';
   renderQuestion(pool);
 }
@@ -827,10 +992,10 @@ function renderQuestion(pool) {
   const st = quizState[pool];
   const card = document.getElementById(`${pool}QuizCard`);
   if (st.idx >= st.q.length) { showResult(pool); return; }
-  const correct = st.q[st.idx];
-  const poolChords = pool === 'open' ? OPEN_CHORDS : BARRE_CHORDS;
-  const wrong3  = shuffle(poolChords.filter(c => c.name !== correct.name)).slice(0, 3);
-  const options = shuffle([correct, ...wrong3]);
+  const correct    = st.q[st.idx];
+  const poolChords = pool==='open' ? OPEN_CHORDS : BARRE_CHORDS;
+  const wrong3     = shuffle(poolChords.filter(c=>c.name!==correct.name)).slice(0,3);
+  const options    = shuffle([correct,...wrong3]);
   if (st.mode === 'name') {
     card.innerHTML = `
       <div class="quiz-status">
@@ -841,16 +1006,14 @@ function renderQuestion(pool) {
         <p class="quiz-question">이 코드의 운지법은?</p>
         <div class="quiz-chord-name">${correct.name}</div>
         <div class="answer-grid">
-          ${options.map(o => `
+          ${options.map(o=>`
             <button class="ans-btn" data-chord="${o.name}" onclick="checkAnswer(this,'${o.name}','${correct.name}','${pool}')">
-              ${buildDiagram(o, 110)}
-            </button>
-          `).join('')}
+              ${buildDiagram(o,110)}
+            </button>`).join('')}
         </div>
         <div class="quiz-feedback" id="${pool}Feedback"></div>
         <button class="next-btn" id="${pool}NextBtn" onclick="nextQuestion('${pool}')">다음 →</button>
-      </div>
-    `;
+      </div>`;
   } else {
     card.innerHTML = `
       <div class="quiz-status">
@@ -859,21 +1022,19 @@ function renderQuestion(pool) {
       </div>
       <div class="quiz-card">
         <p class="quiz-question">이 운지법의 코드명은?</p>
-        <div class="quiz-diagram-wrap">${buildDiagram(correct, 180)}</div>
+        <div class="quiz-diagram-wrap">${buildDiagram(correct,180)}</div>
         <div class="answer-grid">
-          ${options.map(o => `
-            <button class="ans-btn" onclick="checkAnswer(this,'${o.name}','${correct.name}','${pool}')">${o.name}</button>
-          `).join('')}
+          ${options.map(o=>`
+            <button class="ans-btn" onclick="checkAnswer(this,'${o.name}','${correct.name}','${pool}')">${o.name}</button>`).join('')}
         </div>
         <div class="quiz-feedback" id="${pool}Feedback"></div>
         <button class="next-btn" id="${pool}NextBtn" onclick="nextQuestion('${pool}')">다음 →</button>
-      </div>
-    `;
+      </div>`;
   }
 }
 function checkAnswer(btn, chosen, correct, pool) {
   if (btn.disabled) return;
-  document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b => b.disabled = true);
+  document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b=>b.disabled=true);
   const feedback = document.getElementById(`${pool}Feedback`);
   const nextBtn  = document.getElementById(`${pool}NextBtn`);
   if (chosen === correct) {
@@ -883,50 +1044,30 @@ function checkAnswer(btn, chosen, correct, pool) {
     quizState[pool].score++;
   } else {
     btn.classList.add('wrong');
-    document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b => {
-      if (b.dataset.chord === correct) b.classList.add('correct');
+    document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b=>{
+      if (b.dataset.chord===correct) b.classList.add('correct');
     });
-    feedback.textContent = `❌ 에휴~ 넌 코드 공부 좀 더 해야겠다...`;
+    feedback.textContent = '❌ 에휴~ 넌 코드 공부 좀 더 해야겠다...';
     feedback.className = 'quiz-feedback bad';
   }
   nextBtn.style.display = 'inline-block';
 }
-function nextQuestion(pool) {
-  quizState[pool].idx++;
-  renderQuestion(pool);
-}
+function nextQuestion(pool) { quizState[pool].idx++; renderQuestion(pool); }
 function showResult(pool) {
   const st = quizState[pool];
-  const rb = document.getElementById(`${pool}ResultBox`);
   document.getElementById(`${pool}QuizCard`).innerHTML = '';
-  const pct = Math.round(st.score / st.total * 100);
-  let msg = pct === 100 ? '잘했어!! 🎸 이젠 노래 연습을 해볼까?' :
-            pct >= 80   ? '쓰읍...노오력이 조금 부족해' :
-            pct >= 50   ? '코드를 몰라도 너~무 모르네>.<' : '이정도는 기타 피크도 맞추겠는데?';
+  const pct = Math.round(st.score/st.total*100);
+  const msg = pct===100 ? '호오...이 정도는 쉽다고?? 이젠 노래 연습을 해볼까?' :
+              pct>=80   ? '쓰읍...노오력이 조금 부족해' :
+              pct>=50   ? '코드를 몰라도 너~무 모르네>.<' : '이정도는 기타 피크도 맞추겠는데?';
+  const rb = document.getElementById(`${pool}ResultBox`);
   rb.innerHTML = `
     <h2>결과 발표!</h2>
     <div class="result-score">${st.score} / ${st.total}</div>
     <div class="result-msg">${msg} (정답률 ${pct}%)</div>
-    <button class="restart-btn" onclick="startQuiz('${pool}')">다시 도전하기 🔄</button>
-  `;
+    <button class="restart-btn" onclick="startQuiz('${pool}')">다시 도전하기 🔄</button>`;
   rb.style.display = 'block';
 }
- 
-// ───────────────────────── 탭 전환 ─────────────────────────
-function showTab(id, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-  if (id === 'quiz-open')  startQuiz('open');
-  if (id === 'quiz-barre') startQuiz('barre');
-}
- 
-// ───────────────────────── 초기 렌더 ─────────────────────────
-renderGrid(OPEN_CHORDS,  'openGrid',  null, 'open');
-renderGrid(BARRE_CHORDS, 'barreGrid', null, 'barre');
-renderGrid(AKEY_CHORDS,  'akeyGrid',  null, 'akey');
-renderGrid(EKEY_CHORDS,  'ekeyGrid',  null, 'ekey');
 </script>
 </body>
 </html>
