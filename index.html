@@ -1374,6 +1374,9 @@ function detectLoop() {
     const target = STRINGS[selectedStr].freq;
     const cents  = Math.round(1200 * Math.log2(freq / target));
     const clamped = Math.max(-50, Math.min(50, cents));
+     setNeedle(clamped);
+    document.getElementById('tunerCents').textContent =
+      (cents >= 0 ? '+' : '') + cents + '¢';
     const lbl = document.getElementById('tunerLabel');
     if (Math.abs(cents) <= 5) {
       lbl.textContent = '✅ 정확해요!';
