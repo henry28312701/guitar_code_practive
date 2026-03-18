@@ -190,6 +190,136 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .card-advanced .tag { background: #ffd8e8; color: #c04878; }
 .card-advanced .go-btn { background: #f08aaa; color: #fff; box-shadow: 0 3px 10px rgba(240,120,160,.3); }
  
+/* 기타 튜너 — 민트/틸 계열 */
+.card-tuner {
+  background: linear-gradient(145deg, #e0f8f4, #e8f8ff);
+  border-color: #a0ddd8;
+}
+.card-tuner .card-title { color: #2a9080; }
+.card-tuner .card-sub   { color: #40a898; }
+.card-tuner .item-dot   { background: #60c8b8; }
+.card-tuner .card-items li { color: #2a7870; }
+.card-tuner .tag { background: #c8f0ec; color: #2a9080; }
+.card-tuner .go-btn { background: #60c8b8; color: #fff; box-shadow: 0 3px 10px rgba(80,200,184,.3); }
+
+/* ═══════════════════════════════
+   TUNER
+═══════════════════════════════ */
+.tuner-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.section-banner.tuner-style { background: linear-gradient(120deg,#d8f5f0,#eefffe); border-left:5px solid #60c8b8; }
+
+/* 줄 선택 버튼 */
+.string-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.str-btn {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 2px solid #b0e8e0;
+  background: #f0fffe;
+  color: #2a9080;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  line-height: 1.2;
+}
+.str-btn span { font-size: 0.62rem; font-weight: 500; color: #80b8b0; }
+.str-btn:hover { background: #d8f5f0; border-color: #60c8b8; }
+.str-btn.active { background: #60c8b8; border-color: #40a898; color: #fff; }
+.str-btn.active span { color: rgba(255,255,255,0.75); }
+
+/* 게이지 패널 */
+.tuner-gauge-panel {
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px 24px 20px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+  width: 100%;
+  text-align: center;
+}
+.tuner-target-info {
+  margin-bottom: 14px;
+}
+.tuner-target-note {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #2a9080;
+  line-height: 1;
+}
+.tuner-target-hz {
+  font-size: 0.82rem;
+  color: #a0c8c4;
+  margin-top: 3px;
+}
+
+/* 반원 게이지 */
+.gauge-svg-wrap { position: relative; width: 100%; }
+.gauge-svg-wrap svg { display: block; margin: 0 auto; }
+
+/* 상태 표시 */
+.tuner-status-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  min-height: 36px;
+}
+.tuner-cents {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #60c8b8;
+  min-width: 70px;
+  text-align: center;
+}
+.tuner-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 14px;
+  background: #f0fffe;
+  color: #60c8b8;
+  border: 2px solid #b0e8e0;
+}
+.tuner-label.flat  { background: #fff0d8; color: #c08020; border-color: #f0c060; }
+.tuner-label.sharp { background: #ffe8f0; color: #c04878; border-color: #f08aaa; }
+.tuner-label.intune { background: #d8f5e8; color: #2a7a4a; border-color: #78d8a0; }
+
+/* 시작/정지 버튼 */
+.tuner-start-btn {
+  padding: 13px 40px;
+  border: none;
+  border-radius: 25px;
+  background: #60c8b8;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(80,200,184,.3);
+  transition: all .15s;
+}
+.tuner-start-btn:hover { background: #40a898; transform: scale(1.03); }
+.tuner-start-btn.active { background: #f08aaa; box-shadow: 0 3px 12px rgba(240,120,160,.3); }
+.tuner-tip {
+  font-size: 0.8rem;
+  color: #a0b8b4;
+  text-align: center;
+  line-height: 1.6;
+}
+
 /* ═══════════════════════════════
    CORNER SCREEN
 ═══════════════════════════════ */
@@ -225,6 +355,7 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .tab-btn.ekey-tab.active  { background: #60c8a8; box-shadow: 0 3px 10px rgba(80,200,170,0.3); }
 .tab-btn.barre-tab.active { background: #f08aaa; box-shadow: 0 3px 10px rgba(240,120,160,0.3); }
 .tab-btn.quiz-barre.active{ background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,0.3); }
+.tab-btn.tuner-tab.active { background: #60c8b8; box-shadow: 0 3px 10px rgba(80,200,184,0.3); }
 .tab-label {
   display: block;
   font-size: 0.7rem;
@@ -537,7 +668,23 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
- 
+     
+ <!-- 기타 튜너 -->
+    <div class="corner-card card-tuner" onclick="enterCorner('tuner')">
+      <div class="card-icon">🎛️</div>
+      <div class="card-title">기타 튜너</div>
+      <div class="card-sub">표준 튜닝으로 맞춰보기</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>실시간 음정 감지</li>
+        <li><span class="item-dot"></span>6줄 개별 튜닝</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">E2</span><span class="tag">A2</span><span class="tag">D3</span>
+        <span class="tag">G3</span><span class="tag">B3</span><span class="tag">e4</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+
   </div>
 </div>
  
@@ -642,7 +789,70 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       <div id="barreResultBox" class="result-box"></div>
     </div>
   </div>
- 
+
+
+    <!-- ── 기타 튜너 ── -->
+  <div id="tuner-section" class="section">
+    <div class="section-banner tuner-style">
+      <div class="banner-icon">🎛️</div>
+      <div>
+        <h2>기타 튜너</h2>
+        <p>Standard Tuning · E2 · A2 · D3 · G3 · B3 · e4</p>
+      </div>
+    </div>
+    <div class="tuner-wrap">
+
+      <!-- 줄 선택 -->
+      <div class="string-btns" id="stringBtns">
+        <button class="str-btn" onclick="selectString(5)">E<span>6번줄</span></button>
+        <button class="str-btn" onclick="selectString(4)">A<span>5번줄</span></button>
+        <button class="str-btn" onclick="selectString(3)">D<span>4번줄</span></button>
+        <button class="str-btn" onclick="selectString(2)">G<span>3번줄</span></button>
+        <button class="str-btn" onclick="selectString(1)">B<span>2번줄</span></button>
+        <button class="str-btn" onclick="selectString(0)">e<span>1번줄</span></button>
+      </div>
+
+      <!-- 게이지 패널 -->
+      <div class="tuner-gauge-panel">
+        <div class="tuner-target-info">
+          <div class="tuner-target-note" id="tunerTargetNote">E</div>
+          <div class="tuner-target-hz" id="tunerTargetHz">82.41 Hz</div>
+        </div>
+        <div class="gauge-svg-wrap">
+          <svg id="tunerGaugeSvg" width="320" height="180" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- 배경 호 -->
+            <path d="M 30 160 A 130 130 0 0 1 290 160" fill="none" stroke="#f0f0f0" stroke-width="18" stroke-linecap="round"/>
+            <!-- 색상 구간 호 (flat/sharp) -->
+            <path id="gaugeArcFlat"  d="M 30 160 A 130 130 0 0 1 110 52"  fill="none" stroke="#fce8c8" stroke-width="18" stroke-linecap="round"/>
+            <path id="gaugeArcSharp" d="M 210 52 A 130 130 0 0 1 290 160" fill="none" stroke="#fce8e8" stroke-width="18" stroke-linecap="round"/>
+            <!-- 인 튠 구간 -->
+            <path d="M 140 34 A 130 130 0 0 1 180 34" fill="none" stroke="#c8f0e0" stroke-width="18" stroke-linecap="round"/>
+            <!-- 눈금 -->
+            <line x1="30"  y1="160" x2="44"  y2="160" stroke="#ddd" stroke-width="2"/>
+            <line x1="290" y1="160" x2="276" y2="160" stroke="#ddd" stroke-width="2"/>
+            <line x1="160" y1="30"  x2="160" y2="44"  stroke="#60c8b8" stroke-width="2.5"/>
+            <!-- 눈금 텍스트 -->
+            <text x="22"  y="150" font-size="11" fill="#c0c0c0" text-anchor="middle" font-family="sans-serif">-50</text>
+            <text x="298" y="150" font-size="11" fill="#c0c0c0" text-anchor="middle" font-family="sans-serif">+50</text>
+            <text x="160" y="22"  font-size="11" fill="#60c8b8" text-anchor="middle" font-family="sans-serif">0</text>
+            <!-- 바늘 -->
+            <line id="tunerNeedle" x1="160" y1="160" x2="160" y2="48"
+                  stroke="#7878d0" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="160" cy="160" r="7" fill="#7878d0"/>
+          </svg>
+        </div>
+        <div class="tuner-status-row">
+          <div class="tuner-cents" id="tunerCents">—</div>
+          <div class="tuner-label" id="tunerLabel">마이크 대기</div>
+        </div>
+      </div>
+
+      <!-- 시작/정지 -->
+      <button class="tuner-start-btn" id="tunerStartBtn" onclick="toggleTuner()">🎙️ 튜닝 시작</button>
+      <p class="tuner-tip">줄을 선택한 뒤 튜닝 시작을 누르고 기타를 연주해보세요.<br>바늘이 가운데(0)에 오면 정확한 튜닝이에요!</p>
+    </div>
+  </div>
+   
 </div><!-- /cornerScreen -->
  
 <script>
@@ -794,6 +1004,15 @@ const CORNERS = {
     ],
     onEnter: () => {
       renderGrid(BARRE_CHORDS, 'barreGrid', null, 'barre');
+    }
+ },
+  tuner: {
+    label: '🎛️ 기타 튜너',
+    tabs: [
+      { id:'tuner-section', label:'🎛️ 기타 튜너', sub:'Standard Tuning', cls:'tuner-tab' },
+    ],
+    onEnter: () => {
+      initTunerUI();
     }
   }
 };
@@ -1065,6 +1284,165 @@ function checkAnswer(btn, chosen, correct, pool) {
   nextBtn.style.display = 'inline-block';
 }
 function nextQuestion(pool) { quizState[pool].idx++; renderQuestion(pool); }
+
+   // ═══════════════════════════════════════════════════
+//  기타 튜너
+// ═══════════════════════════════════════════════════
+const STRINGS = [
+  { note:'e', octave:4, freq:329.63, strNum:1 },
+  { note:'B', octave:3, freq:246.94, strNum:2 },
+  { note:'G', octave:3, freq:196.00, strNum:3 },
+  { note:'D', octave:3, freq:146.83, strNum:4 },
+  { note:'A', octave:2, freq:110.00, strNum:5 },
+  { note:'E', octave:2, freq:82.41,  strNum:6 },
+];
+
+let tunerActive    = false;
+let tunerStream    = null;
+let tunerCtx       = null;
+let tunerAnalyser  = null;
+let tunerAnimId    = null;
+let selectedStr    = 5; // 기본: 6번줄(E2)
+
+function initTunerUI() {
+  selectString(5);
+}
+
+function selectString(idx) {
+  selectedStr = idx;
+  document.querySelectorAll('.str-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+  const s = STRINGS[idx];
+  document.getElementById('tunerTargetNote').textContent = s.note;
+  document.getElementById('tunerTargetHz').textContent   = s.freq.toFixed(2) + ' Hz';
+  setNeedle(0);
+  document.getElementById('tunerCents').textContent = '—';
+  document.getElementById('tunerLabel').className   = 'tuner-label';
+  document.getElementById('tunerLabel').textContent  = tunerActive ? '연주해보세요' : '마이크 대기';
+}
+
+async function toggleTuner() {
+  if (tunerActive) {
+    stopTuner();
+  } else {
+    await startTuner();
+  }
+}
+
+async function startTuner() {
+  try {
+    tunerStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+  } catch(e) {
+    alert('마이크 접근 권한을 허용해주세요!!');
+    return;
+  }
+  tunerCtx     = new (window.AudioContext || window.webkitAudioContext)();
+  tunerAnalyser = tunerCtx.createAnalyser();
+  tunerAnalyser.fftSize = 4096;
+  const src = tunerCtx.createMediaStreamSource(tunerStream);
+  src.connect(tunerAnalyser);
+  tunerActive = true;
+  const btn = document.getElementById('tunerStartBtn');
+  btn.textContent = '⏹️ 튜닝 중지';
+  btn.classList.add('active');
+  document.getElementById('tunerLabel').textContent = '연주해보세요';
+  detectLoop();
+}
+
+function stopTuner() {
+  tunerActive = false;
+  if (tunerAnimId) cancelAnimationFrame(tunerAnimId);
+  if (tunerStream) tunerStream.getTracks().forEach(t => t.stop());
+  if (tunerCtx)    tunerCtx.close();
+  tunerCtx = tunerAnalyser = tunerStream = null;
+  const btn = document.getElementById('tunerStartBtn');
+  btn.textContent = '🎙️ 튜닝 시작';
+  btn.classList.remove('active');
+  setNeedle(0);
+  document.getElementById('tunerCents').textContent = '—';
+  document.getElementById('tunerLabel').className   = 'tuner-label';
+  document.getElementById('tunerLabel').textContent  = '마이크 대기';
+}
+
+function detectLoop() {
+  if (!tunerActive) return;
+  const buf  = new Float32Array(tunerAnalyser.fftSize);
+  tunerAnalyser.getFloatTimeDomainData(buf);
+  const freq = autoCorrelate(buf, tunerCtx.sampleRate);
+  if (freq > 0) {
+    const target = STRINGS[selectedStr].freq;
+    const cents  = Math.round(1200 * Math.log2(freq / target));
+    const clamped = Math.max(-50, Math.min(50, cents));
+    setNeedle(clamped);
+    document.getElementById('tunerCents').textContent =
+      (cents >= 0 ? '+' : '') + cents + '¢';
+    const lbl = document.getElementById('tunerLabel');
+    if (Math.abs(cents) <= 5) {
+      lbl.textContent = '✅ 정확해요!';
+      lbl.className   = 'tuner-label intune';
+    } else if (cents < 0) {
+      lbl.textContent = '▼ 너무 낮아요';
+      lbl.className   = 'tuner-label flat';
+    } else {
+      lbl.textContent = '▲ 너무 높아요';
+      lbl.className   = 'tuner-label sharp';
+    }
+  }
+  tunerAnimId = requestAnimationFrame(detectLoop);
+}
+
+// 오토코릴레이션 피치 검출
+function autoCorrelate(buf, sampleRate) {
+  let SIZE = buf.length;
+  let rms = 0;
+  for (let i = 0; i < SIZE; i++) rms += buf[i] * buf[i];
+  rms = Math.sqrt(rms / SIZE);
+  if (rms < 0.01) return -1; // 너무 조용함
+
+  let r1 = 0, r2 = SIZE - 1;
+  const thres = 0.2;
+  for (let i = 0; i < SIZE / 2; i++) { if (Math.abs(buf[i]) < thres) { r1 = i; break; } }
+  for (let i = 1; i < SIZE / 2; i++) { if (Math.abs(buf[SIZE - i]) < thres) { r2 = SIZE - i; break; } }
+  buf = buf.slice(r1, r2);
+  SIZE = buf.length;
+
+  const c = new Array(SIZE).fill(0);
+  for (let i = 0; i < SIZE; i++)
+    for (let j = 0; j < SIZE - i; j++)
+      c[i] += buf[j] * buf[j + i];
+
+  let d = 0;
+  while (d < SIZE && c[d] > c[d + 1]) d++;
+  let maxval = -1, maxpos = -1;
+  for (let i = d; i < SIZE; i++) {
+    if (c[i] > maxval) { maxval = c[i]; maxpos = i; }
+  }
+  let T0 = maxpos;
+  const x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
+  const a = (x1 + x3 - 2 * x2) / 2;
+  const b = (x3 - x1) / 2;
+  if (a) T0 -= b / (2 * a);
+  return sampleRate / T0;
+}
+
+// SVG 바늘 회전 (−50cent = −90°, 0 = 0°, +50cent = +90°)
+function setNeedle(cents) {
+  const angle   = (cents / 50) * 90; // −90 ~ +90도
+  const rad     = (angle - 90) * Math.PI / 180;
+  const cx = 160, cy = 160, len = 112;
+  const x2 = cx + len * Math.cos(rad);
+  const y2 = cy + len * Math.sin(rad);
+  const needle = document.getElementById('tunerNeedle');
+  if (needle) {
+    needle.setAttribute('x2', x2.toFixed(1));
+    needle.setAttribute('y2', y2.toFixed(1));
+    const inTune = Math.abs(cents) <= 5;
+    needle.setAttribute('stroke', inTune ? '#60c8b8' : '#7878d0');
+    document.querySelector('#tunerGaugeSvg circle').setAttribute('fill',
+      inTune ? '#60c8b8' : '#7878d0');
+  }
+}
 function showResult(pool) {
   const st = quizState[pool];
   document.getElementById(`${pool}QuizCard`).innerHTML = '';
