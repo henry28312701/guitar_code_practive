@@ -356,6 +356,8 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .tab-btn.barre-tab.active { background: #f08aaa; box-shadow: 0 3px 10px rgba(240,120,160,0.3); }
 .tab-btn.quiz-barre.active{ background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,0.3); }
 .tab-btn.tuner-tab.active { background: #60c8b8; box-shadow: 0 3px 10px rgba(80,200,184,0.3); }
+.tab-btn.ckey-tab.active  { background: #88c870; box-shadow: 0 3px 10px rgba(100,200,80,0.3); }
+.tab-btn.gkey-tab.active  { background: #c890d8; box-shadow: 0 3px 10px rgba(180,120,210,0.3); }
 .tab-label {
   display: block;
   font-size: 0.7rem;
@@ -383,6 +385,8 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .section-banner.quiz-barre-style{ background: linear-gradient(120deg,#fef0d8,#fff8ee); border-left:5px solid #f0b870; }
 .section-banner.akey-style      { background: linear-gradient(120deg,#fff5d8,#fffaee); border-left:5px solid #f0c060; }
 .section-banner.ekey-style      { background: linear-gradient(120deg,#d8f5ee,#eefff8); border-left:5px solid #60c8a8; }
+.section-banner.ckey-style      { background: linear-gradient(120deg,#e8f8d8,#f5fff0); border-left:5px solid #88c870; }
+.section-banner.gkey-style      { background: linear-gradient(120deg,#f5d8f8,#fdf0ff); border-left:5px solid #c890d8; }
 .section-banner .banner-icon { font-size: 2rem; }
 .section-banner h2 { font-size: 1.2rem; color: #5a6090; }
 .section-banner p  { font-size: 0.82rem; color: #9090b0; margin-top: 2px; }
@@ -408,6 +412,8 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .chord-card.selected-barre { border-color: #f0a0b8; background: #fff0f5; }
 .chord-card.selected-akey  { border-color: #f0c060; background: #fffae8; }
 .chord-card.selected-ekey  { border-color: #60c8a8; background: #eafff8; }
+.chord-card.selected-ckey  { border-color: #88c870; background: #f0ffe8; }
+.chord-card.selected-gkey  { border-color: #c890d8; background: #faeeff; }
 .chord-card h3 { font-size: 1.3rem; color: #6060c8; margin-bottom: 8px; }
 .chord-card .chord-type { font-size: 0.68rem; color: #bbb; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
  
@@ -642,13 +648,15 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       <div class="card-title">기타 입문+</div>
       <div class="card-sub">소리가 예쁜 개방현 코드 연습</div>
       <ul class="card-items">
+        <li><span class="item-dot"></span>C키 예쁜 코드 <span style="font-size:0.75rem;opacity:0.7">(♯·♭없음)</span></li>
+        <li><span class="item-dot"></span>G키 예쁜 코드 <span style="font-size:0.75rem;opacity:0.7">(♯1개)</span></li>
         <li><span class="item-dot"></span>A키 쉬운 코드 <span style="font-size:0.75rem;opacity:0.7">(♯♯♯)</span></li>
         <li><span class="item-dot"></span>E키 쉬운 코드 <span style="font-size:0.75rem;opacity:0.7">(♯♯♯♯)</span></li>
       </ul>
       <div class="card-tags">
-        <span class="tag">Aadd9</span><span class="tag">G#m7</span>
-        <span class="tag">F#m7</span><span class="tag">C#m7</span>
-        <span class="tag">B</span><span class="tag">E</span>
+        <span class="tag">Cadd9</span><span class="tag">G/B</span>
+        <span class="tag">Fadd9</span><span class="tag">Dadd9</span>
+        <span class="tag">Aadd9</span><span class="tag">Bm7</span>
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
@@ -755,6 +763,32 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
     <div class="detail-panel" id="ekeyDetailPanel"></div>
   </div>
  
+  <!-- ── C키 소리가 예쁜 코드 ── -->
+  <div id="learn-ckey" class="section">
+    <div class="section-banner ckey-style">
+      <div class="banner-icon">🎼</div>
+      <div>
+        <h2>C키 소리가 예쁜 코드 (♯·♭없음)</h2>
+        <p>개방현 활용 C키 코드 · Cadd9 · G/B · Am7 · G · Fadd9 · Em · Dm</p>
+      </div>
+    </div>
+    <div class="chord-grid" id="ckeyGrid"></div>
+    <div class="detail-panel" id="ckeyDetailPanel"></div>
+  </div>
+
+  <!-- ── G키 소리가 예쁜 코드 ── -->
+  <div id="learn-gkey" class="section">
+    <div class="section-banner gkey-style">
+      <div class="banner-icon">🎶</div>
+      <div>
+        <h2>G키 쉽고 소리가 예쁜 코드 (♯1개)</h2>
+        <p>개방현 활용 G키 코드 · G · D/F# · Em · Dsus4 · Dadd9 · Cadd9 · Bm7 · Am7</p>
+      </div>
+    </div>
+    <div class="chord-grid" id="gkeyGrid"></div>
+    <div class="detail-panel" id="gkeyDetailPanel"></div>
+  </div>
+
   <!-- ── 바렛 코드 배우기 ── -->
   <div id="learn-barre" class="section">
     <div class="section-banner barre-style">
@@ -971,6 +1005,146 @@ const EKEY_CHORDS = [
     tip:'6번 줄(E)부터 스트럼하세요!!' },
 ];
  
+// ─── C키 소리가 예쁜 코드 ───
+const CKEY_CHORDS = [
+  { name:'Cadd9', type:'open',
+    frets:[3,3,0,2,3,-1],
+    fingers:[[1,4,2],[2,5,3],[3,2,3],[4,1,3]],
+    open:[3], mute:[6],
+    guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'G/B', type:'open',
+    frets:[3,3,0,0,2,-1],
+    fingers:[[1,5,2],[3,2,3],[4,1,3]],
+    open:[3,4], mute:[6],
+    guide:['1번 손가락 → 5번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'Am7(1형)', type:'open',
+    frets:[0,1,0,2,0,-1],
+    fingers:[[1,2,1],[2,4,2]],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'Am7(2형)', type:'open',
+    frets:[3,3,0,-1,0,-1],
+    fingers:[[3,2,3],[4,1,3]],
+    open:[5], mute:[4,6],
+    guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+    tip:'5,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+  { name:'G', type:'open',
+    frets:[3,3,0,0,2,3],
+    fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
+    open:[3,4], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'Fadd9', type:'open',
+    frets:[3,3,0,-1,-1,1],
+    fingers:[[1,6,1],[3,2,3],[4,1,3]],
+    open:[3], mute:[4,5],
+    guide:['1번 손가락 → 6번 줄 1프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+    tip:'6,3,2,1번 줄로 아르페지오할 때 쓰는 코드' },
+  { name:'Em(1형)', type:'open',
+    frets:[0,0,0,2,2,0],
+    fingers:[[2,4,2],[3,5,2]],
+    open:[1,2,3,6], mute:[],
+    guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
+    tip:'가장 쉬운 코드!' },
+  { name:'Em7(2형)', type:'open',
+    frets:[3,3,0,0,-1,0],
+    fingers:[[3,2,3],[4,1,3]],
+    open:[3,4,6], mute:[5],
+    guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
+    tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+  { name:'Em7(3형)', type:'open',
+    frets:[0,3,0,4,5,0],
+    fingers:[[1,2,3],[2,4,4],[3,5,5]],
+    open:[1,3,6], mute:[5],
+    guide:['1번 손가락 → 2번 줄 3프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 5번 줄 5프렛','1·3·6번 줄은 개방'],
+    tip:'6,4,3,2,1번 줄로 아르페지오 할 때 소리가 이쁜 코드!!' },
+  { name:'Dm', type:'open',
+    frets:[1,3,2,0,-1,-1],
+    fingers:[[1,1,1],[2,3,2],[3,2,3]],
+    open:[4], mute:[5,6],
+    guide:['1번 손가락 → 1번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+];
+
+// ─── G키 쉽고 소리가 예쁜 코드 ───
+const GKEY_CHORDS = [
+  { name:'G', type:'open',
+    frets:[3,3,0,0,2,3],
+    fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
+    open:[3,4], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'D/F#', type:'open',
+    frets:[3,3,0,0,0,2],
+    fingers:[[1,6,2],[3,2,3],[4,1,3]],
+    open:[1,2,6], mute:[],
+    guide:['1번 손가락 → 6번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','1·2·6번 줄은 개방'],
+    tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+  { name:'Em(1형)', type:'open',
+    frets:[0,0,0,2,2,0],
+    fingers:[[2,4,2],[3,5,2]],
+    open:[1,2,3,6], mute:[],
+    guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
+    tip:'가장 쉬운 코드!' },
+  { name:'Em7(2형)', type:'open',
+    frets:[3,3,0,0,-1,0],
+    fingers:[[3,2,3],[4,1,3]],
+    open:[3,4,6], mute:[5],
+    guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
+    tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+ { name:'Em7(3형)', type:'open',
+    frets:[0,3,0,4,5,0],
+    fingers:[[1,2,3],[2,4,4],[3,5,5]],
+    open:[1,3,6], mute:[5],
+    guide:['1번 손가락 → 2번 줄 3프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 5번 줄 5프렛','1·3·6번 줄은 개방'],
+    tip:'6,4,3,2,1번 줄로 아르페지오 할 때 소리가 이쁜 코드!!' },
+  { name:'Dsus4', type:'open',
+    frets:[3,3,0,0,-1,-1],
+    fingers:[[3,2,3],[4,1,3]],
+    open:[3,4], mute:[5,6],
+    guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'4번 줄(D)부터 스트로크!!' },
+  { name:'Dadd9', type:'open',
+    frets:[0,3,2,0,-1,-1],
+    fingers:[[1,3,2],[3,2,3]],
+    open:[1,4], mute:[5,6],
+    guide:['1번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','1·4번 줄은 개방'],
+    tip:'4번 줄(D)부터 스트로크!!' },
+  { name:'Cadd9(1형)', type:'open',
+    frets:[3,3,0,2,3,-1],
+    fingers:[[1,4,2],[2,5,3],[3,2,3],[4,1,3]],
+    open:[3], mute:[6],
+    guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'Cadd9(2형)', type:'open',
+    frets:[0,3,0,2,3,-1],
+    fingers:[[1,4,2],[2,5,3],[3,2,3]],
+    open:[3], mute:[6],
+    guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','3번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'Bm7', type:'open',
+    frets:[-1,3,2,0,2,-1],
+    fingers:[[1,5,2],[2,3,2],[3,2,3]],
+    open:[4], mute:[1,6],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 1,6번 줄은 mute!!' },
+  { name:'Am7(1형)', type:'open',
+    frets:[0,1,0,2,0,-1],
+    fingers:[[1,2,1],[2,4,2]],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'Am7(2형)', type:'open',
+    frets:[3,3,0,-1,0,-1],
+    fingers:[[3,2,3],[4,1,3]],
+    open:[5], mute:[4,6],
+    guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+    tip:'5,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+];
+
 // ═══════════════════════════════════════════════════
 //  코너 설정
 // ═══════════════════════════════════════════════════
@@ -988,10 +1162,14 @@ const CORNERS = {
   beginnerPlus: {
     label: '⭐ 기타 입문+',
     tabs: [
+      { id:'learn-ckey', label:'🎼 C키 예쁜 코드', sub:'♯·♭없음', cls:'ckey-tab' },
+      { id:'learn-gkey', label:'🎶 G키 예쁜 코드', sub:'♯1개', cls:'gkey-tab' },
       { id:'learn-akey', label:'🅐 A키 쉬운 코드', sub:'♯3개', cls:'akey-tab' },
       { id:'learn-ekey', label:'🎵 E키 쉬운 코드', sub:'♯4개', cls:'ekey-tab' },
     ],
     onEnter: () => {
+      renderGrid(CKEY_CHORDS, 'ckeyGrid', null, 'ckey');
+      renderGrid(GKEY_CHORDS, 'gkeyGrid', null, 'gkey');
       renderGrid(AKEY_CHORDS, 'akeyGrid', null, 'akey');
       renderGrid(EKEY_CHORDS, 'ekeyGrid', null, 'ekey');
     }
@@ -1147,6 +1325,8 @@ const SECTION_META = {
   barre: { chordsRef:()=>BARRE_CHORDS, selClass:'selected-barre', desc:'바렛 코드 — 검지로 전체 프렛을 바렛' },
   akey:  { chordsRef:()=>AKEY_CHORDS,  selClass:'selected-akey',  desc:'A키 (#3개) — 개방줄 활용 쉬운 코드' },
   ekey:  { chordsRef:()=>EKEY_CHORDS,  selClass:'selected-ekey',  desc:'E키 (#4개) — 개방줄 활용 쉬운 코드' },
+  ckey:  { chordsRef:()=>CKEY_CHORDS,  selClass:'selected-ckey',  desc:'C키 (♯·♭없음) — 소리가 예쁜 개방현 코드' },
+  gkey:  { chordsRef:()=>GKEY_CHORDS,  selClass:'selected-gkey',  desc:'G키 (#1개) — 쉽고 소리가 예쁜 개방현 코드' },
 };
  
 function renderGrid(chords, gridId, selectedName, sectionType) {
@@ -1168,10 +1348,14 @@ function showDetail(name, sectionType) {
   if (!c) return;
   const gridId  = sectionType === 'open'  ? 'openGrid'
                 : sectionType === 'barre' ? 'barreGrid'
-                : sectionType === 'akey'  ? 'akeyGrid'  : 'ekeyGrid';
+                : sectionType === 'akey'  ? 'akeyGrid'
+                : sectionType === 'ekey'  ? 'ekeyGrid'
+                : sectionType === 'ckey'  ? 'ckeyGrid'  : 'gkeyGrid';
   const panelId = sectionType === 'open'  ? 'openDetailPanel'
                 : sectionType === 'barre' ? 'barreDetailPanel'
-                : sectionType === 'akey'  ? 'akeyDetailPanel' : 'ekeyDetailPanel';
+                : sectionType === 'akey'  ? 'akeyDetailPanel'
+                : sectionType === 'ekey'  ? 'ekeyDetailPanel'
+                : sectionType === 'ckey'  ? 'ckeyDetailPanel' : 'gkeyDetailPanel';
   renderGrid(chords, gridId, name, sectionType);
   const panel = document.getElementById(panelId);
   panel.innerHTML = `
