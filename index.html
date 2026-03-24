@@ -27,16 +27,20 @@ header {
 header h1 { font-size: 2rem; color: #7070c8; letter-spacing: 1px; }
 header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
  
-/* ── 뒤로가기 버튼 (코너 화면) ── */
+/* ── 뒤로가기 + 코너 이동 바 ── */
 .back-bar {
   display: none;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
+  flex-direction: column;
   background: #fff;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
 .back-bar.visible { display: flex; }
+.back-bar-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px 8px;
+}
 .back-btn {
   padding: 7px 18px;
   border: none;
@@ -58,7 +62,31 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   border-radius: 20px;
   background: #f0eeff;
 }
- 
+
+/* 코너 빠른 이동 버튼 */
+.corner-nav {
+  display: flex;
+  gap: 7px;
+  padding: 0 16px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.corner-nav::-webkit-scrollbar { display: none; }
+.corner-nav-btn {
+  padding: 5px 13px;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+  background: #f5f5f5;
+  color: #888;
+}
+.corner-nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.corner-nav-btn.nav-current { cursor: default; opacity: 1; transform: none; }
+
 /* ═══════════════════════════════
    HOME SCREEN
 ═══════════════════════════════ */
@@ -297,6 +325,33 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .tuner-label.flat  { background: #fff0d8; color: #c08020; border-color: #f0c060; }
 .tuner-label.sharp { background: #ffe8f0; color: #c04878; border-color: #f08aaa; }
 .tuner-label.intune { background: #d8f5e8; color: #2a7a4a; border-color: #78d8a0; }
+
+/* 모드 토글 */
+.tuner-mode-toggle {
+  display: flex;
+  background: #f0fffe;
+  border-radius: 25px;
+  padding: 4px;
+  border: 2px solid #b0e8e0;
+}
+.mode-toggle-btn {
+  flex: 1;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  color: #60c8b8;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.mode-toggle-btn.active { background: #60c8b8; color: #fff; }
+
+/* 자동 감지 모드일 때 줄 버튼 비활성화 */
+.string-btns.auto-mode .str-btn { opacity: 0.35; cursor: default; pointer-events: none; }
+.string-btns.auto-mode .str-btn.active { opacity: 1; }
 
 /* 시작/정지 버튼 */
 .tuner-start-btn {
@@ -601,6 +656,145 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   .corner-tabs-bar { gap: 6px; }
   .tab-btn { padding: 8px 13px; font-size: 0.82rem; }
 }
+
+/* ═══════════════════════════════
+   노래 코너
+═══════════════════════════════ */
+
+/* 노래 홈 카드 — 코랄/오렌지 계열 */
+.card-songs {
+  background: linear-gradient(145deg, #fff0e8, #ffeaf0);
+  border-color: #ffc8a8;
+}
+.card-songs .card-title { color: #c85020; }
+.card-songs .card-sub   { color: #d87050; }
+.card-songs .item-dot   { background: #f09070; }
+.card-songs .card-items li { color: #a84030; }
+.card-songs .tag { background: #ffdec8; color: #c85020; }
+.card-songs .go-btn { background: #f09070; color: #fff; box-shadow: 0 3px 10px rgba(240,140,100,.3); }
+
+/* 가요/성가 탭 활성화 색상 */
+.tab-btn.gayo-tab.active   { background: #f07860; box-shadow: 0 3px 10px rgba(240,120,90,0.3); }
+.tab-btn.sungga-tab.active { background: #c89030; box-shadow: 0 3px 10px rgba(200,144,48,0.3); }
+
+/* 섹션 배너 */
+.section-banner.gayo-style   { background: linear-gradient(120deg,#fff0e8,#fff8f0); border-left:5px solid #f09070; }
+.section-banner.sungga-style { background: linear-gradient(120deg,#fff8d8,#fffbf0); border-left:5px solid #c89030; }
+
+/* 노래 목록 */
+.song-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+.song-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform .15s, box-shadow .15s;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.song-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+.song-card.selected-gayo   { border-color: #f09070; background: #fff8f5; }
+.song-card.selected-sungga { border-color: #c89030; background: #fffcf0; }
+.song-card-info .song-title  { font-size: 1.1rem; font-weight: 700; color: #444; }
+.song-card-info .song-artist { font-size: 0.82rem; color: #999; margin-top: 3px; }
+.song-key-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.gayo-key-tag   { background: #ffdec8; color: #c85020; }
+.sungga-key-tag { background: #ffecc0; color: #a07010; }
+
+/* 노래 코너 — 코드 카드 선택 상태 */
+.chord-card.selected-gayo   { border-color: #f09070; background: #fff8f5; }
+.chord-card.selected-sungga { border-color: #c89030; background: #fffcf0; }
+
+/* 노래 제목 헤더 */
+.song-header-block {
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.gayo-song-header   { background: #fff8f5; border: 2px solid #ffc8a8; }
+.sungga-song-header { background: #fffcf0; border: 2px solid #e8c87a; }
+.song-header-left .song-header-title  { font-size: 1.2rem; font-weight: 800; color: #444; }
+.song-header-left .song-header-artist { font-size: 0.82rem; color: #aaa; margin-top: 3px; }
+.song-header-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+.gayo-song-header   .song-header-badge { background: #ffdec8; color: #c85020; }
+.sungga-song-header .song-header-badge { background: #ffecc0; color: #a07010; }
+
+/* 노래 상세 패널 */
+.song-detail-panel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  margin-top: 4px;
+  display: none;
+}
+.song-detail-panel.active { display: block; }
+.song-detail-title  { font-size: 1.6rem; font-weight: 800; color: #5a5fcf; margin-bottom: 4px; }
+.song-detail-artist { font-size: 0.88rem; color: #aaa; margin-bottom: 14px; }
+.song-detail-meta   { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.song-meta-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: #f0eeff;
+  color: #7070c8;
+}
+.song-sections { display: flex; flex-direction: column; gap: 14px; }
+.song-section-block {
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+.gayo-section-block   { background: #fff8f5; border-left: 4px solid #f09070; }
+.sungga-section-block { background: #fffcf0; border-left: 4px solid #c89030; }
+.song-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #bbb;
+  margin-bottom: 10px;
+}
+.chord-token-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.chord-token {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.gayo-section-block   .chord-token { background: #ffdec8; color: #c85020; }
+.sungga-section-block .chord-token { background: #ffecc0; color: #a07010; }
+.section-divider-label {
+  font-size: 0.78rem;
+  color: #ccc;
+  margin: 8px 0 4px;
+  font-style: italic;
+}
 </style>
 </head>
 <body>
@@ -611,10 +805,13 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   <p>코너를 선택해서 시작해봐요!</p>
 </header>
  
-<!-- 코너 내부 뒤로가기 바 -->
+<!-- 코너 내부 뒤로가기 + 코너 이동 바 -->
 <div class="back-bar" id="backBar">
-  <button class="back-btn" onclick="goHome()">← 홈으로</button>
-  <span class="corner-title-badge" id="cornerTitleBadge"></span>
+  <div class="back-bar-top">
+    <button class="back-btn" onclick="goHome()">← 홈으로</button>
+    <span class="corner-title-badge" id="cornerTitleBadge"></span>
+  </div>
+  <div class="corner-nav" id="cornerNav"></div>
 </div>
  
 <!-- ══════════════ 홈 화면 ══════════════ -->
@@ -689,6 +886,21 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       <div class="card-tags">
         <span class="tag">E2</span><span class="tag">A2</span><span class="tag">D3</span>
         <span class="tag">G3</span><span class="tag">B3</span><span class="tag">e4</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+
+    <!-- 노래 -->
+    <div class="corner-card card-songs" onclick="enterCorner('songs')">
+      <div class="card-icon">🎤</div>
+      <div class="card-title">노래</div>
+      <div class="card-sub">노래별 코드 연습하기</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>가요 코드</li>
+        <li><span class="item-dot"></span>성가 코드</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">첫사랑</span><span class="tag">백아</span>
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
@@ -836,6 +1048,12 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
     </div>
     <div class="tuner-wrap">
 
+      <!-- 모드 선택 -->
+      <div class="tuner-mode-toggle">
+        <button class="mode-toggle-btn active" id="modeManualBtn" onclick="setTunerMode('manual')">직접 선택</button>
+        <button class="mode-toggle-btn" id="modeAutoBtn" onclick="setTunerMode('auto')">자동 감지</button>
+      </div>
+
       <!-- 줄 선택 -->
       <div class="string-btns" id="stringBtns">
         <button class="str-btn" onclick="selectString(5)">E<span>6번줄</span></button>
@@ -876,17 +1094,58 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
           </svg>
         </div>
         <div class="tuner-status-row">
-          <div class="tuner-cents" id="tunerCents">—</div>
           <div class="tuner-label" id="tunerLabel">마이크 대기</div>
         </div>
       </div>
 
       <!-- 시작/정지 -->
       <button class="tuner-start-btn" id="tunerStartBtn" onclick="toggleTuner()">🎙️ 튜닝 시작</button>
-      <p class="tuner-tip">줄을 선택한 뒤 튜닝 시작을 누르고 기타를 연주해보세요.<br>바늘이 가운데(0)에 오면 정확한 튜닝이에요!</p>
+      <p class="tuner-tip">자동 감지: 튜닝 시작 후 기타를 연주하면 줄이 자동으로 감지돼요.<br>직접 선택: 줄을 먼저 선택하고 연주하면 정확도가 올라가요.<br>바늘이 가운데(0)에 오면 정확한 튜닝이에요!</p>
     </div>
   </div>
    
+  <!-- ── 가요 ── -->
+  <div id="songs-gayo" class="section">
+    <div class="section-banner gayo-style">
+      <div class="banner-icon">🎤</div>
+      <div>
+        <h2>가요</h2>
+        <p>좋아하는 가요의 코드를 연습해봐요!</p>
+      </div>
+    </div>
+    <!-- 첫사랑 — 백아 -->
+    <div class="song-header-block gayo-song-header">
+      <div class="song-header-left">
+        <div class="song-header-title">첫사랑</div>
+        <div class="song-header-artist">백아</div>
+      </div>
+      <span class="song-header-badge">FM7 · C · G · Am7</span>
+    </div>
+    <div class="chord-grid" id="gayoChordGrid"></div>
+    <div class="detail-panel" id="gayoChordDetail"></div>
+  </div>
+
+  <!-- ── 성가 ── -->
+  <div id="songs-sungga" class="section">
+    <div class="section-banner sungga-style">
+      <div class="banner-icon">🙏</div>
+      <div>
+        <h2>성가</h2>
+        <p>아름다운 성가의 코드를 연습해봐요!</p>
+      </div>
+    </div>
+    <!-- 날마다 숨 쉬는 순간마다 -->
+    <div class="song-header-block sungga-song-header">
+      <div class="song-header-left">
+        <div class="song-header-title">날마다 숨 쉬는 순간마다</div>
+        <div class="song-header-artist">나주노 190</div>
+      </div>
+      <span class="song-header-badge">E · Aadd9 · Bsus4</span>
+    </div>
+    <div class="chord-grid" id="sunggaChordGrid"></div>
+    <div class="detail-panel" id="sunggaChordDetail"></div>
+  </div>
+
 </div><!-- /cornerScreen -->
  
 <script>
@@ -1146,6 +1405,66 @@ const GKEY_CHORDS = [
 ];
 
 // ═══════════════════════════════════════════════════
+//  노래 데이터
+// ═══════════════════════════════════════════════════
+
+// ─── 첫사랑 — 백아 ───
+const CHORDS_FIRSTLOVE = [
+  { name:'FM7', type:'open',
+    frets:[0,1,2,3,-1,-1],
+    fingers:[[1,2,1],[2,3,2],[3,4,3]],
+    open:[1], mute:[5,6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 4번 줄 3프렛','1번 줄은 개방'],
+    tip:'4,3,2,1번 줄로 아르페지오 후 퍼커시브!!' },
+  { name:'C', type:'open',
+    frets:[0,1,0,2,3,-1],
+    fingers:[[1,2,1],[2,4,2],[3,5,3]],
+    open:[1,3], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1,3번 줄은 개방'],
+    tip:'5,3,2,1번 줄로 아르페지오 후 퍼커시브!!' },
+  { name:'G', type:'open',
+    frets:[-1,0,0,0,-1,3],
+    fingers:[[3,6,3]],
+    open:[2,3,4], mute:[1,5],
+    guide:['3번 손가락 → 6번 줄 3프렛','2·3·4번 줄은 개방'],
+    tip:'6,4,3,2번 줄로 아르페지오 후 퍼커시브!!' },
+  { name:'Am7', type:'open',
+    frets:[-1,1,0,2,0,-1],
+    fingers:[[1,2,1],[2,4,2]],
+    open:[3,5], mute:[1,6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3·5번 줄은 개방'],
+    tip:'5,4,3,2번 줄로 아르페지오 후 퍼커시브!!' },
+];
+
+// ─── 날마다 숨 쉬는 순간마다 (나주노 190) ───
+const CHORDS_NALMADA = [
+  { name:'E(1형)', type:'open',
+    frets:[0,0,1,2,2,0],
+    fingers:[[1,3,1],[2,5,2],[3,4,2]],
+    open:[1,2,6], mute:[],
+    guide:['1번 손가락 → 3번 줄 1프렛','2번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 2프렛','1·2·6번 줄 개방'],
+    tip:'6번 줄(E)부터 스트로크!!' },
+  { name:'Aadd9', type:'open',
+    frets:[0,0,2,2,0,0],
+    fingers:[[2,4,2],[3,3,2]],
+    open:[1,2,5,6], mute:[],
+    guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5·6번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 5번 줄(A)부터 치면 조금 더 깔끔해요!!' },
+  { name:'Bsus4(1형)', type:'open',
+    frets:[0,0,4,4,2,-1],
+    fingers:[[1,5,2],[3,4,4],[4,3,4]],
+    open:[1,2], mute:[6],
+    guide:['1번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+  { name:'Bsus4(2형)', type:'open',
+    frets:[0,0,4,4,-1,-1],
+    fingers:[[3,4,4],[4,3,4]],
+    open:[1,2], mute:[5,6],
+    guide:['3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+];
+
+// ═══════════════════════════════════════════════════
 //  코너 설정
 // ═══════════════════════════════════════════════════
 const CORNERS = {
@@ -1192,21 +1511,60 @@ const CORNERS = {
     onEnter: () => {
       initTunerUI();
     }
+  },
+  songs: {
+    label: '🎤 노래',
+    tabs: [
+      { id:'songs-gayo',   label:'🎤 가요',  sub:'첫사랑 · 백아',              cls:'gayo-tab'   },
+      { id:'songs-sungga', label:'🙏 성가', sub:'날마다 숨 쉬는 순간마다',    cls:'sungga-tab' },
+    ],
+    onEnter: () => {
+      renderGrid(CHORDS_FIRSTLOVE, 'gayoChordGrid',   null, 'firstlove');
+      renderGrid(CHORDS_NALMADA,   'sunggaChordGrid',  null, 'nalmada');
+    }
   }
 };
  
 let currentCorner = null;
  
+// 코너별 버튼 스타일 정보
+const CORNER_NAV_STYLE = {
+  beginner:    { bg:'#7ab0f0', color:'#fff', border:'#5898e0' },
+  beginnerPlus:{ bg:'#f0c060', color:'#fff', border:'#d8a840' },
+  advanced:    { bg:'#f08aaa', color:'#fff', border:'#d86890' },
+  tuner:       { bg:'#60c8b8', color:'#fff', border:'#40a898' },
+  songs:       { bg:'#f09070', color:'#fff', border:'#d87050' },
+};
+
+function renderCornerNav(currentKey) {
+  const nav = document.getElementById('cornerNav');
+  nav.innerHTML = Object.entries(CORNERS).map(([key, corner]) => {
+    const style = CORNER_NAV_STYLE[key];
+    const isCurrent = key === currentKey;
+    const btnStyle = isCurrent
+      ? `background:${style.bg};color:#fff;border-color:${style.border};box-shadow:0 2px 8px ${style.bg}88;`
+      : `background:${style.bg}1a;color:#ccc;border-color:${style.border}33;`;
+    return `<button class="corner-nav-btn${isCurrent ? ' nav-current' : ''}"
+              style="${btnStyle}"
+              onclick="${isCurrent ? '' : `enterCorner('${key}')`}">
+              ${corner.label}
+            </button>`;
+  }).join('');
+}
+
 function enterCorner(cornerKey) {
   const corner = CORNERS[cornerKey];
   currentCorner = cornerKey;
- 
+
   // 화면 전환
   document.getElementById('homeScreen').style.display   = 'none';
   document.getElementById('cornerScreen').style.display = 'block';
   const backBar = document.getElementById('backBar');
   backBar.classList.add('visible');
   document.getElementById('cornerTitleBadge').textContent = corner.label;
+
+  // 코너 이동 버튼 렌더링
+  renderCornerNav(cornerKey);
  
   // 탭 바 생성
   const tabsBar = document.getElementById('cornerTabsBar');
@@ -1321,12 +1679,14 @@ function buildDiagram(chord, size = 160) {
 //  배우기 — 그리드 & 상세 패널
 // ═══════════════════════════════════════════════════
 const SECTION_META = {
-  open:  { chordsRef:()=>OPEN_CHORDS,  selClass:'selected-open',  desc:'오픈 코드 — 개방줄을 활용한 코드' },
-  barre: { chordsRef:()=>BARRE_CHORDS, selClass:'selected-barre', desc:'바렛 코드 — 검지로 전체 프렛을 바렛' },
-  akey:  { chordsRef:()=>AKEY_CHORDS,  selClass:'selected-akey',  desc:'A키 (#3개) — 개방줄 활용 쉬운 코드' },
-  ekey:  { chordsRef:()=>EKEY_CHORDS,  selClass:'selected-ekey',  desc:'E키 (#4개) — 개방줄 활용 쉬운 코드' },
-  ckey:  { chordsRef:()=>CKEY_CHORDS,  selClass:'selected-ckey',  desc:'C키 (♯·♭없음) — 소리가 예쁜 개방현 코드' },
-  gkey:  { chordsRef:()=>GKEY_CHORDS,  selClass:'selected-gkey',  desc:'G키 (#1개) — 쉽고 소리가 예쁜 개방현 코드' },
+  open:       { chordsRef:()=>OPEN_CHORDS,       selClass:'selected-open',    desc:'오픈 코드 — 개방줄을 활용한 코드',              gridId:'openGrid',        panelId:'openDetailPanel'   },
+  barre:      { chordsRef:()=>BARRE_CHORDS,      selClass:'selected-barre',   desc:'바렛 코드 — 검지로 전체 프렛을 바렛',            gridId:'barreGrid',       panelId:'barreDetailPanel'  },
+  akey:       { chordsRef:()=>AKEY_CHORDS,       selClass:'selected-akey',    desc:'A키 (#3개) — 개방줄 활용 쉬운 코드',            gridId:'akeyGrid',        panelId:'akeyDetailPanel'   },
+  ekey:       { chordsRef:()=>EKEY_CHORDS,       selClass:'selected-ekey',    desc:'E키 (#4개) — 개방줄 활용 쉬운 코드',            gridId:'ekeyGrid',        panelId:'ekeyDetailPanel'   },
+  ckey:       { chordsRef:()=>CKEY_CHORDS,       selClass:'selected-ckey',    desc:'C키 (♯·♭없음) — 소리가 예쁜 개방현 코드',      gridId:'ckeyGrid',        panelId:'ckeyDetailPanel'   },
+  gkey:       { chordsRef:()=>GKEY_CHORDS,       selClass:'selected-gkey',    desc:'G키 (#1개) — 쉽고 소리가 예쁜 개방현 코드',     gridId:'gkeyGrid',        panelId:'gkeyDetailPanel'   },
+  firstlove:  { chordsRef:()=>CHORDS_FIRSTLOVE,  selClass:'selected-gayo',    desc:'첫사랑 (백아) — 코드 연습',                     gridId:'gayoChordGrid',   panelId:'gayoChordDetail'   },
+  nalmada:    { chordsRef:()=>CHORDS_NALMADA,    selClass:'selected-sungga',  desc:'날마다 숨 쉬는 순간마다 (나주노 190) — 코드 연습', gridId:'sunggaChordGrid', panelId:'sunggaChordDetail' },
 };
  
 function renderGrid(chords, gridId, selectedName, sectionType) {
@@ -1346,16 +1706,8 @@ function showDetail(name, sectionType) {
   const chords = meta.chordsRef();
   const c      = chords.find(x => x.name === name);
   if (!c) return;
-  const gridId  = sectionType === 'open'  ? 'openGrid'
-                : sectionType === 'barre' ? 'barreGrid'
-                : sectionType === 'akey'  ? 'akeyGrid'
-                : sectionType === 'ekey'  ? 'ekeyGrid'
-                : sectionType === 'ckey'  ? 'ckeyGrid'  : 'gkeyGrid';
-  const panelId = sectionType === 'open'  ? 'openDetailPanel'
-                : sectionType === 'barre' ? 'barreDetailPanel'
-                : sectionType === 'akey'  ? 'akeyDetailPanel'
-                : sectionType === 'ekey'  ? 'ekeyDetailPanel'
-                : sectionType === 'ckey'  ? 'ckeyDetailPanel' : 'gkeyDetailPanel';
+  const gridId  = meta.gridId;
+  const panelId = meta.panelId;
   renderGrid(chords, gridId, name, sectionType);
   const panel = document.getElementById(panelId);
   panel.innerHTML = `
@@ -1487,21 +1839,32 @@ let tunerCtx       = null;
 let tunerAnalyser  = null;
 let tunerAnimId    = null;
 let selectedStr    = 5; // 기본: 6번줄(E2)
+let tunerAutoMode  = false;
 
 function initTunerUI() {
   selectString(5);
 }
 
+function setTunerMode(mode) {
+  tunerAutoMode = (mode === 'auto');
+  document.getElementById('modeManualBtn').classList.toggle('active', !tunerAutoMode);
+  document.getElementById('modeAutoBtn').classList.toggle('active', tunerAutoMode);
+  document.getElementById('stringBtns').classList.toggle('auto-mode', tunerAutoMode);
+}
+
+function updateStringHighlight(idx) {
+  document.querySelectorAll('.str-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === 5 - idx);
+  });
+}
+
 function selectString(idx) {
   selectedStr = idx;
-  document.querySelectorAll('.str-btn').forEach((b, i) => {
-    b.classList.toggle('active', i === idx);
-  });
+  updateStringHighlight(idx);
   const s = STRINGS[idx];
   document.getElementById('tunerTargetNote').textContent = s.note;
   document.getElementById('tunerTargetHz').textContent   = s.freq.toFixed(2) + ' Hz';
   setNeedle(0);
-  document.getElementById('tunerCents').textContent = '—';
   document.getElementById('tunerLabel').className   = 'tuner-label';
   document.getElementById('tunerLabel').textContent  = tunerActive ? '연주해보세요' : '마이크 대기';
 }
@@ -1544,7 +1907,6 @@ function stopTuner() {
   btn.textContent = '🎙️ 튜닝 시작';
   btn.classList.remove('active');
   setNeedle(0);
-  document.getElementById('tunerCents').textContent = '—';
   document.getElementById('tunerLabel').className   = 'tuner-label';
   document.getElementById('tunerLabel').textContent  = '마이크 대기';
 }
@@ -1555,12 +1917,25 @@ function detectLoop() {
   tunerAnalyser.getFloatTimeDomainData(buf);
   const freq = autoCorrelate(buf, tunerCtx.sampleRate);
   if (freq > 0) {
-    const target = STRINGS[selectedStr].freq;
+    let targetIdx = selectedStr;
+    // 자동 감지: 가장 가까운 줄 찾기
+    if (tunerAutoMode) {
+      let minAbsCents = Infinity;
+      STRINGS.forEach((s, i) => {
+        const ac = Math.abs(1200 * Math.log2(freq / s.freq));
+        if (ac < minAbsCents) { minAbsCents = ac; targetIdx = i; }
+      });
+      if (targetIdx !== selectedStr) {
+        selectedStr = targetIdx;
+        updateStringHighlight(targetIdx);
+        document.getElementById('tunerTargetNote').textContent = STRINGS[targetIdx].note;
+        document.getElementById('tunerTargetHz').textContent   = STRINGS[targetIdx].freq.toFixed(2) + ' Hz';
+      }
+    }
+    const target = STRINGS[targetIdx].freq;
     const cents  = Math.round(1200 * Math.log2(freq / target));
     const clamped = Math.max(-50, Math.min(50, cents));
     setNeedle(clamped);
-    document.getElementById('tunerCents').textContent =
-      (cents >= 0 ? '+' : '') + cents + '';
     const lbl = document.getElementById('tunerLabel');
     if (Math.abs(cents) <= 5) {
       lbl.textContent = '✅ 정확해요!';
