@@ -4,13 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⛪수성성당 주일학교⛪</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/icon.png">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-  }
-</script>  
 <style>
 /* ═══════════════════════════════
    BASE
@@ -881,22 +874,6 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       <button class="go-btn">입장하기 →</button>
     </div>
      
- <!-- 기타 튜너 -->
-    <div class="corner-card card-tuner" onclick="enterCorner('tuner')">
-      <div class="card-icon">🎛️</div>
-      <div class="card-title">기타 튜너</div>
-      <div class="card-sub">표준 튜닝으로 맞춰보기</div>
-      <ul class="card-items">
-        <li><span class="item-dot"></span>실시간 음정 감지</li>
-        <li><span class="item-dot"></span>6줄 개별 튜닝</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">E2</span><span class="tag">A2</span><span class="tag">D3</span>
-        <span class="tag">G3</span><span class="tag">B3</span><span class="tag">e4</span>
-      </div>
-      <button class="go-btn">입장하기 →</button>
-    </div>
-
     <!-- 노래 -->
     <div class="corner-card card-songs" onclick="enterCorner('songs')">
       <div class="card-icon">🎤</div>
@@ -908,6 +885,22 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       </ul>
       <div class="card-tags">
         <span class="tag">첫사랑</span><span class="tag">백아</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+
+    <!-- 기타 튜너 -->
+    <div class="corner-card card-tuner" onclick="enterCorner('tuner')">
+      <div class="card-icon">🎛️</div>
+      <div class="card-title">기타 튜너</div>
+      <div class="card-sub">표준 튜닝으로 맞춰보기</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>실시간 음정 감지</li>
+        <li><span class="item-dot"></span>6줄 개별 튜닝</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">E2</span><span class="tag">A2</span><span class="tag">D3</span>
+        <span class="tag">G3</span><span class="tag">B3</span><span class="tag">e4</span>
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
