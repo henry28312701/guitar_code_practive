@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -746,6 +747,44 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .gayo-song-header   .song-header-badge { background: #ffdec8; color: #c85020; }
 .sungga-song-header .song-header-badge { background: #ffecc0; color: #a07010; }
 
+/* 곡 선택 목록 */
+.song-list-view { display: flex; flex-direction: column; gap: 32px; margin-bottom: 8px; }
+.song-pick-card {
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.song-pick-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+.gayo-pick   { background: #fff8f5; border: 2px solid #ffc8a8; }
+.sungga-pick { background: #fffcf0; border: 2px solid #e8c87a; }
+.song-pick-left .song-pick-title  { font-size: 1.15rem; font-weight: 800; color: #444; }
+.song-pick-left .song-pick-artist { font-size: 0.82rem; color: #aaa; margin-top: 3px; }
+.song-pick-badge {
+  font-size: 0.78rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 12px;
+}
+.gayo-pick   .song-pick-badge { background: #ffdec8; color: #c85020; }
+.sungga-pick .song-pick-badge { background: #ffecc0; color: #a07010; }
+.song-pick-card::after { content: '›'; font-size: 1.4rem; color: #ccc; margin-left: auto; padding-left: 8px; }
+
+/* 곡 상세 뒤로가기 버튼 */
+.song-back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; border-radius: 20px;
+  padding: 8px 18px; margin-bottom: 16px;
+  font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; transition: opacity .15s;
+}
+.song-back-btn:hover { opacity: .8; }
+.gayo-back   { background: #f09070; color: #fff; }
+.sungga-back { background: #c89030; color: #fff; }
+
 /* 노래 상세 패널 */
 .song-detail-panel {
   background: #fff;
@@ -892,7 +931,7 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
         <li><span class="item-dot"></span>성가 코드</li>
       </ul>
       <div class="card-tags">
-        <span class="tag">첫사랑</span><span class="tag">백아</span>
+        <span class="tag">첫사랑</span><span class="tag">I AM</span><span class="tag">Baby</span>
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
@@ -1118,19 +1157,79 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       <div class="banner-icon">🎤</div>
       <div>
         <h2>가요</h2>
-        <p>좋아하는 가요의 코드를 연습해봐요!</p>
+        <p>연습할 곡을 선택하세요!</p>
       </div>
     </div>
-    <!-- 첫사랑 — 백아 -->
-    <div class="song-header-block gayo-song-header">
-      <div class="song-header-left">
-        <div class="song-header-title">첫사랑</div>
-        <div class="song-header-artist">백아</div>
+
+    <!-- 곡 선택 목록 -->
+    <div id="gayoSongList" class="song-list-view">
+      <div class="song-pick-card gayo-pick" onclick="selectSong('firstlove')">
+        <div class="song-pick-left">
+          <div class="song-pick-title">첫사랑</div>
+          <div class="song-pick-artist">백아</div>
+        </div>
       </div>
-      <span class="song-header-badge">FM7 · C · G · Am7</span>
+      <div class="song-pick-card gayo-pick" onclick="selectSong('ive')">
+        <div class="song-pick-left">
+          <div class="song-pick-title">I AM</div>
+          <div class="song-pick-artist">IVE</div>
+        </div>
+      </div>
+      <div class="song-pick-card gayo-pick" onclick="selectSong('baby')">
+        <div class="song-pick-left">
+          <div class="song-pick-title">Baby</div>
+          <div class="song-pick-artist">Justin Bieber · 카포가 필요해요!!</div>
+        </div>
+      </div>
     </div>
-    <div class="chord-grid" id="gayoChordGrid"></div>
-    <div class="detail-panel" id="gayoChordDetail"></div>
+
+    <!-- 선택된 곡 코드 영역 -->
+    <div id="gayoSongDetail" style="display:none">
+      <button class="song-back-btn gayo-back" onclick="backToSongList('gayo')">← 곡 목록으로</button>
+
+      <!-- 첫사랑 -->
+      <div id="firstloveArea" class="song-area" style="display:none">
+        <div class="song-header-block gayo-song-header">
+          <div class="song-header-left">
+            <div class="song-header-title">첫사랑</div>
+            <div class="song-header-artist">백아</div>
+          </div>
+          <span class="song-header-badge">FM7 · C · G · Am7</span>
+        </div>
+        <div class="chord-grid" id="gayoChordGrid"></div>
+        <div class="detail-panel" id="gayoChordDetail"></div>
+      </div>
+
+      <!-- I AM -->
+      <div id="iveArea" class="song-area" style="display:none">
+        <div class="song-header-block gayo-song-header">
+          <div class="song-header-left">
+            <div class="song-header-title">I AM</div>
+            <div class="song-header-artist">IVE · verse: Am7-C-G-D / chorus: Am7-D-G-Em</div>
+          </div>
+          <span class="song-header-badge">Am7 · C · G · D · Em</span>
+        </div>
+        <div class="chord-grid" id="iveChordGrid"></div>
+        <div class="detail-panel" id="iveChordDetail"></div>
+      </div>
+
+      <!-- Baby -->
+      <div id="babyArea" class="song-area" style="display:none">
+        <div class="song-header-block gayo-song-header">
+          <div class="song-header-left">
+            <div class="song-header-title">Baby</div>
+            <div class="song-header-artist">Justin Bieber · 카포가 필요해요!!</div>
+          </div>
+          <span class="song-header-badge">3 Capo: C·Am·FM7·G / 1 Capo: D·Bm7·G·A</span>
+        </div>
+        <div style="padding:4px 0 2px; font-size:0.8rem; font-weight:700; color:#c85020;">🎸 Ver.1 — 3 Capo (C · Am · FM7 · G)</div>
+        <div class="chord-grid" id="babyV1ChordGrid"></div>
+        <div class="detail-panel" id="babyV1ChordDetail"></div>
+        <div style="padding:12px 0 2px; font-size:0.8rem; font-weight:700; color:#c85020;">🎸 Ver.2 — 1 Capo (D · Bm7 · G · A)</div>
+        <div class="chord-grid" id="babyV2ChordGrid"></div>
+        <div class="detail-panel" id="babyV2ChordDetail"></div>
+      </div>
+    </div>
   </div>
 
   <!-- ── 성가 ── -->
@@ -1139,19 +1238,37 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
       <div class="banner-icon">🙏</div>
       <div>
         <h2>성가</h2>
-        <p>아름다운 성가의 코드를 연습해봐요!</p>
+        <p>연습할 곡을 선택하세요!</p>
       </div>
     </div>
-    <!-- 날마다 숨 쉬는 순간마다 -->
-    <div class="song-header-block sungga-song-header">
-      <div class="song-header-left">
-        <div class="song-header-title">날마다 숨 쉬는 순간마다</div>
-        <div class="song-header-artist">나주노 190</div>
+
+    <!-- 곡 선택 목록 -->
+    <div id="sunggaSongList" class="song-list-view">
+      <div class="song-pick-card sungga-pick" onclick="selectSong('nalmada')">
+        <div class="song-pick-left">
+          <div class="song-pick-title">날마다 숨 쉬는 순간마다</div>
+          <div class="song-pick-artist">나주노 190</div>
+        </div>
       </div>
-      <span class="song-header-badge">E · Aadd9 · Bsus4</span>
     </div>
-    <div class="chord-grid" id="sunggaChordGrid"></div>
-    <div class="detail-panel" id="sunggaChordDetail"></div>
+
+    <!-- 선택된 곡 코드 영역 -->
+    <div id="sunggaSongDetail" style="display:none">
+      <button class="song-back-btn sungga-back" onclick="backToSongList('sungga')">← 곡 목록으로</button>
+
+      <!-- 날마다 -->
+      <div id="nalmadaArea" class="song-area" style="display:none">
+        <div class="song-header-block sungga-song-header">
+          <div class="song-header-left">
+            <div class="song-header-title">날마다 숨 쉬는 순간마다</div>
+            <div class="song-header-artist">나주노 190</div>
+          </div>
+          <span class="song-header-badge">E · Aadd9 · Bsus4</span>
+        </div>
+        <div class="chord-grid" id="sunggaChordGrid"></div>
+        <div class="detail-panel" id="sunggaChordDetail"></div>
+      </div>
+    </div>
   </div>
 
 </div><!-- /cornerScreen -->
@@ -1484,6 +1601,114 @@ const CHORDS_NALMADA = [
     tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
 ];
 
+// ─── I AM — IVE ───
+const CHORDS_IVE = [
+  { name:'Am7', type:'open',
+    frets:[0,1,0,2,0,-1],
+    fingers:[[1,2,1],[2,4,2]],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'C', type:'open',
+    frets:[0,1,0,2,3,-1],
+    fingers:[[1,2,1],[2,4,2],[3,5,3]],
+    open:[1,3], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'G', type:'open',
+    frets:[3,0,0,0,2,3],
+    fingers:[[2,6,3],[3,5,2],[4,1,3]],
+    open:[2,3,4], mute:[],
+    guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
+    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+  { name:'G(2형)', type:'open',
+    frets:[3,3,0,0,2,3],
+    fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
+    open:[3,4], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'D', type:'open',
+    frets:[2,3,2,0,-1,-1],
+    fingers:[[1,3,2],[2,1,2],[3,2,3]],
+    open:[4], mute:[5,6],
+    guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+  { name:'Em', type:'open',
+    frets:[0,0,0,2,2,0],
+    fingers:[[2,4,2],[3,5,2]],
+    open:[1,2,3,6], mute:[],
+    guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
+    tip:'6번 줄(E)부터 스트로크!!' },
+];
+
+// ─── Baby — Justin Bieber · Ver.1 (3 Capo) C-Am-FM7-G ───
+const CHORDS_BABY_V1 = [
+  { name:'C', type:'open',
+    frets:[0,1,0,2,3,-1],
+    fingers:[[1,2,1],[2,4,2],[3,5,3]],
+    open:[1,3], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'Am', type:'open',
+    frets:[0,1,2,2,0,-1],
+    fingers:[[1,2,1],[2,4,2],[3,3,2]],
+    open:[1,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·5번 줄 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+  { name:'FM7', type:'open',
+    frets:[0,1,2,3,-1,-1],
+    fingers:[[1,2,1],[2,3,2],[3,4,3]],
+    open:[1], mute:[5,6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 4번 줄 3프렛','1번 줄은 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  { name:'G', type:'open',
+    frets:[3,0,0,0,2,3],
+    fingers:[[2,6,3],[3,5,2],[4,1,3]],
+    open:[2,3,4], mute:[],
+    guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
+    tip:'6줄부터 스트로크!!' },
+  { name:'G(2형)', type:'open',
+    frets:[3,3,0,0,2,3],
+    fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
+    open:[3,4], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+];
+
+// ─── Baby — Justin Bieber · Ver.2 (1 Capo) D-Bm7-G-A ───
+const CHORDS_BABY_V2 = [
+  { name:'D', type:'open',
+    frets:[2,3,2,0,-1,-1],
+    fingers:[[1,3,2],[2,1,2],[3,2,3]],
+    open:[4], mute:[5,6],
+    guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+  { name:'Bm7', type:'open',
+    frets:[-1,3,2,0,2,-1],
+    fingers:[[1,5,2],[2,3,2],[3,2,3]],
+    open:[1,5], mute:[6],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+  { name:'G', type:'open',
+    frets:[3,0,0,0,2,3],
+    fingers:[[2,6,3],[3,5,2],[4,1,3]],
+    open:[2,3,4], mute:[],
+    guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
+    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+  { name:'G(2형)', type:'open',
+    frets:[3,3,0,0,2,3],
+    fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
+    open:[3,4], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'A', type:'open',
+    frets:[0,2,2,2,0,-1],
+    fingers:[[1,4,2],[2,3,2],[3,2,2]],
+    open:[1,5], mute:[6],
+    guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 2프렛','1·5번 줄 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 손가락 3개를 세로로 가지런히.' },
+];
+
 // ═══════════════════════════════════════════════════
 //  코너 설정
 // ═══════════════════════════════════════════════════
@@ -1535,12 +1760,13 @@ const CORNERS = {
   songs: {
     label: '🎤 노래',
     tabs: [
-      { id:'songs-gayo',   label:'🎤 가요',  sub:'첫사랑 · 백아',              cls:'gayo-tab'   },
+      { id:'songs-gayo',   label:'🎤 가요',  sub:'첫사랑 · I AM · Baby',       cls:'gayo-tab'   },
       { id:'songs-sungga', label:'🙏 성가', sub:'날마다 숨 쉬는 순간마다',    cls:'sungga-tab' },
     ],
     onEnter: () => {
-      renderGrid(CHORDS_FIRSTLOVE, 'gayoChordGrid',   null, 'firstlove');
-      renderGrid(CHORDS_NALMADA,   'sunggaChordGrid',  null, 'nalmada');
+      // 곡 목록 화면으로 초기화
+      backToSongList('gayo');
+      backToSongList('sungga');
     }
   }
 };
@@ -1705,7 +1931,10 @@ const SECTION_META = {
   ekey:       { chordsRef:()=>EKEY_CHORDS,       selClass:'selected-ekey',    desc:'E키 (#4개) — 개방줄 활용 쉬운 코드',            gridId:'ekeyGrid',        panelId:'ekeyDetailPanel'   },
   ckey:       { chordsRef:()=>CKEY_CHORDS,       selClass:'selected-ckey',    desc:'C키 (♯·♭없음) — 소리가 예쁜 개방현 코드',      gridId:'ckeyGrid',        panelId:'ckeyDetailPanel'   },
   gkey:       { chordsRef:()=>GKEY_CHORDS,       selClass:'selected-gkey',    desc:'G키 (#1개) — 쉽고 소리가 예쁜 개방현 코드',     gridId:'gkeyGrid',        panelId:'gkeyDetailPanel'   },
-  firstlove:  { chordsRef:()=>CHORDS_FIRSTLOVE,  selClass:'selected-gayo',    desc:'첫사랑 (백아) — 코드 연습',                     gridId:'gayoChordGrid',   panelId:'gayoChordDetail'   },
+  firstlove:  { chordsRef:()=>CHORDS_FIRSTLOVE,  selClass:'selected-gayo',    desc:'첫사랑 (백아) — 코드 연습',                       gridId:'gayoChordGrid',   panelId:'gayoChordDetail'   },
+  ive:        { chordsRef:()=>CHORDS_IVE,        selClass:'selected-gayo',    desc:'I AM (IVE) — 코드 연습',                          gridId:'iveChordGrid',    panelId:'iveChordDetail'    },
+  babyv1:     { chordsRef:()=>CHORDS_BABY_V1,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.1 3 Capo',             gridId:'babyV1ChordGrid', panelId:'babyV1ChordDetail' },
+  babyv2:     { chordsRef:()=>CHORDS_BABY_V2,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.2 1 Capo',             gridId:'babyV2ChordGrid', panelId:'babyV2ChordDetail' },
   nalmada:    { chordsRef:()=>CHORDS_NALMADA,    selClass:'selected-sungga',  desc:'날마다 숨 쉬는 순간마다 (나주노 190) — 코드 연습', gridId:'sunggaChordGrid', panelId:'sunggaChordDetail' },
 };
  
@@ -1745,6 +1974,36 @@ function showDetail(name, sectionType) {
   panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
  
+// ─── 곡 선택 / 목록으로 ───
+const SONG_RENDER = {
+  firstlove: () => renderGrid(CHORDS_FIRSTLOVE, 'gayoChordGrid',   null, 'firstlove'),
+  ive:       () => renderGrid(CHORDS_IVE,       'iveChordGrid',     null, 'ive'),
+  baby:      () => {
+    renderGrid(CHORDS_BABY_V1, 'babyV1ChordGrid', null, 'babyv1');
+    renderGrid(CHORDS_BABY_V2, 'babyV2ChordGrid', null, 'babyv2');
+  },
+  nalmada:   () => renderGrid(CHORDS_NALMADA, 'sunggaChordGrid', null, 'nalmada'),
+};
+const SONG_CORNER = { firstlove:'gayo', ive:'gayo', baby:'gayo', nalmada:'sungga' };
+
+function selectSong(songKey) {
+  const corner = SONG_CORNER[songKey];
+  document.getElementById(`${corner}SongList`).style.display   = 'none';
+  document.getElementById(`${corner}SongDetail`).style.display = 'block';
+  document.querySelectorAll(`#${corner}SongDetail .song-area`).forEach(el => el.style.display = 'none');
+  document.getElementById(`${songKey}Area`).style.display = 'block';
+  SONG_RENDER[songKey]();
+}
+
+function backToSongList(corner) {
+  const listEl   = document.getElementById(`${corner}SongList`);
+  const detailEl = document.getElementById(`${corner}SongDetail`);
+  if (listEl)   listEl.style.display   = 'block';
+  if (detailEl) detailEl.style.display = 'none';
+  // 상세 패널 초기화
+  if (detailEl) detailEl.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+}
+
 // ═══════════════════════════════════════════════════
 //  퀴즈
 // ═══════════════════════════════════════════════════
