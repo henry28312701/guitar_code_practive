@@ -191,6 +191,60 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 }
 .corner-card .go-btn:hover { opacity: 0.88; }
  
+/* 기타 기초 — 초록 계열 */
+.card-basics {
+  background: linear-gradient(145deg, #e8f8ee, #f0ffe8);
+  border-color: #a8ddb8;
+}
+.card-basics .card-title { color: #2a8050; }
+.card-basics .card-sub   { color: #40a068; }
+.card-basics .item-dot   { background: #60b880; }
+.card-basics .card-items li { color: #2a6840; }
+.card-basics .tag { background: #d0f0dc; color: #2a8050; }
+.card-basics .go-btn { background: #60b880; color: #fff; box-shadow: 0 3px 10px rgba(80,184,120,.3); }
+
+/* 기타 기초 화면 */
+#learn-basics { padding: 0 0 40px; }
+.basics-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.basics-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border-left: 5px solid #60b880;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.basics-item .basics-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #60b880;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.basics-item .basics-text {
+  font-size: 0.95rem;
+  color: #3a5a48;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.basics-item .basics-text strong {
+  color: #2a8050;
+  font-weight: 700;
+}
+
 /* 기타 입문 — 파란 계열 */
 .card-beginner {
   background: linear-gradient(145deg, #e8f4ff, #f0e8ff);
@@ -413,6 +467,7 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 }
 .tab-btn:hover { background: #e0dbff; }
 .tab-btn.active { background: #b0a8ff; color: #fff; box-shadow: 0 3px 10px rgba(140,130,255,0.3); }
+.tab-btn.basics-tab.active { background: #60b880; box-shadow: 0 3px 10px rgba(80,184,120,0.3); }
 .tab-btn.open-tab.active  { background: #7ab0f0; box-shadow: 0 3px 10px rgba(100,160,240,0.3); }
 .tab-btn.quiz-open.active { background: #90d8b0; box-shadow: 0 3px 10px rgba(100,200,150,0.3); }
 .tab-btn.akey-tab.active  { background: #f0c060; box-shadow: 0 3px 10px rgba(240,190,80,0.3); }
@@ -869,6 +924,23 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   </div>
   <div class="corner-grid" style="padding: 18px 18px 60px; max-width: 960px; margin: 0 auto;">
  
+    <!-- 기타 기초 -->
+    <div class="corner-card card-basics" onclick="enterCorner('basics')">
+      <div class="card-icon">📖</div>
+      <div class="card-title">기타 기초</div>
+      <div class="card-sub">기타를 처음 잡는 분들을 위해</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>기타 구조 (헤드·넥·바디)</li>
+        <li><span class="item-dot"></span>줄 번호와 프렛 이해하기</li>
+        <li><span class="item-dot"></span>왼손·오른손 역할</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">헤드</span><span class="tag">넥</span><span class="tag">바디</span>
+        <span class="tag">프렛</span><span class="tag">줄 번호</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+
     <!-- 기타 입문 -->
     <div class="corner-card card-beginner" onclick="enterCorner('beginner')">
       <div class="card-icon">🎵</div>
@@ -961,6 +1033,43 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   <!-- 탭 바 (JS로 내용 채움) -->
   <div class="corner-tabs-bar" id="cornerTabsBar"></div>
  
+  <!-- ── 기타 기초 ── -->
+  <div id="learn-basics" class="section">
+    <div class="section-banner" style="background:linear-gradient(120deg,#e0f8ea,#f0fff4);border-left:5px solid #60b880;">
+      <div class="banner-icon">📖</div>
+      <div>
+        <h2>기타 기초</h2>
+        <p>기타를 처음 잡는 분들을 위한 기본 지식</p>
+      </div>
+    </div>
+    <div class="basics-content">
+      <div class="basics-item">
+        <div class="basics-num">1</div>
+        <div class="basics-text">기타는 줄을 감는 튜너가 위치한 <strong>헤드</strong>, 지판의 대부분이 위치한 <strong>넥</strong>, 스트로크를 하는 부위인 <strong>바디</strong>로 구성된다.</div>
+      </div>
+      <div class="basics-item">
+        <div class="basics-num">2</div>
+        <div class="basics-text">기타는 <strong>굵은 줄이 위로</strong>, <strong>얇은 줄이 아래로</strong> 가도록 잡는다.</div>
+      </div>
+      <div class="basics-item">
+        <div class="basics-num">3</div>
+        <div class="basics-text">가장 굵은 줄이 <strong>6번 줄</strong>, 가장 얇은 줄이 <strong>1번 줄</strong>이다.</div>
+      </div>
+      <div class="basics-item">
+        <div class="basics-num">4</div>
+        <div class="basics-text">기타의 지판을 뜻하는 말은 <strong>프렛(fret)</strong>이다.</div>
+      </div>
+      <div class="basics-item">
+        <div class="basics-num">5</div>
+        <div class="basics-text"><strong>1프렛</strong>은 넥에서 가장 가까운 프렛이며, 한 칸씩 넥에서 멀어질수록(바디에 가까워질수록) <strong>2프렛</strong>, <strong>3프렛</strong>이라고 부른다.</div>
+      </div>
+      <div class="basics-item">
+        <div class="basics-num">6</div>
+        <div class="basics-text"><strong>왼손</strong>으로 넥 부분의 프렛을 잡고, <strong>오른손</strong>으로 줄을 튕겨 연주한다.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── 오픈 코드 배우기 ── -->
   <div id="learn-open" class="section">
     <div class="section-banner open-style">
@@ -1209,8 +1318,38 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
           </div>
           <span class="song-header-badge">Am7 · C · G · D · Em</span>
         </div>
-        <div class="chord-grid" id="iveChordGrid"></div>
-        <div class="detail-panel" id="iveChordDetail"></div>
+
+        <!-- Verse -->
+        <div class="song-section-block gayo-section-block" style="border-radius:14px;padding:14px 16px 4px;margin-bottom:14px;">
+          <div class="song-section-label">Verse</div>
+          <div class="chord-token-row">
+            <span class="chord-token">Am7</span>
+            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span class="chord-token">C</span>
+            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span class="chord-token">G</span>
+            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span class="chord-token">D</span>
+          </div>
+          <div class="chord-grid" id="iveVerseGrid"></div>
+          <div class="detail-panel" id="iveVerseDetail"></div>
+        </div>
+
+        <!-- Chorus -->
+        <div class="song-section-block gayo-section-block" style="border-radius:14px;padding:14px 16px 4px;margin-bottom:14px;">
+          <div class="song-section-label">Chorus</div>
+          <div class="chord-token-row">
+            <span class="chord-token">Am7</span>
+            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span class="chord-token">D</span>
+            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span class="chord-token">G</span>
+            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span class="chord-token">Em</span>
+          </div>
+          <div class="chord-grid" id="iveChorusGrid"></div>
+          <div class="detail-panel" id="iveChorusDetail"></div>
+        </div>
       </div>
 
       <!-- Baby -->
@@ -1601,8 +1740,8 @@ const CHORDS_NALMADA = [
     tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
 ];
 
-// ─── I AM — IVE ───
-const CHORDS_IVE = [
+// ─── I AM — IVE · Verse (Am7-C-G-D) ───
+const CHORDS_IVE_VERSE = [
   { name:'Am7', type:'open',
     frets:[0,1,0,2,0,-1],
     fingers:[[1,2,1],[2,4,2]],
@@ -1615,12 +1754,6 @@ const CHORDS_IVE = [
     open:[1,3], mute:[6],
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3번 줄은 개방'],
     tip:'5번 줄(A)부터 스트로크!!' },
-  { name:'G', type:'open',
-    frets:[3,0,0,0,2,3],
-    fingers:[[2,6,3],[3,5,2],[4,1,3]],
-    open:[2,3,4], mute:[],
-    guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
-    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
   { name:'G(2형)', type:'open',
     frets:[3,3,0,0,2,3],
     fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
@@ -1633,6 +1766,27 @@ const CHORDS_IVE = [
     open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
     tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+];
+// ─── I AM — IVE · Chorus (Am7-D-G-Em) ───
+const CHORDS_IVE_CHORUS = [
+  { name:'Am7', type:'open',
+    frets:[0,1,0,2,0,-1],
+    fingers:[[1,2,1],[2,4,2]],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'D', type:'open',
+    frets:[2,3,2,0,-1,-1],
+    fingers:[[1,3,2],[2,1,2],[3,2,3]],
+    open:[4], mute:[5,6],
+    guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+  { name:'G', type:'open',
+    frets:[3,0,0,0,2,3],
+    fingers:[[2,6,3],[3,5,2],[4,1,3]],
+    open:[2,3,4], mute:[],
+    guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
+    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
   { name:'Em', type:'open',
     frets:[0,0,0,2,2,0],
     fingers:[[2,4,2],[3,5,2]],
@@ -1713,6 +1867,13 @@ const CHORDS_BABY_V2 = [
 //  코너 설정
 // ═══════════════════════════════════════════════════
 const CORNERS = {
+  basics: {
+    label: '📖 기타 기초',
+    tabs: [
+      { id:'learn-basics', label:'📖 기타 기초', sub:'구조·줄·프렛·손 역할', cls:'basics-tab' },
+    ],
+    onEnter: () => {}
+  },
   beginner: {
     label: '🎵 기타 입문',
     tabs: [
@@ -1775,6 +1936,7 @@ let currentCorner = null;
  
 // 코너별 버튼 스타일 정보
 const CORNER_NAV_STYLE = {
+  basics:      { bg:'#60b880', color:'#fff', border:'#40a060' },
   beginner:    { bg:'#7ab0f0', color:'#fff', border:'#5898e0' },
   beginnerPlus:{ bg:'#f0c060', color:'#fff', border:'#d8a840' },
   advanced:    { bg:'#f08aaa', color:'#fff', border:'#d86890' },
@@ -1870,10 +2032,23 @@ function buildDiagram(chord, size = 160) {
   const cs = sw/5, rs = sh/4;
   let minFret = Math.min(...chord.frets.filter(f => f > 0));
   if (!isFinite(minFret) || minFret <= 0) minFret = 1;
-  let startFret = minFret > 1 ? minFret : 1;
+  let maxFret = Math.max(...chord.frets.filter(f => f > 0));
+  if (!isFinite(maxFret) || maxFret <= 0) maxFret = 1;
+  let startFret, labelFret;
+  if (minFret === 4 && maxFret === 4) {
+    // 4프렛만 사용: 두 번째 줄에 표시, "4fr" 레이블
+    startFret = 3;
+    labelFret = 4;
+  } else if (maxFret <= 4) {
+    startFret = 1;
+    labelFret = 1;
+  } else {
+    startFret = minFret;
+    labelFret = minFret;
+  }
   let svg = `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}" xmlns="http://www.w3.org/2000/svg">`;
-  if (startFret > 1) {
-    svg += `<text x="${sx-4}" y="${sy+rs*0.6}" font-size="${S*0.075}" fill="#aaa" text-anchor="end" font-family="sans-serif">${startFret}fr</text>`;
+  if (labelFret > 1) {
+    svg += `<text x="${sx-4}" y="${sy+(minFret-startFret+0.5)*rs}" font-size="${S*0.075}" fill="#aaa" text-anchor="end" dominant-baseline="middle" font-family="sans-serif">${labelFret}fr</text>`;
   } else {
     svg += `<rect x="${sx}" y="${sy-4}" width="${sw}" height="5" rx="2" fill="#999"/>`;
   }
@@ -1932,7 +2107,8 @@ const SECTION_META = {
   ckey:       { chordsRef:()=>CKEY_CHORDS,       selClass:'selected-ckey',    desc:'C키 (♯·♭없음) — 소리가 예쁜 개방현 코드',      gridId:'ckeyGrid',        panelId:'ckeyDetailPanel'   },
   gkey:       { chordsRef:()=>GKEY_CHORDS,       selClass:'selected-gkey',    desc:'G키 (#1개) — 쉽고 소리가 예쁜 개방현 코드',     gridId:'gkeyGrid',        panelId:'gkeyDetailPanel'   },
   firstlove:  { chordsRef:()=>CHORDS_FIRSTLOVE,  selClass:'selected-gayo',    desc:'첫사랑 (백아) — 코드 연습',                       gridId:'gayoChordGrid',   panelId:'gayoChordDetail'   },
-  ive:        { chordsRef:()=>CHORDS_IVE,        selClass:'selected-gayo',    desc:'I AM (IVE) — 코드 연습',                          gridId:'iveChordGrid',    panelId:'iveChordDetail'    },
+  iveVerse:   { chordsRef:()=>CHORDS_IVE_VERSE,  selClass:'selected-gayo',    desc:'I AM (IVE) — Verse: Am7-C-G-D',                   gridId:'iveVerseGrid',    panelId:'iveVerseDetail'    },
+  iveChorus:  { chordsRef:()=>CHORDS_IVE_CHORUS, selClass:'selected-gayo',    desc:'I AM (IVE) — Chorus: Am7-D-G-Em',                 gridId:'iveChorusGrid',   panelId:'iveChorusDetail'   },
   babyv1:     { chordsRef:()=>CHORDS_BABY_V1,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.1 3 Capo',             gridId:'babyV1ChordGrid', panelId:'babyV1ChordDetail' },
   babyv2:     { chordsRef:()=>CHORDS_BABY_V2,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.2 1 Capo',             gridId:'babyV2ChordGrid', panelId:'babyV2ChordDetail' },
   nalmada:    { chordsRef:()=>CHORDS_NALMADA,    selClass:'selected-sungga',  desc:'날마다 숨 쉬는 순간마다 (나주노 190) — 코드 연습', gridId:'sunggaChordGrid', panelId:'sunggaChordDetail' },
@@ -1950,6 +2126,8 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
   `).join('');
 }
  
+const _selectedChord = {};
+
 function showDetail(name, sectionType) {
   const meta   = SECTION_META[sectionType];
   const chords = meta.chordsRef();
@@ -1957,8 +2135,18 @@ function showDetail(name, sectionType) {
   if (!c) return;
   const gridId  = meta.gridId;
   const panelId = meta.panelId;
+  const panel   = document.getElementById(panelId);
+
+  // 이미 선택된 코드를 다시 누르면 패널 닫기
+  if (_selectedChord[sectionType] === name && panel.classList.contains('active')) {
+    _selectedChord[sectionType] = null;
+    renderGrid(chords, gridId, null, sectionType);
+    panel.classList.remove('active');
+    return;
+  }
+
+  _selectedChord[sectionType] = name;
   renderGrid(chords, gridId, name, sectionType);
-  const panel = document.getElementById(panelId);
   panel.innerHTML = `
     <div class="diagram-wrap">${buildDiagram(c, 200)}</div>
     <div class="detail-text">
@@ -1977,7 +2165,10 @@ function showDetail(name, sectionType) {
 // ─── 곡 선택 / 목록으로 ───
 const SONG_RENDER = {
   firstlove: () => renderGrid(CHORDS_FIRSTLOVE, 'gayoChordGrid',   null, 'firstlove'),
-  ive:       () => renderGrid(CHORDS_IVE,       'iveChordGrid',     null, 'ive'),
+  ive:       () => {
+    renderGrid(CHORDS_IVE_VERSE,  'iveVerseGrid',  null, 'iveVerse');
+    renderGrid(CHORDS_IVE_CHORUS, 'iveChorusGrid', null, 'iveChorus');
+  },
   baby:      () => {
     renderGrid(CHORDS_BABY_V1, 'babyV1ChordGrid', null, 'babyv1');
     renderGrid(CHORDS_BABY_V2, 'babyV2ChordGrid', null, 'babyv2');
