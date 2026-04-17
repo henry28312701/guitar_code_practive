@@ -767,6 +767,43 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .chord-token:hover  { filter: brightness(0.88); }
 .chord-token:active { transform: scale(0.92); }
 
+/* ══════════════════════════════════════════
+   스트로크 모드 선택 바
+══════════════════════════════════════════ */
+.strum-mode-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #f8f5ff;
+  border-bottom: 1px solid #e8e0ff;
+  flex-wrap: wrap;
+}
+.strum-mode-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8080b8;
+  white-space: nowrap;
+}
+.strum-mode-btn {
+  padding: 5px 14px;
+  border: 2px solid #d0c8ff;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #7070c8;
+  background: #fff;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.strum-mode-btn:hover { background: #ede8ff; }
+.strum-mode-btn.active {
+  background: #7070c8;
+  color: #fff;
+  border-color: #5858b0;
+}
+
 /* ═══════════════════════════════
    노래 코너
 ═══════════════════════════════ */
@@ -1631,7 +1668,7 @@ const CKEY_CHORDS = [
     guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
     tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
   { name:'Em7(3형)', type:'open',
-    frets:[0,3,0,4,5,0],
+    frets:[0,3,0,4,-1,0],
     fingers:[[1,2,3],[2,4,4],[3,5,5]],
     open:[1,3,6], mute:[5],
     guide:['1번 손가락 → 2번 줄 3프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 5번 줄 5프렛','1·3·6번 줄은 개방'],
@@ -1653,9 +1690,9 @@ const GKEY_CHORDS = [
     guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
     tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
   { name:'D/F#', type:'open',
-    frets:[3,3,0,0,0,2],
+    frets:[3,3,0,-1,-1,2],
     fingers:[[1,6,2],[3,2,3],[4,1,3]],
-    open:[1,2,6], mute:[],
+    open:[3], mute:[4,5],
     guide:['1번 손가락 → 6번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','1·2·6번 줄은 개방'],
     tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
   { name:'Em', type:'open',
@@ -1670,8 +1707,8 @@ const GKEY_CHORDS = [
     open:[3,4,6], mute:[5],
     guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
     tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
- { name:'Em7(3형)', type:'open',
-    frets:[0,3,0,4,5,0],
+  { name:'Em7(3형)', type:'open',
+    frets:[0,3,0,4,-1,0],
     fingers:[[1,2,3],[2,4,4],[3,5,5]],
     open:[1,3,6], mute:[5],
     guide:['1번 손가락 → 2번 줄 3프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 5번 줄 5프렛','1·3·6번 줄은 개방'],
@@ -1739,9 +1776,9 @@ const CHORDS_FIRSTLOVE = [
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 4번 줄 3프렛','1번 줄은 개방'],
     tip:'4,3,2,1번 줄로 아르페지오 후 퍼커시브!!' },
   { name:'C', type:'open',
-    frets:[0,1,0,2,3,-1],
+    frets:[0,1,0,-1,3,-1],
     fingers:[[1,2,1],[2,4,2],[3,5,3]],
-    open:[1,3], mute:[6],
+    open:[1,3], mute:[4,6],
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1,3번 줄은 개방'],
     tip:'5,3,2,1번 줄로 아르페지오 후 퍼커시브!!' },
   { name:'G', type:'open',
@@ -1808,7 +1845,7 @@ const CHORDS_IVE_VERSE = [
     fingers:[[1,3,2],[2,1,2],[3,2,3]],
     open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
-    tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+    tip:'4번 줄(D)부터 스트로크하세요! 5·6번 줄은 mute!!' },
 ];
 // ─── I AM — IVE · Chorus (Am-D-G-Em) ───
 const CHORDS_IVE_CHORUS = [
@@ -1820,13 +1857,13 @@ const CHORDS_IVE_CHORUS = [
     fingers:[[1,3,2],[2,1,2],[3,2,3]],
     open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
-    tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+    tip:'4번 줄(D)부터 스트로크하세요! 5·6번 줄은 mute!!' },
   { name:'G', type:'open',
     frets:[3,0,0,0,2,3],
     fingers:[[2,6,3],[3,5,2],[4,1,3]],
     open:[2,3,4], mute:[],
     guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
-    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+    tip:'6줄 모두 스트로크 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
   { name:'Em', type:'open',
     frets:[0,0,0,2,2,0],
     fingers:[[2,4,2],[3,5,2]],
@@ -1876,7 +1913,7 @@ const CHORDS_BABY_V2 = [
     fingers:[[1,3,2],[2,1,2],[3,2,3]],
     open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
-    tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
+    tip:'4번 줄(D)부터 스트로크하세요! 5·6번 줄은 mute!!' },
   { name:'Bm7', type:'open',
     frets:[-1,3,2,0,2,-1],
     fingers:[[1,5,2],[2,3,2],[3,2,3]],
@@ -1888,7 +1925,7 @@ const CHORDS_BABY_V2 = [
     fingers:[[2,6,3],[3,5,2],[4,1,3]],
     open:[2,3,4], mute:[],
     guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
-    tip:'6줄 모두 스트럼 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+    tip:'6줄 모두 스트로크 가능! 새끼손가락으로 1번 줄을 누르면 편해요.' },
   { name:'G(2형)', type:'open',
     frets:[3,3,0,0,2,3],
     fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]],
@@ -2199,7 +2236,11 @@ function showDetail(name, sectionType) {
         ${c.guide.map((g,i) => `<li><span class="finger-num">${i+1}</span>${g}</li>`).join('')}
       </ul>
       <div class="tip-box">💡 ${c.tip}</div>
-      <button class="sound-btn" onclick="playChordSoundByName('${c.name}','${sectionType}')">🔊 소리 듣기</button>
+      <div class="strum-mode-bar">
+        <span class="strum-mode-label">🎸 소리 듣기:</span>
+        <button class="strum-mode-btn${_strumGap === 0.015 ? ' active' : ''}" id="strumBtnFast" onclick="setStrumModeAndPlay('fast','${c.name}','${sectionType}')">⚡ 스트로크</button>
+        <button class="strum-mode-btn${_strumGap !== 0.015 ? ' active' : ''}" id="strumBtnArpeggio" onclick="setStrumModeAndPlay('arpeggio','${c.name}','${sectionType}')">🎵 아르페지오</button>
+      </div>
     </div>
   `;
   panel.classList.add('active');
@@ -2603,7 +2644,21 @@ function _pluckString(ctx, freq, t, decay, dryBus, wetBus) {
   });
 }
 
-// 코드 전체 재생 — 6번줄→1번줄 순서로 스트럼
+// 스트로크 모드: 'fast'=15ms, 'arpeggio'=100ms (기본값)
+let _strumGap = 0.300;
+
+function setStrumMode(mode) {
+  _strumGap = mode === 'fast' ? 0.015 : 0.300;
+  document.getElementById('strumBtnFast').classList.toggle('active', mode === 'fast');
+  document.getElementById('strumBtnArpeggio').classList.toggle('active', mode === 'arpeggio');
+}
+
+function setStrumModeAndPlay(mode, chordName, sectionType) {
+  setStrumMode(mode);
+  playChordSoundByName(chordName, sectionType);
+}
+
+// 코드 전체 재생 — 6번줄→1번줄 순서로 스트로크
 function playChordSound(chord) {
   if (!chord || !chord.frets) return;
 
@@ -2624,12 +2679,12 @@ function playChordSound(chord) {
   reverb.connect(ctx.destination);
 
   const DECAY     = 2.5;
-  const STRUM_GAP = 0.020;
+  const STRUM_GAP = _strumGap;
 
   let t = ctx.currentTime + 0.04;
   for (let i = 5; i >= 0; i--) {
     const fret = chord.frets[i];
-    if (fret === -1) { t += STRUM_GAP; continue; }
+    if (fret === -1) continue;
     const freq = STRING_OPEN_FREQS[i] * Math.pow(2, fret / 12);
     _pluckString(ctx, freq, t, DECAY, dryGain, wetGain);
     t += STRUM_GAP;
