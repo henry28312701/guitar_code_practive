@@ -721,6 +721,52 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   .tab-btn { padding: 8px 13px; font-size: 0.82rem; }
 }
 
+/* ══════════════════════════════════════════
+   사운드 버튼
+══════════════════════════════════════════ */
+.sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px;
+  padding: 8px 18px;
+  background: #f0eeff;
+  border: 2px solid #d0c8ff;
+  border-radius: 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #7070c8;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  user-select: none;
+}
+.sound-btn:hover  { background: #e0dbff; }
+.sound-btn:active { transform: scale(0.96); }
+
+.card-sound-btn {
+  display: block;
+  margin: 6px auto 0;
+  padding: 3px 10px;
+  background: #f0eeff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7070c8;
+  cursor: pointer;
+  transition: background .15s;
+  user-select: none;
+}
+.card-sound-btn:hover { background: #ddd8ff; }
+
+.chord-token {
+  cursor: pointer;
+  transition: filter .1s, transform .12s;
+  user-select: none;
+}
+.chord-token:hover  { filter: brightness(0.88); }
+.chord-token:active { transform: scale(0.92); }
+
 /* ═══════════════════════════════
    노래 코너
 ═══════════════════════════════ */
@@ -1314,16 +1360,16 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
         <div class="song-header-block gayo-song-header">
           <div class="song-header-left">
             <div class="song-header-title">I AM</div>
-            <div class="song-header-artist">IVE · verse: Am7-C-G-D / chorus: Am7-D-G-Em</div>
+            <div class="song-header-artist">IVE · verse: Am-C-G-D / chorus: Am-D-G-Em</div>
           </div>
-          <span class="song-header-badge">Am7 · C · G · D · Em</span>
+          <span class="song-header-badge">Am · C · G · D · Em</span>
         </div>
 
         <!-- Verse -->
         <div class="song-section-block gayo-section-block" style="border-radius:14px;padding:14px 16px 4px;margin-bottom:14px;">
           <div class="song-section-label">Verse</div>
           <div class="chord-token-row">
-            <span class="chord-token">Am7</span>
+            <span class="chord-token">Am</span>
             <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
             <span class="chord-token">C</span>
             <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
@@ -1339,7 +1385,7 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
         <div class="song-section-block gayo-section-block" style="border-radius:14px;padding:14px 16px 4px;margin-bottom:14px;">
           <div class="song-section-label">Chorus</div>
           <div class="chord-token-row">
-            <span class="chord-token">Am7</span>
+            <span class="chord-token">Am</span>
             <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
             <span class="chord-token">D</span>
             <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
@@ -1740,14 +1786,11 @@ const CHORDS_NALMADA = [
     tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
 ];
 
-// ─── I AM — IVE · Verse (Am7-C-G-D) ───
+// ─── I AM — IVE · Verse (Am-C-G-D) ───
 const CHORDS_IVE_VERSE = [
-  { name:'Am7', type:'open',
-    frets:[0,1,0,2,0,-1],
-    fingers:[[1,2,1],[2,4,2]],
-    open:[1,3,5], mute:[6],
-    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
-    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'Am', type:'open',  frets:[0,1,2,2,0,-1], fingers:[[1,2,1],[2,4,2],[3,3,2]], open:[1,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·5번 줄 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
   { name:'C', type:'open',
     frets:[0,1,0,2,3,-1],
     fingers:[[1,2,1],[2,4,2],[3,5,3]],
@@ -1767,14 +1810,11 @@ const CHORDS_IVE_VERSE = [
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
     tip:'4번 줄(D)부터 스트럼하세요! 5·6번 줄은 mute!!' },
 ];
-// ─── I AM — IVE · Chorus (Am7-D-G-Em) ───
+// ─── I AM — IVE · Chorus (Am-D-G-Em) ───
 const CHORDS_IVE_CHORUS = [
-  { name:'Am7', type:'open',
-    frets:[0,1,0,2,0,-1],
-    fingers:[[1,2,1],[2,4,2]],
-    open:[1,3,5], mute:[6],
-    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
-    tip:'5번 줄(A)부터 스트로크!!' },
+  { name:'Am', type:'open',  frets:[0,1,2,2,0,-1], fingers:[[1,2,1],[2,4,2],[3,3,2]], open:[1,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·5번 줄 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
   { name:'D', type:'open',
     frets:[2,3,2,0,-1,-1],
     fingers:[[1,3,2],[2,1,2],[3,2,3]],
@@ -2107,8 +2147,8 @@ const SECTION_META = {
   ckey:       { chordsRef:()=>CKEY_CHORDS,       selClass:'selected-ckey',    desc:'C키 (♯·♭없음) — 소리가 예쁜 개방현 코드',      gridId:'ckeyGrid',        panelId:'ckeyDetailPanel'   },
   gkey:       { chordsRef:()=>GKEY_CHORDS,       selClass:'selected-gkey',    desc:'G키 (#1개) — 쉽고 소리가 예쁜 개방현 코드',     gridId:'gkeyGrid',        panelId:'gkeyDetailPanel'   },
   firstlove:  { chordsRef:()=>CHORDS_FIRSTLOVE,  selClass:'selected-gayo',    desc:'첫사랑 (백아) — 코드 연습',                       gridId:'gayoChordGrid',   panelId:'gayoChordDetail'   },
-  iveVerse:   { chordsRef:()=>CHORDS_IVE_VERSE,  selClass:'selected-gayo',    desc:'I AM (IVE) — Verse: Am7-C-G-D',                   gridId:'iveVerseGrid',    panelId:'iveVerseDetail'    },
-  iveChorus:  { chordsRef:()=>CHORDS_IVE_CHORUS, selClass:'selected-gayo',    desc:'I AM (IVE) — Chorus: Am7-D-G-Em',                 gridId:'iveChorusGrid',   panelId:'iveChorusDetail'   },
+  iveVerse:   { chordsRef:()=>CHORDS_IVE_VERSE,  selClass:'selected-gayo',    desc:'I AM (IVE) — Verse: Am-C-G-D',                    gridId:'iveVerseGrid',    panelId:'iveVerseDetail'    },
+  iveChorus:  { chordsRef:()=>CHORDS_IVE_CHORUS, selClass:'selected-gayo',    desc:'I AM (IVE) — Chorus: Am-D-G-Em',                  gridId:'iveChorusGrid',   panelId:'iveChorusDetail'   },
   babyv1:     { chordsRef:()=>CHORDS_BABY_V1,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.1 3 Capo',             gridId:'babyV1ChordGrid', panelId:'babyV1ChordDetail' },
   babyv2:     { chordsRef:()=>CHORDS_BABY_V2,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.2 1 Capo',             gridId:'babyV2ChordGrid', panelId:'babyV2ChordDetail' },
   nalmada:    { chordsRef:()=>CHORDS_NALMADA,    selClass:'selected-sungga',  desc:'날마다 숨 쉬는 순간마다 (나주노 190) — 코드 연습', gridId:'sunggaChordGrid', panelId:'sunggaChordDetail' },
@@ -2122,6 +2162,9 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
       <div class="chord-type">${c.type === 'open' ? 'Open Chord' : 'Barre Chord'}</div>
       <h3>${c.name}</h3>
       <div>${buildDiagram(c, 100)}</div>
+      <button class="card-sound-btn"
+              onclick="event.stopPropagation(); playChordSoundByName('${c.name}','${sectionType}')"
+              title="소리 듣기">🔊 듣기</button>
     </div>
   `).join('');
 }
@@ -2156,6 +2199,7 @@ function showDetail(name, sectionType) {
         ${c.guide.map((g,i) => `<li><span class="finger-num">${i+1}</span>${g}</li>`).join('')}
       </ul>
       <div class="tip-box">💡 ${c.tip}</div>
+      <button class="sound-btn" onclick="playChordSoundByName('${c.name}','${sectionType}')">🔊 소리 듣기</button>
     </div>
   `;
   panel.classList.add('active');
@@ -2279,6 +2323,8 @@ function checkAnswer(btn, chosen, correct, pool) {
     feedback.textContent = '🎉 이욜~~좀 친다 이거지?';
     feedback.className = 'quiz-feedback ok';
     quizState[pool].score++;
+    const _correctChord = _findChordByName(correct);
+    if (_correctChord) setTimeout(() => playChordSound(_correctChord), 150);
   } else {
     btn.classList.add('wrong');
     document.querySelectorAll(`#${pool}QuizCard .ans-btn`).forEach(b=>{
@@ -2472,6 +2518,155 @@ function setNeedle(cents) {
       inTune ? '#60c8b8' : '#7878d0');
   }
 }
+// ═══════════════════════════════════════════════════════════════
+//  통기타 사운드 엔진 (Web Audio API)
+// ═══════════════════════════════════════════════════════════════
+
+// 개방현 주파수: frets 배열 인덱스 0=1번줄(e4) ~ 5=6번줄(E2)
+const STRING_OPEN_FREQS = [329.63, 246.94, 196.00, 146.83, 110.00, 82.41];
+
+let _chordCtx      = null;  // 전역 AudioContext (재사용)
+let _chordReverb   = null;  // 리버브 컨볼버 (컨텍스트당 1개)
+let _activeSources = [];    // 현재 재생 중인 오실레이터 노드
+
+// iOS Safari 대응: 첫 터치에서 AudioContext 활성화
+document.addEventListener('touchstart', function () {
+  if (_chordCtx && _chordCtx.state === 'suspended') _chordCtx.resume();
+}, { passive: true });
+
+function _getChordCtx() {
+  if (!_chordCtx || _chordCtx.state === 'closed') {
+    _chordCtx    = new (window.AudioContext || window.webkitAudioContext)();
+    _chordReverb = null; // 컨텍스트 재생성 시 리버브 초기화
+  }
+  return _chordCtx;
+}
+
+// 합성 리버브 임펄스 응답 생성 (외부 파일 없음)
+function _getChordReverb(ctx) {
+  if (!_chordReverb) {
+    _chordReverb = ctx.createConvolver();
+    const rate = ctx.sampleRate;
+    const len  = Math.floor(rate * 1.4); // 1.4초 잔향
+    const buf  = ctx.createBuffer(2, len, rate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) {
+        d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.5);
+      }
+    }
+    _chordReverb.buffer = buf;
+  }
+  return _chordReverb;
+}
+
+// 이미 재생 중인 소리 즉시 중단
+function _stopActiveSound() {
+  _activeSources.forEach(n => { try { n.stop(0); } catch (e) {} });
+  _activeSources = [];
+}
+
+// 단일 현(줄) 소리 합성 — 오실레이터 + 배음 + 코러스 + 엔벨로프
+// [배음차수, 파형, 게인, 어택(s), 감쇠비율, detune(null=랜덤 ±1.5cents / 숫자=고정cents)]
+const _STRING_PARTIALS = [
+  [1, 'triangle', 0.52, 0.008, 1.00, null],
+  [2, 'sine',     0.20, 0.008, 1.00, null],
+  [3, 'sine',     0.10, 0.008, 1.00, null],
+  [4, 'sine',     0.05, 0.008, 1.00, null],
+  [1, 'sine',     0.07, 0.012, 0.75,    8], // 코러스 보이스 (+8 cents)
+];
+
+function _pluckString(ctx, freq, t, decay, dryBus, wetBus) {
+  const lpf = ctx.createBiquadFilter();
+  lpf.type            = 'lowpass';
+  lpf.frequency.value = Math.min(freq * 8, 5500);
+  lpf.Q.value         = 0.7;
+  lpf.connect(dryBus);
+  lpf.connect(wetBus);
+
+  _STRING_PARTIALS.forEach(([mult, type, amp, atk, decMult, fixedDetune]) => {
+    const osc = ctx.createOscillator();
+    osc.type            = type;
+    osc.frequency.value = freq * mult;
+    osc.detune.value    = fixedDetune !== null ? fixedDetune : (Math.random() - 0.5) * 3;
+
+    const env = ctx.createGain();
+    env.gain.setValueAtTime(0, t);
+    env.gain.linearRampToValueAtTime(amp, t + atk);
+    env.gain.exponentialRampToValueAtTime(0.0001, t + decay * decMult);
+
+    osc.connect(env);
+    env.connect(lpf);
+    osc.start(t);
+    osc.stop(t + decay * decMult + 0.1);
+    _activeSources.push(osc);
+  });
+}
+
+// 코드 전체 재생 — 6번줄→1번줄 순서로 스트럼
+function playChordSound(chord) {
+  if (!chord || !chord.frets) return;
+
+  const ctx = _getChordCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+
+  _stopActiveSound();
+
+  // 드라이/웨트 믹스 버스
+  const dryGain = ctx.createGain();
+  dryGain.gain.value = 0.78;
+  dryGain.connect(ctx.destination);
+
+  const wetGain = ctx.createGain();
+  wetGain.gain.value = 0.22;
+  const reverb = _getChordReverb(ctx);
+  wetGain.connect(reverb);
+  reverb.connect(ctx.destination);
+
+  const DECAY     = 2.5;
+  const STRUM_GAP = 0.020;
+
+  let t = ctx.currentTime + 0.04;
+  for (let i = 5; i >= 0; i--) {
+    const fret = chord.frets[i];
+    if (fret === -1) { t += STRUM_GAP; continue; }
+    const freq = STRING_OPEN_FREQS[i] * Math.pow(2, fret / 12);
+    _pluckString(ctx, freq, t, DECAY, dryGain, wetGain);
+    t += STRUM_GAP;
+  }
+
+  // 소리가 완전히 감쇠된 후 버스 노드 연결 해제 (audio graph 누적 방지)
+  const cleanupMs = (DECAY + STRUM_GAP * 6 + 0.3) * 1000;
+  setTimeout(() => { dryGain.disconnect(); wetGain.disconnect(); }, cleanupMs);
+}
+
+// sectionType 기반 코드 검색 후 재생 (카드·상세 패널용)
+function playChordSoundByName(name, sectionType) {
+  const meta  = SECTION_META[sectionType];
+  const chord = meta ? meta.chordsRef().find(c => c.name === name) : null;
+  if (chord) playChordSound(chord);
+}
+
+// 코드명으로 전체 데이터에서 검색 (노래 chord-token용)
+// SECTION_META를 단일 출처로 사용하므로 새 코드 풀 추가 시 자동 반영됨
+function _findChordByName(name) {
+  for (const meta of Object.values(SECTION_META)) {
+    const c = meta.chordsRef().find(x => x.name === name);
+    if (c) return c;
+  }
+  return null;
+}
+
+// 노래 코너 chord-token 클릭 → 소리 재생 (이벤트 위임)
+document.addEventListener('click', function (e) {
+  const token = e.target.closest('.chord-token');
+  if (!token) return;
+  const chord = _findChordByName(token.textContent.trim());
+  if (chord) playChordSound(chord);
+});
+
+// ─── 사운드 엔진 끝 ──────────────────────────────────────────
+
 function showResult(pool) {
   const st = quizState[pool];
   document.getElementById(`${pool}QuizCard`).innerHTML = '';
