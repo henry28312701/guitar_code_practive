@@ -15,193 +15,260 @@
 </head>
 <style>
 /* ═══════════════════════════════
+   DESIGN TOKENS — 따뜻한 아날로그
+═══════════════════════════════ */
+:root {
+  /* Base */
+  --bg: #F7F0E3;
+  --paper: #FBF6EC;
+  --sand: #EBDFC4;
+  --sand-deep: #D4C4A0;
+  --espresso: #3D3022;
+  --wood: #8B7355;
+  --wood-light: #A89578;
+  --ink: #5A4A35;
+  --ink-soft: #8B7355;
+  --line: #E5D9C0;
+
+  /* Accents */
+  --sage: #7A8B5C;        --sage-bg: #DCE3CC;        --sage-text: #3D4A28;
+  --walnut: #8B6F47;      --walnut-bg: #D9C9B0;      --walnut-text: #5A4530;
+  --mustard: #C49A4E;     --mustard-bg: #EBD5A8;     --mustard-text: #6B5012;
+  --terracotta: #A85742;  --terracotta-bg: #E5BFB0;  --terracotta-text: #6B3525;
+  --rust: #B8704F;        --rust-bg: #E3C5A8;        --rust-text: #6B3F1F;
+  --pine: #5C7A6F;        --pine-bg: #C4D1C5;        --pine-text: #2F4A3E;
+
+  /* Fonts */
+  --font-serif: Georgia, 'Nanum Myeongjo', 'Apple SD Gothic Neo', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+  --font-mono: 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* ═══════════════════════════════
    BASE
 ═══════════════════════════════ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
-  background: #f5f0fa;
+  font-family: var(--font-sans);
+  background: var(--bg);
   min-height: 100vh;
-  color: #444;
+  color: var(--ink);
 }
  
 /* ── 공통 헤더 ── */
 header {
-  background: linear-gradient(135deg, #d4e4ff, #e8d8f8, #fde8d8);
-  padding: 22px 20px 18px;
+  background: var(--paper);
+  padding: 28px 20px 22px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  border-bottom: 1px solid var(--line);
   position: relative;
 }
-header h1 { font-size: 2rem; color: #7070c8; letter-spacing: 1px; }
-header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
+header h1 {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.5px;
+}
+header p {
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  margin-top: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
  
 /* ── 뒤로가기 + 코너 이동 바 ── */
 .back-bar {
   display: none;
   flex-direction: column;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
 }
 .back-bar.visible { display: flex; }
 .back-bar-top {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 18px 8px;
+  padding: 12px 18px 10px;
 }
 .back-btn {
-  padding: 7px 18px;
-  border: none;
-  border-radius: 20px;
-  background: #ede9ff;
-  color: #7070c8;
-  font-size: 0.88rem;
-  font-weight: 700;
+  padding: 7px 16px;
+  border: 1px solid var(--espresso);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--espresso);
+  font-size: 0.82rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background .15s;
+  transition: background .15s, color .15s;
   white-space: nowrap;
+  font-family: var(--font-sans);
 }
-.back-btn:hover { background: #d8d2ff; }
+.back-btn:hover { background: var(--espresso); color: var(--paper); }
 .corner-title-badge {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #5a5fcc;
-  padding: 5px 14px;
-  border-radius: 20px;
-  background: #f0eeff;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--espresso);
+  padding: 4px 0;
+  letter-spacing: -0.3px;
 }
 
 /* 코너 빠른 이동 버튼 */
 .corner-nav {
   display: flex;
-  gap: 7px;
-  padding: 0 16px 10px;
+  gap: 6px;
+  padding: 0 16px 12px;
   overflow-x: auto;
   scrollbar-width: none;
 }
 .corner-nav::-webkit-scrollbar { display: none; }
 .corner-nav-btn {
-  padding: 5px 13px;
-  border: 2px solid transparent;
-  border-radius: 16px;
-  font-size: 0.76rem;
-  font-weight: 700;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all .15s;
   white-space: nowrap;
-  background: #f5f5f5;
-  color: #888;
+  background: var(--bg);
+  color: var(--ink-soft);
 }
-.corner-nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-.corner-nav-btn.nav-current { cursor: default; opacity: 1; transform: none; }
+.corner-nav-btn:hover { opacity: 0.85; }
+.corner-nav-btn.nav-current { cursor: default; opacity: 1; }
 
 /* ═══════════════════════════════
    HOME SCREEN
 ═══════════════════════════════ */
-#homeScreen { padding: 32px 18px 60px; max-width: 960px; margin: 0 auto; }
+#homeScreen { padding: 40px 18px 60px; max-width: 960px; margin: 0 auto; }
  
 .home-intro {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 .home-intro h2 {
-  font-size: 1.4rem;
-  color: #6060c8;
-  margin-bottom: 8px;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
 }
-.home-intro p { color: #9090b8; font-size: 0.92rem; }
+.home-intro p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  font-style: italic;
+}
  
 .corner-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 18px;
 }
 @media (max-width: 640px) {
   .corner-grid { grid-template-columns: 1fr; }
 }
  
 .corner-card {
-  border-radius: 22px;
-  padding: 28px 22px 24px;
+  background: var(--paper);
+  border: 1px solid var(--sand-deep);
+  border-left-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 24px 22px 22px;
   cursor: pointer;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-  transition: transform .18s, box-shadow .18s;
-  border: 2px solid transparent;
+  transition: transform .18s, border-color .18s;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 .corner-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  border-color: var(--espresso);
 }
-.corner-card .card-icon { font-size: 2.8rem; line-height: 1; }
+.corner-card .card-icon { font-size: 2.4rem; line-height: 1; }
 .corner-card .card-title {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 500;
   letter-spacing: -0.5px;
 }
 .corner-card .card-sub {
-  font-size: 0.8rem;
-  font-weight: 600;
-  opacity: 0.7;
-  margin-top: -10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: -8px;
 }
 .corner-card .card-items {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 .corner-card .card-items li {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.84rem;
+  font-weight: 400;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
+  color: var(--ink);
 }
 .corner-card .card-items li .item-dot {
-  width: 7px; height: 7px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 .corner-card .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 4px;
   margin-top: 4px;
 }
 .corner-card .tag {
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
 }
 .corner-card .go-btn {
-  margin-top: 6px;
+  margin-top: 8px;
   padding: 10px 0;
-  border: none;
-  border-radius: 14px;
-  font-size: 0.9rem;
-  font-weight: 700;
+  border: 1px solid;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  transition: opacity .15s;
+  transition: all .15s;
   width: 100%;
 }
-.corner-card .go-btn:hover { opacity: 0.88; }
  
-/* 기타 기초 — 초록 계열 */
+/* 기타 기초 — Sage (세이지) */
 .card-basics {
-  background: linear-gradient(145deg, #e8f8ee, #f0ffe8);
-  border-color: #a8ddb8;
+  border-left-color: var(--sage);
 }
-.card-basics .card-title { color: #2a8050; }
-.card-basics .card-sub   { color: #40a068; }
-.card-basics .item-dot   { background: #60b880; }
-.card-basics .card-items li { color: #2a6840; }
-.card-basics .tag { background: #d0f0dc; color: #2a8050; }
-.card-basics .go-btn { background: #60b880; color: #fff; box-shadow: 0 3px 10px rgba(80,184,120,.3); }
+.card-basics .card-title { color: var(--sage-text); }
+.card-basics .card-sub   { color: var(--sage); }
+.card-basics .item-dot   { background: var(--sage); }
+.card-basics .tag { background: var(--sage-bg); color: var(--sage-text); }
+.card-basics .go-btn { border-color: var(--sage); color: var(--sage-text); }
+.card-basics .go-btn:hover { background: var(--sage); color: var(--paper); }
 
 /* 기타 기초 화면 */
 #learn-basics { padding: 0 0 40px; }
@@ -211,14 +278,14 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   padding: 0 18px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 .basics-item {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--sage);
+  border-radius: var(--radius-md);
   padding: 18px 22px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-  border-left: 5px solid #60b880;
   display: flex;
   gap: 14px;
   align-items: flex-start;
@@ -226,72 +293,69 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .basics-item .basics-num {
   width: 28px; height: 28px;
   border-radius: 50%;
-  background: #60b880;
-  color: #fff;
-  font-size: 0.82rem;
-  font-weight: 800;
+  background: var(--sage);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   margin-top: 1px;
 }
 .basics-item .basics-text {
-  font-size: 0.95rem;
-  color: #3a5a48;
-  line-height: 1.6;
-  font-weight: 500;
+  font-size: 0.94rem;
+  color: var(--ink);
+  line-height: 1.65;
+  font-weight: 400;
 }
 .basics-item .basics-text strong {
-  color: #2a8050;
-  font-weight: 700;
+  color: var(--sage-text);
+  font-weight: 500;
 }
 
-/* 기타 입문 — 파란 계열 */
+/* 기타 입문 — Walnut (월넛) */
 .card-beginner {
-  background: linear-gradient(145deg, #e8f4ff, #f0e8ff);
-  border-color: #c0d8ff;
+  border-left-color: var(--walnut);
 }
-.card-beginner .card-title { color: #4a7ec8; }
-.card-beginner .card-sub   { color: #6898d8; }
-.card-beginner .item-dot   { background: #7ab0f0; }
-.card-beginner .card-items li { color: #5a80b8; }
-.card-beginner .tag { background: #d4eaff; color: #4a7ec8; }
-.card-beginner .go-btn { background: #7ab0f0; color: #fff; box-shadow: 0 3px 10px rgba(100,160,240,.3); }
+.card-beginner .card-title { color: var(--walnut-text); }
+.card-beginner .card-sub   { color: var(--walnut); }
+.card-beginner .item-dot   { background: var(--walnut); }
+.card-beginner .tag { background: var(--walnut-bg); color: var(--walnut-text); }
+.card-beginner .go-btn { border-color: var(--walnut); color: var(--walnut-text); }
+.card-beginner .go-btn:hover { background: var(--walnut); color: var(--paper); }
  
-/* 기타 입문+ — 골드 계열 */
+/* 기타 입문+ — Mustard (머스타드) */
 .card-beginner-plus {
-  background: linear-gradient(145deg, #fff8e0, #fff0f8);
-  border-color: #ffe0a0;
+  border-left-color: var(--mustard);
 }
-.card-beginner-plus .card-title { color: #c88020; }
-.card-beginner-plus .card-sub   { color: #d89840; }
-.card-beginner-plus .item-dot   { background: #f0c060; }
-.card-beginner-plus .card-items li { color: #a87030; }
-.card-beginner-plus .tag { background: #fff0c0; color: #b07020; }
-.card-beginner-plus .go-btn { background: #f0c060; color: #fff; box-shadow: 0 3px 10px rgba(240,192,80,.3); }
+.card-beginner-plus .card-title { color: var(--mustard-text); }
+.card-beginner-plus .card-sub   { color: var(--mustard); }
+.card-beginner-plus .item-dot   { background: var(--mustard); }
+.card-beginner-plus .tag { background: var(--mustard-bg); color: var(--mustard-text); }
+.card-beginner-plus .go-btn { border-color: var(--mustard); color: var(--mustard-text); }
+.card-beginner-plus .go-btn:hover { background: var(--mustard); color: var(--paper); }
  
-/* 기타 심화 — 핑크 계열 */
+/* 기타 심화 — Terracotta (테라코타) */
 .card-advanced {
-  background: linear-gradient(145deg, #ffe8f0, #f8e8ff);
-  border-color: #f0c0d8;
+  border-left-color: var(--terracotta);
 }
-.card-advanced .card-title { color: #c04878; }
-.card-advanced .card-sub   { color: #d06888; }
-.card-advanced .item-dot   { background: #f08aaa; }
-.card-advanced .card-items li { color: #a04060; }
-.card-advanced .tag { background: #ffd8e8; color: #c04878; }
-.card-advanced .go-btn { background: #f08aaa; color: #fff; box-shadow: 0 3px 10px rgba(240,120,160,.3); }
+.card-advanced .card-title { color: var(--terracotta-text); }
+.card-advanced .card-sub   { color: var(--terracotta); }
+.card-advanced .item-dot   { background: var(--terracotta); }
+.card-advanced .tag { background: var(--terracotta-bg); color: var(--terracotta-text); }
+.card-advanced .go-btn { border-color: var(--terracotta); color: var(--terracotta-text); }
+.card-advanced .go-btn:hover { background: var(--terracotta); color: var(--paper); }
  
-/* 기타 튜너 — 민트/틸 계열 */
+/* 기타 튜너 — Pine (파인) */
 .card-tuner {
-  background: linear-gradient(145deg, #e0f8f4, #e8f8ff);
-  border-color: #a0ddd8;
+  border-left-color: var(--pine);
 }
-.card-tuner .card-title { color: #2a9080; }
-.card-tuner .card-sub   { color: #40a898; }
-.card-tuner .item-dot   { background: #60c8b8; }
-.card-tuner .card-items li { color: #2a7870; }
-.card-tuner .tag { background: #c8f0ec; color: #2a9080; }
-.card-tuner .go-btn { background: #60c8b8; color: #fff; box-shadow: 0 3px 10px rgba(80,200,184,.3); }
+.card-tuner .card-title { color: var(--pine-text); }
+.card-tuner .card-sub   { color: var(--pine); }
+.card-tuner .item-dot   { background: var(--pine); }
+.card-tuner .tag { background: var(--pine-bg); color: var(--pine-text); }
+.card-tuner .go-btn { border-color: var(--pine); color: var(--pine-text); }
+.card-tuner .go-btn:hover { background: var(--pine); color: var(--paper); }
 
 /* ═══════════════════════════════
    TUNER
@@ -304,7 +368,7 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   align-items: center;
   gap: 20px;
 }
-.section-banner.tuner-style { background: linear-gradient(120deg,#d8f5f0,#eefffe); border-left:5px solid #60c8b8; }
+.section-banner.tuner-style { background: var(--paper); border-left: 4px solid var(--pine); }
 
 /* 줄 선택 버튼 */
 .string-btns {
@@ -316,28 +380,35 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .str-btn {
   width: 52px; height: 52px;
   border-radius: 50%;
-  border: 2px solid #b0e8e0;
-  background: #f0fffe;
-  color: #2a9080;
-  font-size: 0.88rem;
-  font-weight: 800;
+  border: 1.5px solid var(--pine-bg);
+  background: var(--paper);
+  color: var(--pine-text);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all .15s;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   line-height: 1.2;
 }
-.str-btn span { font-size: 0.62rem; font-weight: 500; color: #80b8b0; }
-.str-btn:hover { background: #d8f5f0; border-color: #60c8b8; }
-.str-btn.active { background: #60c8b8; border-color: #40a898; color: #fff; }
-.str-btn.active span { color: rgba(255,255,255,0.75); }
+.str-btn span {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  color: var(--pine);
+  letter-spacing: 0.5px;
+}
+.str-btn:hover { background: var(--pine-bg); border-color: var(--pine); }
+.str-btn.active { background: var(--pine); border-color: var(--pine); color: var(--paper); }
+.str-btn.active span { color: rgba(255,255,255,0.85); }
 
 /* 게이지 패널 */
 .tuner-gauge-panel {
-  background: #fff;
-  border-radius: 24px;
-  padding: 28px 24px 20px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px 22px;
   width: 100%;
   text-align: center;
 }
@@ -345,15 +416,18 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   margin-bottom: 14px;
 }
 .tuner-target-note {
+  font-family: var(--font-serif);
   font-size: 3rem;
-  font-weight: 900;
-  color: #2a9080;
+  font-weight: 500;
+  color: var(--espresso);
   line-height: 1;
 }
 .tuner-target-hz {
-  font-size: 0.82rem;
-  color: #a0c8c4;
-  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  letter-spacing: 1px;
 }
 
 /* 반원 게이지 */
@@ -370,47 +444,49 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   min-height: 36px;
 }
 .tuner-cents {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #60c8b8;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--pine);
   min-width: 70px;
   text-align: center;
 }
 .tuner-label {
-  font-size: 0.9rem;
-  font-weight: 700;
-  padding: 4px 14px;
-  border-radius: 14px;
-  background: #f0fffe;
-  color: #60c8b8;
-  border: 2px solid #b0e8e0;
+  font-size: 0.86rem;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--pine-text);
+  border: 1px solid var(--pine-bg);
 }
-.tuner-label.flat  { background: #fff0d8; color: #c08020; border-color: #f0c060; }
-.tuner-label.sharp { background: #ffe8f0; color: #c04878; border-color: #f08aaa; }
-.tuner-label.intune { background: #d8f5e8; color: #2a7a4a; border-color: #78d8a0; }
+.tuner-label.flat   { background: var(--mustard-bg); color: var(--mustard-text); border-color: var(--mustard); }
+.tuner-label.sharp  { background: var(--terracotta-bg); color: var(--terracotta-text); border-color: var(--terracotta); }
+.tuner-label.intune { background: var(--sage-bg); color: var(--sage-text); border-color: var(--sage); }
 
 /* 모드 토글 */
 .tuner-mode-toggle {
   display: flex;
-  background: #f0fffe;
-  border-radius: 25px;
-  padding: 4px;
-  border: 2px solid #b0e8e0;
+  background: var(--paper);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  border: 1px solid var(--pine-bg);
 }
 .mode-toggle-btn {
   flex: 1;
   padding: 8px 18px;
   border: none;
-  border-radius: 20px;
-  font-size: 0.88rem;
-  font-weight: 700;
+  border-radius: 3px;
+  font-size: 0.84rem;
+  font-weight: 500;
   cursor: pointer;
   background: transparent;
-  color: #60c8b8;
+  color: var(--pine-text);
   transition: all .2s;
   white-space: nowrap;
+  font-family: var(--font-sans);
 }
-.mode-toggle-btn.active { background: #60c8b8; color: #fff; }
+.mode-toggle-btn.active { background: var(--pine); color: var(--paper); }
 
 /* 자동 감지 모드일 때 줄 버튼 비활성화 */
 .string-btns.auto-mode .str-btn { opacity: 0.35; cursor: default; pointer-events: none; }
@@ -419,23 +495,25 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 /* 시작/정지 버튼 */
 .tuner-start-btn {
   padding: 13px 40px;
-  border: none;
-  border-radius: 25px;
-  background: #60c8b8;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
+  border: 1.5px solid var(--pine);
+  border-radius: var(--radius-sm);
+  background: var(--pine);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  box-shadow: 0 3px 12px rgba(80,200,184,.3);
   transition: all .15s;
 }
-.tuner-start-btn:hover { background: #40a898; transform: scale(1.03); }
-.tuner-start-btn.active { background: #f08aaa; box-shadow: 0 3px 12px rgba(240,120,160,.3); }
+.tuner-start-btn:hover { background: var(--pine-text); border-color: var(--pine-text); }
+.tuner-start-btn.active { background: var(--terracotta); border-color: var(--terracotta); }
 .tuner-tip {
-  font-size: 0.8rem;
-  color: #a0b8b4;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
   text-align: center;
   line-height: 1.6;
+  font-style: italic;
 }
 
 /* ═══════════════════════════════
@@ -447,68 +525,85 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .corner-tabs-bar {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 12px;
+  gap: 6px;
+  padding: 16px 12px;
   flex-wrap: wrap;
-  background: #fff;
-  border-bottom: 1px solid #f0eeff;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
 }
 .tab-btn {
-  padding: 9px 20px;
-  border: none;
-  border-radius: 25px;
-  background: #f0eeff;
-  color: #8888c0;
-  font-size: 0.88rem;
-  font-weight: 600;
+  padding: 8px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   transition: all .2s;
 }
-.tab-btn:hover { background: #e0dbff; }
-.tab-btn.active { background: #b0a8ff; color: #fff; box-shadow: 0 3px 10px rgba(140,130,255,0.3); }
-.tab-btn.basics-tab.active { background: #60b880; box-shadow: 0 3px 10px rgba(80,184,120,0.3); }
-.tab-btn.open-tab.active  { background: #7ab0f0; box-shadow: 0 3px 10px rgba(100,160,240,0.3); }
-.tab-btn.quiz-open.active { background: #90d8b0; box-shadow: 0 3px 10px rgba(100,200,150,0.3); }
-.tab-btn.akey-tab.active  { background: #f0c060; box-shadow: 0 3px 10px rgba(240,190,80,0.3); }
-.tab-btn.ekey-tab.active  { background: #60c8a8; box-shadow: 0 3px 10px rgba(80,200,170,0.3); }
-.tab-btn.barre-tab.active { background: #f08aaa; box-shadow: 0 3px 10px rgba(240,120,160,0.3); }
-.tab-btn.quiz-barre.active{ background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,0.3); }
-.tab-btn.tuner-tab.active { background: #60c8b8; box-shadow: 0 3px 10px rgba(80,200,184,0.3); }
-.tab-btn.ckey-tab.active  { background: #88c870; box-shadow: 0 3px 10px rgba(100,200,80,0.3); }
-.tab-btn.gkey-tab.active  { background: #c890d8; box-shadow: 0 3px 10px rgba(180,120,210,0.3); }
+.tab-btn:hover { background: var(--bg); border-color: var(--wood-light); }
+.tab-btn.active { background: var(--espresso); border-color: var(--espresso); color: var(--paper); }
+.tab-btn.basics-tab.active { background: var(--sage); border-color: var(--sage); }
+.tab-btn.open-tab.active   { background: var(--walnut); border-color: var(--walnut); }
+.tab-btn.quiz-open.active  { background: var(--sage); border-color: var(--sage); }
+.tab-btn.akey-tab.active   { background: var(--mustard); border-color: var(--mustard); }
+.tab-btn.ekey-tab.active   { background: var(--pine); border-color: var(--pine); }
+.tab-btn.barre-tab.active  { background: var(--terracotta); border-color: var(--terracotta); }
+.tab-btn.quiz-barre.active { background: var(--mustard); border-color: var(--mustard); }
+.tab-btn.tuner-tab.active  { background: var(--pine); border-color: var(--pine); }
+.tab-btn.ckey-tab.active   { background: var(--sage); border-color: var(--sage); }
+.tab-btn.gkey-tab.active   { background: var(--walnut); border-color: var(--walnut); }
 .tab-label {
   display: block;
-  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
   font-weight: 400;
-  opacity: 0.8;
-  margin-top: 2px;
+  opacity: 0.85;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
 }
  
 /* ── 섹션 ── */
-.section { display: none; padding: 16px 16px 40px; max-width: 980px; margin: 0 auto; }
+.section { display: none; padding: 20px 16px 40px; max-width: 980px; margin: 0 auto; }
 .section.active { display: block; }
  
 /* ── 섹션 배너 ── */
 .section-banner {
-  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
   padding: 16px 20px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
-.section-banner.open-style      { background: linear-gradient(120deg,#dceeff,#eef8ff); border-left:5px solid #90c0f0; }
-.section-banner.quiz-open-style { background: linear-gradient(120deg,#d8f5e8,#eefff5); border-left:5px solid #70c898; }
-.section-banner.barre-style     { background: linear-gradient(120deg,#fde8f0,#fff0f5); border-left:5px solid #f0a0b8; }
-.section-banner.quiz-barre-style{ background: linear-gradient(120deg,#fef0d8,#fff8ee); border-left:5px solid #f0b870; }
-.section-banner.akey-style      { background: linear-gradient(120deg,#fff5d8,#fffaee); border-left:5px solid #f0c060; }
-.section-banner.ekey-style      { background: linear-gradient(120deg,#d8f5ee,#eefff8); border-left:5px solid #60c8a8; }
-.section-banner.ckey-style      { background: linear-gradient(120deg,#e8f8d8,#f5fff0); border-left:5px solid #88c870; }
-.section-banner.gkey-style      { background: linear-gradient(120deg,#f5d8f8,#fdf0ff); border-left:5px solid #c890d8; }
-.section-banner .banner-icon { font-size: 2rem; }
-.section-banner h2 { font-size: 1.2rem; color: #5a6090; }
-.section-banner p  { font-size: 0.82rem; color: #9090b0; margin-top: 2px; }
+.section-banner.open-style       { border-left-color: var(--walnut); }
+.section-banner.basics-style     { border-left-color: var(--sage); }
+.section-banner.quiz-open-style  { border-left-color: var(--sage); }
+.section-banner.barre-style      { border-left-color: var(--terracotta); }
+.section-banner.quiz-barre-style { border-left-color: var(--mustard); }
+.section-banner.akey-style       { border-left-color: var(--mustard); }
+.section-banner.ekey-style       { border-left-color: var(--pine); }
+.section-banner.ckey-style       { border-left-color: var(--sage); }
+.section-banner.gkey-style       { border-left-color: var(--walnut); }
+.section-banner .banner-icon { font-size: 1.8rem; }
+.section-banner h2 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.3px;
+}
+.section-banner p {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 3px;
+  font-style: italic;
+}
  
 /* ── 코드 그리드 ── */
 .chord-grid {
@@ -517,77 +612,105 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   gap: 14px;
 }
 .chord-card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   padding: 14px 10px 10px;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: transform .15s, box-shadow .15s;
-  border: 2px solid transparent;
+  transition: transform .15s, border-color .15s;
 }
-.chord-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
-.chord-card.selected-open  { border-color: #90c0f0; background: #f0f7ff; }
-.chord-card.selected-barre { border-color: #f0a0b8; background: #fff0f5; }
-.chord-card.selected-akey  { border-color: #f0c060; background: #fffae8; }
-.chord-card.selected-ekey  { border-color: #60c8a8; background: #eafff8; }
-.chord-card.selected-ckey  { border-color: #88c870; background: #f0ffe8; }
-.chord-card.selected-gkey  { border-color: #c890d8; background: #faeeff; }
-.chord-card h3 { font-size: 1.3rem; color: #6060c8; margin-bottom: 8px; }
-.chord-card .chord-type { font-size: 0.68rem; color: #bbb; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+.chord-card:hover { transform: translateY(-2px); border-color: var(--wood-light); }
+.chord-card.selected-open  { border-color: var(--walnut); background: var(--walnut-bg); }
+.chord-card.selected-barre { border-color: var(--terracotta); background: var(--terracotta-bg); }
+.chord-card.selected-akey  { border-color: var(--mustard); background: var(--mustard-bg); }
+.chord-card.selected-ekey  { border-color: var(--pine); background: var(--pine-bg); }
+.chord-card.selected-ckey  { border-color: var(--sage); background: var(--sage-bg); }
+.chord-card.selected-gkey  { border-color: var(--walnut); background: var(--walnut-bg); }
+.chord-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+.chord-card .chord-type {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
  
 /* ── 상세 패널 ── */
 .detail-panel {
-  background: #fff;
-  border-radius: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
   padding: 26px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
   margin-top: 18px;
   display: none;
 }
 .detail-panel.active { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; justify-content: center; }
-.detail-panel h2 { font-size: 1.9rem; color: #5a5fcf; }
+.detail-panel h2 {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.5px;
+}
 .detail-text { flex: 1; min-width: 200px; }
-.detail-text .chord-desc { color: #888; margin: 6px 0 14px; font-size: 0.88rem; }
+.detail-text .chord-desc {
+  color: var(--ink-soft);
+  margin: 8px 0 16px;
+  font-size: 0.88rem;
+  font-style: italic;
+}
 .finger-guide { list-style: none; }
 .finger-guide li {
-  padding: 6px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
   font-size: 0.86rem;
-  color: #555;
+  color: var(--ink);
 }
 .finger-guide li:last-child { border-bottom: none; }
 .finger-num {
   display: inline-block;
   width: 22px; height: 22px;
   border-radius: 50%;
-  background: #b0a8ff;
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 700;
+  background: var(--wood);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
   text-align: center;
   line-height: 22px;
   margin-right: 8px;
 }
 .barre-badge {
   display: inline-block;
-  background: #ffdce8;
-  color: #c06080;
-  border-radius: 8px;
+  background: var(--terracotta-bg);
+  color: var(--terracotta-text);
+  border-radius: var(--radius-sm);
   padding: 2px 8px;
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
   margin-left: 8px;
   vertical-align: middle;
 }
 .tip-box {
-  background: #fffae8;
-  border-left: 4px solid #ffd080;
-  border-radius: 8px;
-  padding: 10px 14px;
+  background: var(--mustard-bg);
+  border-left: 3px solid var(--mustard);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
   margin-top: 14px;
   font-size: 0.85rem;
-  color: #7a6020;
+  color: var(--mustard-text);
+  line-height: 1.6;
 }
 .diagram-wrap { flex: 0 0 auto; }
 .diagram-wrap svg { display: block; }
@@ -595,122 +718,169 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 /* ── 퀴즈 ── */
 .quiz-area { max-width: 600px; margin: 0 auto; }
 .quiz-status {
-  display: flex; gap: 12px; justify-content: center;
-  margin-bottom: 18px; flex-wrap: wrap;
+  display: flex; gap: 10px; justify-content: center;
+  margin-bottom: 20px; flex-wrap: wrap;
 }
 .status-badge {
-  background: #fff;
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
-  color: #6060c8;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.5px;
 }
 .quiz-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 26px 22px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
   text-align: center;
 }
-.quiz-question { font-size: 1rem; color: #888; margin-bottom: 6px; }
-.quiz-chord-name { font-size: 3.4rem; font-weight: 800; color: #6060c8; margin: 10px 0 18px; }
-.quiz-diagram-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
+.quiz-question {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.quiz-chord-name {
+  font-family: var(--font-serif);
+  font-size: 3.4rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin: 12px 0 20px;
+  letter-spacing: -1px;
+}
+.quiz-diagram-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
 .answer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 10px;
   margin-top: 10px;
 }
 .ans-btn {
   padding: 14px;
-  border: 2px solid #ddd8ff;
-  border-radius: 14px;
-  background: #faf9ff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #6060c8;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--espresso);
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: -0.3px;
+}
+.ans-btn:hover:not(:disabled) { background: var(--sand); border-color: var(--wood); }
+.ans-btn.correct { background: var(--sage-bg); border-color: var(--sage); color: var(--sage-text); }
+.ans-btn.wrong   { background: var(--terracotta-bg); border-color: var(--terracotta); color: var(--terracotta-text); }
+.ans-btn:disabled { cursor: default; }
+.quiz-feedback {
+  margin-top: 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  min-height: 28px;
+  font-style: italic;
+}
+.quiz-feedback.ok  { color: var(--sage-text); }
+.quiz-feedback.bad { color: var(--terracotta-text); }
+.next-btn {
+  margin-top: 16px;
+  padding: 11px 30px;
+  background: var(--espresso);
+  border: 1.5px solid var(--espresso);
+  border-radius: var(--radius-sm);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: opacity .15s;
+  display: none;
+}
+.next-btn:hover { opacity: 0.85; }
+.quiz-open-mode  .next-btn { background: var(--sage); border-color: var(--sage); }
+.quiz-barre-mode .next-btn { background: var(--mustard); border-color: var(--mustard); color: var(--mustard-text); }
+.result-box {
+  display: none;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 24px;
+  text-align: center;
+}
+.result-box h2 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.result-score {
+  font-family: var(--font-serif);
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: var(--wood);
+  margin: 20px 0;
+}
+.result-msg {
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 24px;
+  font-style: italic;
+  line-height: 1.6;
+}
+.restart-btn {
+  padding: 11px 28px;
+  background: transparent;
+  border: 1.5px solid var(--espresso);
+  border-radius: var(--radius-sm);
+  color: var(--espresso);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all .15s;
 }
-.ans-btn:hover:not(:disabled) { background: #eae6ff; border-color: #b0a8ff; transform: scale(1.03); }
-.ans-btn.correct { background: #d8f5e4; border-color: #78d8a0; color: #2a7a4a; }
-.ans-btn.wrong   { background: #ffe0e8; border-color: #f09090; color: #b04040; }
-.ans-btn:disabled { cursor: default; }
-.quiz-feedback {
-  margin-top: 16px;
-  font-size: 1rem;
-  font-weight: 600;
-  min-height: 28px;
-}
-.quiz-feedback.ok  { color: #40a060; }
-.quiz-feedback.bad { color: #c04040; }
-.next-btn {
-  margin-top: 14px;
-  padding: 12px 32px;
-  background: #b0a8ff;
-  border: none;
-  border-radius: 25px;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 3px 10px rgba(140,130,255,.28);
-  transition: transform .1s;
-  display: none;
-}
-.next-btn:hover { transform: scale(1.04); }
-.quiz-open-mode  .next-btn { background: #78c898; box-shadow: 0 3px 10px rgba(100,200,150,.28); }
-.quiz-barre-mode .next-btn { background: #f0b870; box-shadow: 0 3px 10px rgba(240,180,100,.28); }
-.result-box {
-  display: none;
-  background: #fff;
-  border-radius: 20px;
-  padding: 36px 24px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-  text-align: center;
-}
-.result-box h2 { font-size: 1.9rem; color: #5a5fcf; margin-bottom: 10px; }
-.result-score { font-size: 3rem; font-weight: 800; color: #b0a8ff; margin: 16px 0; }
-.result-msg { font-size: 1rem; color: #666; margin-bottom: 20px; }
-.restart-btn {
-  padding: 12px 30px;
-  background: #c8d8ff;
-  border: none;
-  border-radius: 25px;
-  color: #4a50a0;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .15s;
-}
-.restart-btn:hover { background: #b0a8ff; color: #fff; }
+.restart-btn:hover { background: var(--espresso); color: var(--paper); }
 .mode-select {
-  background: #fff;
-  border-radius: 18px;
-  padding: 24px 22px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 22px;
   text-align: center;
   margin-bottom: 18px;
 }
-.mode-select h3 { font-size: 1.05rem; color: #6060c8; margin-bottom: 14px; }
-.mode-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.mode-select h3 {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: 14px;
+}
+.mode-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 .mode-btn {
-  padding: 11px 22px;
-  border: 2px solid #ddd8ff;
-  border-radius: 14px;
-  background: #faf9ff;
-  color: #6060c8;
-  font-weight: 700;
-  font-size: 0.88rem;
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.86rem;
   cursor: pointer;
   transition: all .15s;
 }
-.mode-btn:hover { background: #eae6ff; }
-.mode-btn.active { background: #b0a8ff; border-color: #b0a8ff; color: #fff; }
-.quiz-open-mode  .mode-btn.active { background: #78c898; border-color: #78c898; }
-.quiz-barre-mode .mode-btn.active { background: #f0b870; border-color: #f0b870; }
+.mode-btn:hover { background: var(--sand); }
+.mode-btn.active { background: var(--espresso); border-color: var(--espresso); color: var(--paper); }
+.quiz-open-mode  .mode-btn.active { background: var(--sage); border-color: var(--sage); }
+.quiz-barre-mode .mode-btn.active { background: var(--mustard); border-color: var(--mustard); }
  
 @media (max-width: 480px) {
   header h1 { font-size: 1.5rem; }
@@ -727,45 +897,48 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .sound-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   margin-top: 12px;
-  padding: 8px 18px;
-  background: #f0eeff;
-  border: 2px solid #d0c8ff;
-  border-radius: 18px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #7070c8;
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--wood-light);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--espresso);
   cursor: pointer;
-  transition: background .15s, transform .1s;
+  transition: background .15s;
   user-select: none;
 }
-.sound-btn:hover  { background: #e0dbff; }
-.sound-btn:active { transform: scale(0.96); }
+.sound-btn:hover  { background: var(--sand); }
+.sound-btn:active { background: var(--sand-deep); }
 
 .card-sound-btn {
   display: block;
   margin: 6px auto 0;
   padding: 3px 10px;
-  background: #f0eeff;
-  border: none;
-  border-radius: 10px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #7070c8;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-soft);
   cursor: pointer;
-  transition: background .15s;
+  transition: all .15s;
   user-select: none;
+  letter-spacing: 0.5px;
 }
-.card-sound-btn:hover { background: #ddd8ff; }
+.card-sound-btn:hover { background: var(--sand); color: var(--espresso); }
 
 .chord-token {
   cursor: pointer;
   transition: filter .1s, transform .12s;
   user-select: none;
 }
-.chord-token:hover  { filter: brightness(0.88); }
-.chord-token:active { transform: scale(0.92); }
+.chord-token:hover  { filter: brightness(0.92); }
+.chord-token:active { transform: scale(0.94); }
 
 /* ══════════════════════════════════════════
    스트로크 모드 선택 바
@@ -774,189 +947,253 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: #f8f5ff;
-  border-bottom: 1px solid #e8e0ff;
+  padding: 10px 16px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
   flex-wrap: wrap;
 }
 .strum-mode-label {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #8080b8;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink-soft);
   white-space: nowrap;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 .strum-mode-btn {
   padding: 5px 14px;
-  border: 2px solid #d0c8ff;
-  border-radius: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
   font-size: 0.8rem;
-  font-weight: 700;
-  color: #7070c8;
-  background: #fff;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--bg);
   cursor: pointer;
   transition: all .15s;
   white-space: nowrap;
 }
-.strum-mode-btn:hover { background: #ede8ff; }
+.strum-mode-btn:hover { background: var(--sand); }
 .strum-mode-btn.active {
-  background: #7070c8;
-  color: #fff;
-  border-color: #5858b0;
+  background: var(--espresso);
+  color: var(--paper);
+  border-color: var(--espresso);
 }
 
 /* ═══════════════════════════════
    노래 코너
 ═══════════════════════════════ */
 
-/* 노래 홈 카드 — 코랄/오렌지 계열 */
+/* 노래 홈 카드 — Rust (러스트) */
 .card-songs {
-  background: linear-gradient(145deg, #fff0e8, #ffeaf0);
-  border-color: #ffc8a8;
+  border-left-color: var(--rust);
 }
-.card-songs .card-title { color: #c85020; }
-.card-songs .card-sub   { color: #d87050; }
-.card-songs .item-dot   { background: #f09070; }
-.card-songs .card-items li { color: #a84030; }
-.card-songs .tag { background: #ffdec8; color: #c85020; }
-.card-songs .go-btn { background: #f09070; color: #fff; box-shadow: 0 3px 10px rgba(240,140,100,.3); }
+.card-songs .card-title { color: var(--rust-text); }
+.card-songs .card-sub   { color: var(--rust); }
+.card-songs .item-dot   { background: var(--rust); }
+.card-songs .tag { background: var(--rust-bg); color: var(--rust-text); }
+.card-songs .go-btn { border-color: var(--rust); color: var(--rust-text); }
+.card-songs .go-btn:hover { background: var(--rust); color: var(--paper); }
 
 /* 가요/성가 탭 활성화 색상 */
-.tab-btn.gayo-tab.active   { background: #f07860; box-shadow: 0 3px 10px rgba(240,120,90,0.3); }
-.tab-btn.sungga-tab.active { background: #c89030; box-shadow: 0 3px 10px rgba(200,144,48,0.3); }
+.tab-btn.gayo-tab.active   { background: var(--rust); border-color: var(--rust); }
+.tab-btn.sungga-tab.active { background: var(--mustard); border-color: var(--mustard); }
 
 /* 섹션 배너 */
-.section-banner.gayo-style   { background: linear-gradient(120deg,#fff0e8,#fff8f0); border-left:5px solid #f09070; }
-.section-banner.sungga-style { background: linear-gradient(120deg,#fff8d8,#fffbf0); border-left:5px solid #c89030; }
+.section-banner.gayo-style   { border-left-color: var(--rust); }
+.section-banner.sungga-style { border-left-color: var(--mustard); }
 
 /* 노래 목록 */
 .song-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
 .song-card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   padding: 16px 20px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: transform .15s, box-shadow .15s;
-  border: 2px solid transparent;
+  transition: transform .15s, border-color .15s;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.song-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
-.song-card.selected-gayo   { border-color: #f09070; background: #fff8f5; }
-.song-card.selected-sungga { border-color: #c89030; background: #fffcf0; }
-.song-card-info .song-title  { font-size: 1.1rem; font-weight: 700; color: #444; }
-.song-card-info .song-artist { font-size: 0.82rem; color: #999; margin-top: 3px; }
-.song-key-tag {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 12px;
-  white-space: nowrap;
+.song-card:hover { transform: translateY(-2px); border-color: var(--wood-light); }
+.song-card.selected-gayo   { border-color: var(--rust); background: var(--rust-bg); }
+.song-card.selected-sungga { border-color: var(--mustard); background: var(--mustard-bg); }
+.song-card-info .song-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.3px;
 }
-.gayo-key-tag   { background: #ffdec8; color: #c85020; }
-.sungga-key-tag { background: #ffecc0; color: #a07010; }
+.song-card-info .song-artist {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-style: italic;
+}
+.song-key-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+.gayo-key-tag   { background: var(--rust-bg); color: var(--rust-text); }
+.sungga-key-tag { background: var(--mustard-bg); color: var(--mustard-text); }
 
 /* 노래 코너 — 코드 카드 선택 상태 */
-.chord-card.selected-gayo   { border-color: #f09070; background: #fff8f5; }
-.chord-card.selected-sungga { border-color: #c89030; background: #fffcf0; }
+.chord-card.selected-gayo   { border-color: var(--rust); background: var(--rust-bg); }
+.chord-card.selected-sungga { border-color: var(--mustard); background: var(--mustard-bg); }
 
 /* 노래 제목 헤더 */
 .song-header-block {
-  border-radius: 14px;
-  padding: 14px 18px;
-  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
 }
-.gayo-song-header   { background: #fff8f5; border: 2px solid #ffc8a8; }
-.sungga-song-header { background: #fffcf0; border: 2px solid #e8c87a; }
-.song-header-left .song-header-title  { font-size: 1.2rem; font-weight: 800; color: #444; }
-.song-header-left .song-header-artist { font-size: 0.82rem; color: #aaa; margin-top: 3px; }
-.song-header-badge {
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 12px;
+.gayo-song-header   { background: var(--rust-bg); border: 1px solid var(--rust); }
+.sungga-song-header { background: var(--mustard-bg); border: 1px solid var(--mustard); }
+.song-header-left .song-header-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.3px;
 }
-.gayo-song-header   .song-header-badge { background: #ffdec8; color: #c85020; }
-.sungga-song-header .song-header-badge { background: #ffecc0; color: #a07010; }
+.song-header-left .song-header-artist {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-style: italic;
+}
+.song-header-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+}
+.gayo-song-header   .song-header-badge { background: var(--rust); color: var(--paper); }
+.sungga-song-header .song-header-badge { background: var(--mustard); color: var(--paper); }
 
 /* 곡 선택 목록 */
-.song-list-view { display: flex; flex-direction: column; gap: 32px; margin-bottom: 8px; }
+.song-list-view { display: flex; flex-direction: column; gap: 28px; margin-bottom: 8px; }
 .song-pick-card {
-  border-radius: 14px;
-  padding: 16px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
   cursor: pointer;
-  transition: transform .15s, box-shadow .15s;
+  transition: transform .15s, border-color .15s;
 }
-.song-pick-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
-.gayo-pick   { background: #fff8f5; border: 2px solid #ffc8a8; }
-.sungga-pick { background: #fffcf0; border: 2px solid #e8c87a; }
-.song-pick-left .song-pick-title  { font-size: 1.15rem; font-weight: 800; color: #444; }
-.song-pick-left .song-pick-artist { font-size: 0.82rem; color: #aaa; margin-top: 3px; }
+.song-pick-card:hover { transform: translateY(-2px); border-color: var(--wood-light); }
+.gayo-pick   { border-color: var(--rust); background: var(--rust-bg); }
+.sungga-pick { border-color: var(--mustard); background: var(--mustard-bg); }
+.song-pick-left .song-pick-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.3px;
+}
+.song-pick-left .song-pick-artist {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-style: italic;
+}
 .song-pick-badge {
-  font-size: 0.78rem; font-weight: 700;
-  padding: 4px 12px; border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem; font-weight: 500;
+  padding: 4px 10px; border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
 }
-.gayo-pick   .song-pick-badge { background: #ffdec8; color: #c85020; }
-.sungga-pick .song-pick-badge { background: #ffecc0; color: #a07010; }
-.song-pick-card::after { content: '›'; font-size: 1.4rem; color: #ccc; margin-left: auto; padding-left: 8px; }
+.gayo-pick   .song-pick-badge { background: var(--rust); color: var(--paper); }
+.sungga-pick .song-pick-badge { background: var(--mustard); color: var(--paper); }
+.song-pick-card::after { content: '›'; font-size: 1.4rem; color: var(--ink-soft); margin-left: auto; padding-left: 8px; }
 
 /* 곡 상세 뒤로가기 버튼 */
 .song-back-btn {
   display: inline-flex; align-items: center; gap: 6px;
-  border: none; border-radius: 20px;
-  padding: 8px 18px; margin-bottom: 16px;
-  font-size: 0.88rem; font-weight: 700;
-  cursor: pointer; transition: opacity .15s;
+  border: 1px solid;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  padding: 7px 16px; margin-bottom: 18px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem; font-weight: 500;
+  cursor: pointer; transition: all .15s;
 }
-.song-back-btn:hover { opacity: .8; }
-.gayo-back   { background: #f09070; color: #fff; }
-.sungga-back { background: #c89030; color: #fff; }
+.song-back-btn:hover { color: var(--paper); }
+.gayo-back   { border-color: var(--rust); color: var(--rust-text); }
+.gayo-back:hover { background: var(--rust); }
+.sungga-back { border-color: var(--mustard); color: var(--mustard-text); }
+.sungga-back:hover { background: var(--mustard); }
 
 /* 노래 상세 패널 */
 .song-detail-panel {
-  background: #fff;
-  border-radius: 20px;
-  padding: 26px 24px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
   margin-top: 4px;
   display: none;
 }
 .song-detail-panel.active { display: block; }
-.song-detail-title  { font-size: 1.6rem; font-weight: 800; color: #5a5fcf; margin-bottom: 4px; }
-.song-detail-artist { font-size: 0.88rem; color: #aaa; margin-bottom: 14px; }
-.song-detail-meta   { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.song-detail-title  {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.song-detail-artist {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.song-detail-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
 .song-meta-badge {
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 12px;
-  background: #f0eeff;
-  color: #7070c8;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--sand);
+  color: var(--espresso);
+  letter-spacing: 0.5px;
 }
 .song-sections { display: flex; flex-direction: column; gap: 14px; }
 .song-section-block {
-  border-radius: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   padding: 14px 18px;
 }
-.gayo-section-block   { background: #fff8f5; border-left: 4px solid #f09070; }
-.sungga-section-block { background: #fffcf0; border-left: 4px solid #c89030; }
+.gayo-section-block   { background: var(--paper); border-left: 3px solid var(--rust); }
+.sungga-section-block { background: var(--paper); border-left: 3px solid var(--mustard); }
 .song-section-label {
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #bbb;
+  letter-spacing: 1.2px;
+  color: var(--ink-soft);
   margin-bottom: 10px;
 }
 .chord-token-row {
@@ -968,15 +1205,16 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
 .chord-token {
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 500;
 }
-.gayo-section-block   .chord-token { background: #ffdec8; color: #c85020; }
-.sungga-section-block .chord-token { background: #ffecc0; color: #a07010; }
+.gayo-section-block   .chord-token { background: var(--rust-bg); color: var(--rust-text); }
+.sungga-section-block .chord-token { background: var(--mustard-bg); color: var(--mustard-text); }
 .section-divider-label {
   font-size: 0.78rem;
-  color: #ccc;
+  color: var(--ink-soft);
   margin: 8px 0 4px;
   font-style: italic;
 }
@@ -986,8 +1224,8 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
  
 <!-- ══════════════ 공통 헤더 ══════════════ -->
 <header>
-  <h1>⛪수성성당 주일학교⛪</h1>
-  <p>동아리 클래스 - 🎸기타🎸</p>
+  <h1>수성성당 주일학교</h1>
+  <p>GUITAR · CLASS</p>
 </header>
  
 <!-- 코너 내부 뒤로가기 + 코너 이동 바 -->
@@ -1001,11 +1239,11 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
  
 <!-- ══════════════ 홈 화면 ══════════════ -->
 <div id="homeScreen">
-  <div style="padding: 28px 18px 10px; text-align:center;">
-    <h2 style="font-size:1.3rem; color:#6060c8; margin-bottom:8px;">코너를 선택하세요</h2>
-    <p style="color:#9090b8; font-size:0.9rem;">나의 레벨에 맞는 코너로 입장!</p>
+  <div class="home-intro">
+    <h2>코너를 선택하세요</h2>
+    <p>나의 레벨에 맞는 코너로 입장!</p>
   </div>
-  <div class="corner-grid" style="padding: 18px 18px 60px; max-width: 960px; margin: 0 auto;">
+  <div class="corner-grid">
  
     <!-- 기타 기초 -->
     <div class="corner-card card-basics" onclick="enterCorner('basics')">
@@ -1118,7 +1356,7 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
  
   <!-- ── 기타 기초 ── -->
   <div id="learn-basics" class="section">
-    <div class="section-banner" style="background:linear-gradient(120deg,#e0f8ea,#f0fff4);border-left:5px solid #60b880;">
+    <div class="section-banner basics-style">
       <div class="banner-icon">📖</div>
       <div>
         <h2>기타 기초</h2>
@@ -1311,25 +1549,19 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
         </div>
         <div class="gauge-svg-wrap">
           <svg id="tunerGaugeSvg" width="320" height="180" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-            <!-- 배경 호 -->
-            <path d="M 30 160 A 130 130 0 0 1 290 160" fill="none" stroke="#f0f0f0" stroke-width="18" stroke-linecap="round"/>
-            <!-- 색상 구간 호 (flat/sharp) -->
-            <path id="gaugeArcFlat"  d="M 30 160 A 130 130 0 0 1 110 52"  fill="none" stroke="#fce8c8" stroke-width="18" stroke-linecap="round"/>
-            <path id="gaugeArcSharp" d="M 210 52 A 130 130 0 0 1 290 160" fill="none" stroke="#fce8e8" stroke-width="18" stroke-linecap="round"/>
-            <!-- 인 튠 구간 -->
-            <path d="M 140 34 A 130 130 0 0 1 180 34" fill="none" stroke="#c8f0e0" stroke-width="18" stroke-linecap="round"/>
-            <!-- 눈금 -->
-            <line x1="30"  y1="160" x2="44"  y2="160" stroke="#ddd" stroke-width="2"/>
-            <line x1="290" y1="160" x2="276" y2="160" stroke="#ddd" stroke-width="2"/>
-            <line x1="160" y1="30"  x2="160" y2="44"  stroke="#60c8b8" stroke-width="2.5"/>
-            <!-- 눈금 텍스트 -->
-            <text x="22"  y="150" font-size="11" fill="#c0c0c0" text-anchor="middle" font-family="sans-serif">-50</text>
-            <text x="298" y="150" font-size="11" fill="#c0c0c0" text-anchor="middle" font-family="sans-serif">+50</text>
-            <text x="160" y="22"  font-size="11" fill="#60c8b8" text-anchor="middle" font-family="sans-serif">0</text>
-            <!-- 바늘 -->
+            <path d="M 30 160 A 130 130 0 0 1 290 160" fill="none" stroke="#E5D9C0" stroke-width="18" stroke-linecap="round"/>
+            <path id="gaugeArcFlat"  d="M 30 160 A 130 130 0 0 1 110 52"  fill="none" stroke="#EBD5A8" stroke-width="18" stroke-linecap="round"/>
+            <path id="gaugeArcSharp" d="M 210 52 A 130 130 0 0 1 290 160" fill="none" stroke="#E5BFB0" stroke-width="18" stroke-linecap="round"/>
+            <path d="M 140 34 A 130 130 0 0 1 180 34" fill="none" stroke="#C4D1C5" stroke-width="18" stroke-linecap="round"/>
+            <line x1="30"  y1="160" x2="44"  y2="160" stroke="#D4C4A0" stroke-width="2"/>
+            <line x1="290" y1="160" x2="276" y2="160" stroke="#D4C4A0" stroke-width="2"/>
+            <line x1="160" y1="30"  x2="160" y2="44"  stroke="#5C7A6F" stroke-width="2.5"/>
+            <text x="22"  y="150" font-size="11" fill="#8B7355" text-anchor="middle" font-family="'SF Mono', Menlo, monospace">-50</text>
+            <text x="298" y="150" font-size="11" fill="#8B7355" text-anchor="middle" font-family="'SF Mono', Menlo, monospace">+50</text>
+            <text x="160" y="22"  font-size="11" fill="#5C7A6F" text-anchor="middle" font-family="'SF Mono', Menlo, monospace">0</text>
             <line id="tunerNeedle" x1="160" y1="160" x2="160" y2="48"
-                  stroke="#7878d0" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="160" cy="160" r="7" fill="#7878d0"/>
+                  stroke="#3D3022" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="160" cy="160" r="7" fill="#3D3022"/>
           </svg>
         </div>
         <div class="tuner-status-row">
@@ -1407,11 +1639,11 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
           <div class="song-section-label">Verse</div>
           <div class="chord-token-row">
             <span class="chord-token">Am</span>
-            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span style="align-self:center;color:var(--ink-soft);">→</span>
             <span class="chord-token">C</span>
-            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span style="align-self:center;color:var(--ink-soft);">→</span>
             <span class="chord-token">G</span>
-            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span style="align-self:center;color:var(--ink-soft);">→</span>
             <span class="chord-token">D</span>
           </div>
           <div class="chord-grid" id="iveVerseGrid"></div>
@@ -1423,11 +1655,11 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
           <div class="song-section-label">Chorus</div>
           <div class="chord-token-row">
             <span class="chord-token">Am</span>
-            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span style="align-self:center;color:var(--ink-soft);">→</span>
             <span class="chord-token">D</span>
-            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span style="align-self:center;color:var(--ink-soft);">→</span>
             <span class="chord-token">G</span>
-            <span style="align-self:center;color:#ccc;font-weight:700;">→</span>
+            <span style="align-self:center;color:var(--ink-soft);">→</span>
             <span class="chord-token">Em</span>
           </div>
           <div class="chord-grid" id="iveChorusGrid"></div>
@@ -1444,10 +1676,10 @@ header p  { color: #9090c0; margin-top: 5px; font-size: 0.9rem; }
           </div>
           <span class="song-header-badge">3 Capo: C·Am·FM7·G / 1 Capo: D·Bm7·G·A</span>
         </div>
-        <div style="padding:4px 0 2px; font-size:0.8rem; font-weight:700; color:#c85020;">🎸 Ver.1 — 3 Capo (C · Am · FM7 · G)</div>
+        <div style="padding:4px 0 2px; font-size:0.8rem; font-weight:700; color:var(--rust-text);">🎸 Ver.1 — 3 Capo (C · Am · FM7 · G)</div>
         <div class="chord-grid" id="babyV1ChordGrid"></div>
         <div class="detail-panel" id="babyV1ChordDetail"></div>
-        <div style="padding:12px 0 2px; font-size:0.8rem; font-weight:700; color:#c85020;">🎸 Ver.2 — 1 Capo (D · Bm7 · G · A)</div>
+        <div style="padding:12px 0 2px; font-size:0.8rem; font-weight:700; color:var(--rust-text);">🎸 Ver.2 — 1 Capo (D · Bm7 · G · A)</div>
         <div class="chord-grid" id="babyV2ChordGrid"></div>
         <div class="detail-panel" id="babyV2ChordDetail"></div>
       </div>
@@ -2011,14 +2243,14 @@ const CORNERS = {
  
 let currentCorner = null;
  
-// 코너별 버튼 스타일 정보
+// 코너별 버튼 스타일 정보 (따뜻한 아날로그 톤)
 const CORNER_NAV_STYLE = {
-  basics:      { bg:'#60b880', color:'#fff', border:'#40a060' },
-  beginner:    { bg:'#7ab0f0', color:'#fff', border:'#5898e0' },
-  beginnerPlus:{ bg:'#f0c060', color:'#fff', border:'#d8a840' },
-  advanced:    { bg:'#f08aaa', color:'#fff', border:'#d86890' },
-  tuner:       { bg:'#60c8b8', color:'#fff', border:'#40a898' },
-  songs:       { bg:'#f09070', color:'#fff', border:'#d87050' },
+  basics:      { bg:'#7A8B5C', color:'#FBF6EC', border:'#5A6B40' },
+  beginner:    { bg:'#8B6F47', color:'#FBF6EC', border:'#6A532F' },
+  beginnerPlus:{ bg:'#C49A4E', color:'#FBF6EC', border:'#9E7A35' },
+  advanced:    { bg:'#A85742', color:'#FBF6EC', border:'#854231' },
+  tuner:       { bg:'#5C7A6F', color:'#FBF6EC', border:'#3F5950' },
+  songs:       { bg:'#B8704F', color:'#FBF6EC', border:'#8E5538' },
 };
 
 function renderCornerNav(currentKey) {
@@ -2027,8 +2259,8 @@ function renderCornerNav(currentKey) {
     const style = CORNER_NAV_STYLE[key];
     const isCurrent = key === currentKey;
     const btnStyle = isCurrent
-      ? `background:${style.bg};color:#fff;border-color:${style.border};box-shadow:0 2px 8px ${style.bg}88;`
-      : `background:${style.bg}1a;color:#ccc;border-color:${style.border}33;`;
+      ? `background:${style.bg};color:${style.color};border-color:${style.border};`
+      : `background:transparent;color:${style.bg};border-color:${style.bg}55;`;
     return `<button class="corner-nav-btn${isCurrent ? ' nav-current' : ''}"
               style="${btnStyle}"
               onclick="${isCurrent ? '' : `enterCorner('${key}')`}">
@@ -2125,24 +2357,24 @@ function buildDiagram(chord, size = 160) {
   }
   let svg = `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}" xmlns="http://www.w3.org/2000/svg">`;
   if (labelFret > 1) {
-    svg += `<text x="${sx-4}" y="${sy+(minFret-startFret+0.5)*rs}" font-size="${S*0.075}" fill="#aaa" text-anchor="end" dominant-baseline="middle" font-family="sans-serif">${labelFret}fr</text>`;
+    svg += `<text x="${sx-4}" y="${sy+(minFret-startFret+0.5)*rs}" font-size="${S*0.075}" fill="#8B7355" text-anchor="end" dominant-baseline="middle" font-family="'SF Mono', Menlo, monospace">${labelFret}fr</text>`;
   } else {
-    svg += `<rect x="${sx}" y="${sy-4}" width="${sw}" height="5" rx="2" fill="#999"/>`;
+    svg += `<rect x="${sx}" y="${sy-4}" width="${sw}" height="5" rx="2" fill="#3D3022"/>`;
   }
   for (let i = 0; i <= 4; i++) {
     const y = sy + i * rs;
-    svg += `<line x1="${sx}" y1="${y}" x2="${sx+sw}" y2="${y}" stroke="#ccc" stroke-width="1.5"/>`;
+    svg += `<line x1="${sx}" y1="${y}" x2="${sx+sw}" y2="${y}" stroke="#D4C4A0" stroke-width="1.5"/>`;
   }
   for (let s = 0; s < 6; s++) {
     const x = sx + s * cs;
-    svg += `<line x1="${x}" y1="${sy}" x2="${x}" y2="${sy+sh}" stroke="#ccc" stroke-width="1.2"/>`;
+    svg += `<line x1="${x}" y1="${sy}" x2="${x}" y2="${sy+sh}" stroke="#A89578" stroke-width="1.2"/>`;
   }
   if (chord.barre) {
     const b = chord.barre, bfret = b.fret - startFret;
     if (bfret >= 0 && bfret < 4) {
       const y = sy + (bfret+0.5)*rs;
       const x1 = sx + (6-b.from)*cs, x2 = sx + (6-b.to)*cs;
-      svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#c090e0" stroke-width="${S*0.065}" stroke-linecap="round" opacity="0.65"/>`;
+      svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#A85742" stroke-width="${S*0.065}" stroke-linecap="round" opacity="0.7"/>`;
     }
   }
   const drawn = new Set();
@@ -2153,21 +2385,21 @@ function buildDiagram(chord, size = 160) {
     const relFret = fret - startFret;
     if (relFret < 0 || relFret >= 4) return;
     const x = sx + (6-str)*cs, y = sy + (relFret+0.5)*rs;
-    svg += `<circle cx="${x}" cy="${y}" r="${S*0.055}" fill="#7878d0"/>`;
-    svg += `<text x="${x}" y="${y+S*0.02}" font-size="${S*0.075}" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="bold" font-family="sans-serif">${f}</text>`;
+    svg += `<circle cx="${x}" cy="${y}" r="${S*0.055}" fill="#3D3022"/>`;
+    svg += `<text x="${x}" y="${y+S*0.02}" font-size="${S*0.075}" fill="#FBF6EC" text-anchor="middle" dominant-baseline="middle" font-weight="500" font-family="'SF Mono', Menlo, monospace">${f}</text>`;
   });
   for (let s = 0; s < 6; s++) {
     const f = chord.frets[5-s], x = sx+s*cs, y = sy-S*0.08;
     if (f === -1) {
-      svg += `<text x="${x}" y="${y+S*0.01}" font-size="${S*0.09}" fill="#e09090" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif">✕</text>`;
+      svg += `<text x="${x}" y="${y+S*0.01}" font-size="${S*0.09}" fill="#A85742" text-anchor="middle" dominant-baseline="middle" font-family="serif">×</text>`;
     } else if (f === 0) {
-      svg += `<circle cx="${x}" cy="${y}" r="${S*0.044}" fill="none" stroke="#80c090" stroke-width="1.8"/>`;
+      svg += `<circle cx="${x}" cy="${y}" r="${S*0.044}" fill="none" stroke="#7A8B5C" stroke-width="1.8"/>`;
     }
   }
   const strNames = ['E','A','D','G','B','e'];
   for (let s = 0; s < 6; s++) {
     const x = sx+s*cs, y = sy+sh+S*0.08;
-    svg += `<text x="${x}" y="${y}" font-size="${S*0.065}" fill="#ccc" text-anchor="middle" font-family="sans-serif">${strNames[s]}</text>`;
+    svg += `<text x="${x}" y="${y}" font-size="${S*0.065}" fill="#8B7355" text-anchor="middle" font-family="'SF Mono', Menlo, monospace">${strNames[s]}</text>`;
   }
   svg += `</svg>`;
   return svg;
@@ -2554,9 +2786,9 @@ function setNeedle(cents) {
     needle.setAttribute('x2', x2.toFixed(1));
     needle.setAttribute('y2', y2.toFixed(1));
     const inTune = Math.abs(cents) <= 5;
-    needle.setAttribute('stroke', inTune ? '#60c8b8' : '#7878d0');
+    needle.setAttribute('stroke', inTune ? '#5C7A6F' : '#3D3022');
     document.querySelector('#tunerGaugeSvg circle').setAttribute('fill',
-      inTune ? '#60c8b8' : '#7878d0');
+      inTune ? '#5C7A6F' : '#3D3022');
   }
 }
 // ═══════════════════════════════════════════════════════════════
