@@ -914,23 +914,6 @@ header p {
 .sound-btn:hover  { background: var(--sand); }
 .sound-btn:active { background: var(--sand-deep); }
 
-.card-sound-btn {
-  display: block;
-  margin: 6px auto 0;
-  padding: 3px 10px;
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: all .15s;
-  user-select: none;
-  letter-spacing: 0.5px;
-}
-.card-sound-btn:hover { background: var(--sand); color: var(--espresso); }
 
 .chord-token {
   cursor: pointer;
@@ -950,7 +933,7 @@ header p {
   padding: 10px 16px;
   background: var(--paper);
   border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .strum-mode-label {
   font-family: var(--font-mono);
@@ -962,7 +945,7 @@ header p {
   text-transform: uppercase;
 }
 .strum-mode-btn {
-  padding: 5px 14px;
+  padding: 5px 9px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   font-family: var(--font-sans);
@@ -2431,9 +2414,6 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
       <div class="chord-type">${c.type === 'open' ? 'Open Chord' : 'Barre Chord'}</div>
       <h3>${c.name}</h3>
       <div>${buildDiagram(c, 100)}</div>
-      <button class="card-sound-btn"
-              onclick="event.stopPropagation(); playChordSoundByName('${c.name}','${sectionType}')"
-              title="소리 듣기">🔊 듣기</button>
     </div>
   `).join('');
 }
@@ -2469,9 +2449,9 @@ function showDetail(name, sectionType) {
       </ul>
       <div class="tip-box">💡 ${c.tip}</div>
       <div class="strum-mode-bar">
-        <span class="strum-mode-label">🎸 소리 듣기:</span>
-        <button class="strum-mode-btn${_strumGap === 0.015 ? ' active' : ''}" id="strumBtnFast" onclick="setStrumModeAndPlay('fast','${c.name}','${sectionType}')">⚡ 스트로크</button>
-        <button class="strum-mode-btn${_strumGap !== 0.015 ? ' active' : ''}" id="strumBtnArpeggio" onclick="setStrumModeAndPlay('arpeggio','${c.name}','${sectionType}')">🎵 아르페지오</button>
+        <span class="strum-mode-label">소리 듣기:</span>
+        <button class="strum-mode-btn${_strumGap === 0.015 ? ' active' : ''}" id="strumBtnFast" onclick="setStrumModeAndPlay('fast','${c.name}','${sectionType}')">스트로크</button>
+        <button class="strum-mode-btn${_strumGap !== 0.015 ? ' active' : ''}" id="strumBtnArpeggio" onclick="setStrumModeAndPlay('arpeggio','${c.name}','${sectionType}')">아르페지오</button>
       </div>
     </div>
   `;
@@ -2816,7 +2796,7 @@ function _unlockAudio() {
   if (_audioUnlocked) return;
   _audioUnlocked = true;
   const ctx = _getChordCtx();
-  // 1샘플 무음 버퍼 재생으로 iOS 오디오 시스템 잠금 해제
+  // 1샘플 무음 버퍼 재생으로 iOS/Android 오디오 시스템 잠금 해제
   const buf = ctx.createBuffer(1, 1, ctx.sampleRate);
   const src = ctx.createBufferSource();
   src.buffer = buf;
@@ -2825,9 +2805,10 @@ function _unlockAudio() {
   // 잠금 해제 후 리버브 버퍼 미리 생성 (첫 재생 딜레이 방지)
   ctx.resume().then(() => _getChordReverb(ctx));
 }
-document.addEventListener('touchstart', _unlockAudio, { passive: true });
-document.addEventListener('touchend',   _unlockAudio, { passive: true });
-document.addEventListener('click',      _unlockAudio);
+document.addEventListener('touchstart',  _unlockAudio, { passive: true });
+document.addEventListener('touchend',    _unlockAudio, { passive: true });
+document.addEventListener('pointerdown', _unlockAudio, { passive: true });
+document.addEventListener('click',       _unlockAudio);
 
 // 합성 리버브 임펄스 응답 생성 (외부 파일 없음)
 function _getChordReverb(ctx) {
@@ -2900,45 +2881,53 @@ function setStrumMode(mode) {
 }
 
 function setStrumModeAndPlay(mode, chordName, sectionType) {
+  _unlockAudio();
   setStrumMode(mode);
   playChordSoundByName(chordName, sectionType);
 }
 
 // 코드 전체 재생 — 6번줄→1번줄 순서로 스트로크
-async function playChordSound(chord) {
+function playChordSound(chord) {
   if (!chord || !chord.frets) return;
 
   const ctx = _getChordCtx();
-  if (ctx.state === 'suspended') await ctx.resume();
-
   _stopActiveSound();
 
-  // 드라이/웨트 믹스 버스
-  const dryGain = ctx.createGain();
-  dryGain.gain.value = 0.78;
-  dryGain.connect(ctx.destination);
+  const doPlay = () => {
+    // 드라이/웨트 믹스 버스
+    const dryGain = ctx.createGain();
+    dryGain.gain.value = 0.78;
+    dryGain.connect(ctx.destination);
 
-  const wetGain = ctx.createGain();
-  wetGain.gain.value = 0.22;
-  const reverb = _getChordReverb(ctx);
-  wetGain.connect(reverb);
-  reverb.connect(ctx.destination);
+    const wetGain = ctx.createGain();
+    wetGain.gain.value = 0.22;
+    const reverb = _getChordReverb(ctx);
+    wetGain.connect(reverb);
+    reverb.connect(ctx.destination);
 
-  const DECAY     = 2.5;
-  const STRUM_GAP = _strumGap;
+    const DECAY     = 2.5;
+    const STRUM_GAP = _strumGap;
 
-  let t = ctx.currentTime + 0.10;
-  for (let i = 5; i >= 0; i--) {
-    const fret = chord.frets[i];
-    if (fret === -1) continue;
-    const freq = STRING_OPEN_FREQS[i] * Math.pow(2, fret / 12);
-    _pluckString(ctx, freq, t, DECAY, dryGain, wetGain);
-    t += STRUM_GAP;
+    let t = ctx.currentTime + 0.15;
+    for (let i = 5; i >= 0; i--) {
+      const fret = chord.frets[i];
+      if (fret === -1) continue;
+      const freq = STRING_OPEN_FREQS[i] * Math.pow(2, fret / 12);
+      _pluckString(ctx, freq, t, DECAY, dryGain, wetGain);
+      t += STRUM_GAP;
+    }
+
+    // 소리가 완전히 감쇠된 후 버스 노드 연결 해제 (audio graph 누적 방지)
+    const cleanupMs = (DECAY + STRUM_GAP * 6 + 0.3) * 1000;
+    setTimeout(() => { dryGain.disconnect(); wetGain.disconnect(); }, cleanupMs);
+  };
+
+  // iOS/Android: 제스처 체인 유지를 위해 resume을 동기 호출 후 .then()으로 재생
+  if (ctx.state === 'suspended') {
+    ctx.resume().then(doPlay);
+  } else {
+    doPlay();
   }
-
-  // 소리가 완전히 감쇠된 후 버스 노드 연결 해제 (audio graph 누적 방지)
-  const cleanupMs = (DECAY + STRUM_GAP * 6 + 0.3) * 1000;
-  setTimeout(() => { dryGain.disconnect(); wetGain.disconnect(); }, cleanupMs);
 }
 
 // sectionType 기반 코드 검색 후 재생 (카드·상세 패널용)
