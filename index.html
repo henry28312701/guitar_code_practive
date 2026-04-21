@@ -1270,14 +1270,7 @@ header p {
   transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
   letter-spacing: 0.1px;
 }
-.song-back-btn::before {
-  content: '←';
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  transition: transform var(--t-fast) var(--ease);
-}
 .song-back-btn:hover { color: var(--paper); }
-.song-back-btn:hover::before { transform: translateX(-2px); }
 .gayo-back   { border-color: var(--rust); color: var(--rust-text); }
 .gayo-back:hover   { background: var(--rust); }
 .sungga-back { border-color: var(--mustard); color: var(--mustard-text); }
@@ -1859,6 +1852,18 @@ header p {
           <div class="song-pick-artist">Justin Bieber · 카포가 필요해요!!</div>
         </div>
       </div>
+      <div class="song-pick-card gayo-pick" onclick="selectSong('toxic')">
+        <div class="song-pick-left">
+          <div class="song-pick-title">toxic till the end</div>
+          <div class="song-pick-artist">ROSÉ</div>
+        </div>
+      </div>
+      <div class="song-pick-card gayo-pick" onclick="selectSong('nakwon')">
+        <div class="song-pick-left">
+          <div class="song-pick-title">소문의 낙원</div>
+          <div class="song-pick-artist">AKMU</div>
+        </div>
+      </div>
     </div>
 
     <!-- 선택된 곡 코드 영역 -->
@@ -1936,6 +1941,32 @@ header p {
         <div style="padding:12px 0 2px; font-size:0.8rem; font-weight:700; color:var(--rust-text);">🎸 Ver.2 — 1 Capo (D · Bm7 · G · A)</div>
         <div class="chord-grid" id="babyV2ChordGrid"></div>
         <div class="detail-panel" id="babyV2ChordDetail"></div>
+      </div>
+
+      <!-- toxic till the end -->
+      <div id="toxicArea" class="song-area" style="display:none">
+        <div class="song-header-block gayo-song-header">
+          <div class="song-header-left">
+            <div class="song-header-title">toxic till the end</div>
+            <div class="song-header-artist">ROSÉ</div>
+          </div>
+          <span class="song-header-badge">C · D · G · Em7</span>
+        </div>
+        <div class="chord-grid" id="toxicChordGrid"></div>
+        <div class="detail-panel" id="toxicChordDetail"></div>
+      </div>
+
+      <!-- 소문의 낙원 -->
+      <div id="nakwonArea" class="song-area" style="display:none">
+        <div class="song-header-block gayo-song-header">
+          <div class="song-header-left">
+            <div class="song-header-title">소문의 낙원</div>
+            <div class="song-header-artist">AKMU</div>
+          </div>
+          <span class="song-header-badge">C · Dm · D7 · FM7 · G · A · Am7</span>
+        </div>
+        <div class="chord-grid" id="nakwonChordGrid"></div>
+        <div class="detail-panel" id="nakwonChordDetail"></div>
       </div>
     </div>
   </div>
@@ -2426,6 +2457,50 @@ const CHORDS_BABY_V2 = [
     tip:'5번 줄(A)부터 스트로크!! 손가락 3개를 세로로 가지런히.' },
 ];
 
+// ─── toxic till the end — ROSÉ (C-D-G2-Em7_2) ───
+const CHORDS_TOXIC = [
+  { name:'C', type:'open', frets:[0,1,0,2,3,-1], fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+  { name:'Cadd9', type:'open', frets:[3,3,0,2,3,-1], fingers:[[1,4,2],[2,5,3],[3,2,3],[4,1,3]], open:[3], mute:[6],
+    guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'D', type:'open', frets:[2,3,2,0,-1,-1], fingers:[[1,3,2],[2,1,2],[3,2,3]], open:[4], mute:[5,6],
+    guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  { name:'G(2형)', type:'open', frets:[3,3,0,0,2,3], fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]], open:[3,4], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+  { name:'Em7(2형)', type:'open', frets:[3,3,0,2,2,0], fingers:[[1,5,2],[2,4,2],[3,2,3],[4,1,3]], open:[3,6], mute:[],
+    guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·6번 줄은 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+];
+
+// ─── 소문의 낙원 — AKMU (C-Dm-D7-FM7-G-A-Am7) ───
+const CHORDS_NAKWON = [
+  { name:'C', type:'open', frets:[0,1,0,2,3,-1], fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+  { name:'Dm', type:'open', frets:[1,3,2,0,-1,-1], fingers:[[1,1,1],[2,3,2],[3,2,3]], open:[4], mute:[5,6],
+    guide:['1번 손가락 → 1번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  { name:'D7', type:'open', frets:[2,1,2,0,-1,-1], fingers:[[1,2,1],[2,1,2],[3,3,2]], open:[4], mute:[5,6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','4번 줄 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  { name:'FM7', type:'open', frets:[0,1,2,3,-1,-1], fingers:[[1,2,1],[2,3,2],[3,4,3]], open:[1], mute:[5,6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 4번 줄 3프렛','1번 줄은 개방'],
+    tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  { name:'G', type:'open', frets:[3,0,0,0,2,3], fingers:[[2,6,3],[3,5,2],[4,1,3]], open:[2,3,4], mute:[],
+    guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
+    tip:'6번 줄(E)부터 스트로크!! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+  { name:'A', type:'open', frets:[0,2,2,2,0,-1], fingers:[[1,4,2],[2,3,2],[3,2,2]], open:[1,5], mute:[6],
+    guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 2프렛','1·5번 줄 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+  { name:'Am7', type:'open', frets:[0,1,0,2,0,-1], fingers:[[1,2,1],[2,4,2]], open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3·5번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+];
+
 // ═══════════════════════════════════════════════════
 //  코너 설정
 // ═══════════════════════════════════════════════════
@@ -2674,6 +2749,8 @@ const SECTION_META = {
   iveChorus:  { chordsRef:()=>CHORDS_IVE_CHORUS, selClass:'selected-gayo',    desc:'I AM (IVE) — Chorus: Am-D-G-Em',                  gridId:'iveChorusGrid',   panelId:'iveChorusDetail'   },
   babyv1:     { chordsRef:()=>CHORDS_BABY_V1,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.1 3 Capo',             gridId:'babyV1ChordGrid', panelId:'babyV1ChordDetail' },
   babyv2:     { chordsRef:()=>CHORDS_BABY_V2,    selClass:'selected-gayo',    desc:'Baby (Justin Bieber) — Ver.2 1 Capo',             gridId:'babyV2ChordGrid', panelId:'babyV2ChordDetail' },
+  toxic:      { chordsRef:()=>CHORDS_TOXIC,      selClass:'selected-gayo',    desc:'toxic till the end (ROSÉ) — 코드 연습',           gridId:'toxicChordGrid',  panelId:'toxicChordDetail'  },
+  nakwon:     { chordsRef:()=>CHORDS_NAKWON,     selClass:'selected-gayo',    desc:'소문의 낙원 (AKMU) — 코드 연습',                  gridId:'nakwonChordGrid', panelId:'nakwonChordDetail' },
   nalmada:    { chordsRef:()=>CHORDS_NALMADA,    selClass:'selected-sungga',  desc:'날마다 숨 쉬는 순간마다 (나주노 190) — 코드 연습', gridId:'sunggaChordGrid', panelId:'sunggaChordDetail' },
 };
  
@@ -2690,8 +2767,12 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
 }
  
 const _selectedChord = {};
+let _lastShowDetailTime = 0;
 
 function showDetail(name, sectionType) {
+  const now = Date.now();
+  if (now - _lastShowDetailTime < 400) return;
+  _lastShowDetailTime = now;
   const meta   = SECTION_META[sectionType];
   const chords = meta.chordsRef();
   const c      = chords.find(x => x.name === name);
@@ -2727,7 +2808,7 @@ function showDetail(name, sectionType) {
     </div>
   `;
   panel.classList.add('active');
-  panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  panel.scrollIntoView({ behavior:'auto', block:'nearest' });
 }
  
 // ─── 곡 선택 / 목록으로 ───
@@ -2741,9 +2822,11 @@ const SONG_RENDER = {
     renderGrid(CHORDS_BABY_V1, 'babyV1ChordGrid', null, 'babyv1');
     renderGrid(CHORDS_BABY_V2, 'babyV2ChordGrid', null, 'babyv2');
   },
+  toxic:     () => renderGrid(CHORDS_TOXIC,  'toxicChordGrid',  null, 'toxic'),
+  nakwon:    () => renderGrid(CHORDS_NAKWON, 'nakwonChordGrid', null, 'nakwon'),
   nalmada:   () => renderGrid(CHORDS_NALMADA, 'sunggaChordGrid', null, 'nalmada'),
 };
-const SONG_CORNER = { firstlove:'gayo', ive:'gayo', baby:'gayo', nalmada:'sungga' };
+const SONG_CORNER = { firstlove:'gayo', ive:'gayo', baby:'gayo', toxic:'gayo', nakwon:'gayo', nalmada:'sungga' };
 
 function selectSong(songKey) {
   const corner = SONG_CORNER[songKey];
