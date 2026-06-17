@@ -5,7 +5,32 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>🏠수성성당 주일학교🏠</title>
 <script>
-  /* standalone build: PWA disabled */
+  /* standalone build: PWA disabled — 남은 서비스워커/캐시 자동 정리 (구버전 캐시 방지) */
+  (function () {
+    try {
+      var clearCaches = function () {
+        if (window.caches && caches.keys) {
+          caches.keys().then(function (keys) {
+            keys.forEach(function (k) { caches.delete(k); });
+          }).catch(function () {});
+        }
+      };
+      if ('serviceWorker' in navigator && navigator.serviceWorker.getRegistrations) {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          var had = regs.length > 0;
+          regs.forEach(function (r) { r.unregister(); });
+          clearCaches();
+          // 정리할 서비스워커가 있었고, 이번 세션에서 아직 새로고침 안 했다면 1회만 새로고침
+          if (had && !sessionStorage.getItem('sw_cleaned')) {
+            sessionStorage.setItem('sw_cleaned', '1');
+            location.reload();
+          }
+        }).catch(function () { clearCaches(); });
+      } else {
+        clearCaches();
+      }
+    } catch (e) {}
+  })();
   </script>
 
 <style>
@@ -1403,6 +1428,20 @@ header p {
   cursor: pointer;
   background: transparent;
 }
+/* 정지 상태에서 유튜브 공유(사슬) 오버레이를 가리는 포스터 막 */
+.yt-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 9999px rgba(0,0,0,0.12);
+  transition: opacity var(--t-base) var(--ease);
+}
+.yt-cover.hidden { opacity: 0; }
 .yt-controls {
   display: flex;
   align-items: center;
@@ -3167,6 +3206,12 @@ function _setPlayIcon(playing) {
   btn.setAttribute('aria-label', playing ? '정지' : '재생');
 }
 
+// 재생 중에는 포스터 막을 치워 영상이 보이게, 정지 시에는 덮어서 공유 오버레이 가림
+function _setCover(show) {
+  const c = document.getElementById('ytCover');
+  if (c) c.classList.toggle('hidden', !show);
+}
+
 // ▶/⏸ 토글
 function _ytToggle() {
   if (!_ytPlayer || !_ytPlayer.getPlayerState) return;
@@ -3222,7 +3267,8 @@ function _createYtPlayer(videoId) {
       },
       onStateChange: (e) => {
         _setPlayIcon(e.data === 1);                  // 1=재생중 → ⏸, 그 외 → ▶
-        if (e.data === 1) _startYtTimer();           // 재생 시작 → 타이머 보장
+        if (e.data === 1) { _setCover(false); _startYtTimer(); }   // 재생 → 영상 표시
+        if (e.data === 2 || e.data === 0) _setCover(true);          // 정지/종료 → 포스터로 가림
         if (e.data === 0) _setSeekUI(1, true);       // 끝까지 재생됨
       }
     }
@@ -3254,7 +3300,7 @@ function renderSongAudio(songKey) {
   if (ytId) {
     block.innerHTML =
       '<div class="song-audio-label">🎧 음원 듣기</div>' +
-      '<div class="yt-video"><div id="ytPlayerHost"></div><div class="yt-shield" onclick="_ytToggle()"></div></div>' +
+      '<div class="yt-video"><div id="ytPlayerHost"></div><div class="yt-cover" id="ytCover" style="background-image:url(https://i.ytimg.com/vi/' + ytId + '/mqdefault.jpg)"></div><div class="yt-shield" onclick="_ytToggle()"></div></div>' +
       '<div class="yt-controls">' +
         '<button class="yt-play-btn" id="ytPlayBtn" onclick="_ytToggle()" aria-label="재생">' + _ICON_PLAY + '</button>' +
         '<div class="yt-seek" id="ytSeek"><div class="yt-seek-fill" id="ytSeekFill"></div><div class="yt-seek-handle" id="ytSeekHandle"></div></div>' +
