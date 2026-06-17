@@ -1386,6 +1386,7 @@ header p {
 .song-audio-empty { font-size: 0.82rem; color: var(--ink-mute); }
 /* YouTube 커스텀 플레이어 */
 .yt-video {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-sm);
@@ -1394,6 +1395,14 @@ header p {
   background: #000;
 }
 .yt-video iframe, .yt-video > div { width: 100%; height: 100%; border: 0; display: block; }
+/* 영상 위 투명 클릭 막 — 유튜브 자체 오버레이(공유·추천영상) 차단, 클릭 시 재생/정지 */
+.yt-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  cursor: pointer;
+  background: transparent;
+}
 .yt-controls {
   display: flex;
   align-items: center;
@@ -1413,6 +1422,7 @@ header p {
   transition: transform var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease);
   line-height: 1;
 }
+.yt-play-btn svg { width: 15px; height: 15px; fill: currentColor; display: block; }
 .yt-play-btn:hover { opacity: 0.88; }
 .yt-play-btn:active { transform: scale(0.94); }
 .yt-seek {
@@ -3146,6 +3156,17 @@ function _setSeekUI(ratio, updateTime) {
   }
 }
 
+// 재생/정지 아이콘 (같은 톤의 SVG — 이모지 아님)
+const _ICON_PLAY  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+const _ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="3.8" height="14" rx="1"/><rect x="13.7" y="5" width="3.8" height="14" rx="1"/></svg>';
+
+function _setPlayIcon(playing) {
+  const btn = document.getElementById('ytPlayBtn');
+  if (!btn) return;
+  btn.innerHTML = playing ? _ICON_PAUSE : _ICON_PLAY;
+  btn.setAttribute('aria-label', playing ? '정지' : '재생');
+}
+
 // ▶/⏸ 토글
 function _ytToggle() {
   if (!_ytPlayer || !_ytPlayer.getPlayerState) return;
@@ -3188,24 +3209,20 @@ function _createYtPlayer(videoId) {
   _ytPlayer = new YT.Player('ytPlayerHost', {
     videoId,
     host: 'https://www.youtube-nocookie.com',
-    playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 0, fs: 0, disablekb: 1, iv_load_policy: 3 },
     events: {
       onReady: (e) => {
         // Error 153 대비: 생성된 iframe에 referrerpolicy 명시
         try { e.target.getIframe().setAttribute('referrerpolicy', 'strict-origin-when-cross-origin'); } catch (_) {}
         const durEl = document.getElementById('ytDur');
         if (durEl) durEl.textContent = _fmtTime(e.target.getDuration() || 0);
+        _setPlayIcon(false);
         _setupYtSeek();
         _startYtTimer();
       },
       onStateChange: (e) => {
-        const btn = document.getElementById('ytPlayBtn');
-        if (btn) {
-          const playing = (e.data === 1);
-          btn.textContent = playing ? '⏸' : '▶';
-          btn.setAttribute('aria-label', playing ? '정지' : '재생');
-        }
-        if (e.data === 1) _startYtTimer();          // 재생 시작 → 타이머 보장
+        _setPlayIcon(e.data === 1);                  // 1=재생중 → ⏸, 그 외 → ▶
+        if (e.data === 1) _startYtTimer();           // 재생 시작 → 타이머 보장
         if (e.data === 0) _setSeekUI(1, true);       // 끝까지 재생됨
       }
     }
@@ -3237,9 +3254,9 @@ function renderSongAudio(songKey) {
   if (ytId) {
     block.innerHTML =
       '<div class="song-audio-label">🎧 음원 듣기</div>' +
-      '<div class="yt-video"><div id="ytPlayerHost"></div></div>' +
+      '<div class="yt-video"><div id="ytPlayerHost"></div><div class="yt-shield" onclick="_ytToggle()"></div></div>' +
       '<div class="yt-controls">' +
-        '<button class="yt-play-btn" id="ytPlayBtn" onclick="_ytToggle()" aria-label="재생">▶</button>' +
+        '<button class="yt-play-btn" id="ytPlayBtn" onclick="_ytToggle()" aria-label="재생">' + _ICON_PLAY + '</button>' +
         '<div class="yt-seek" id="ytSeek"><div class="yt-seek-fill" id="ytSeekFill"></div><div class="yt-seek-handle" id="ytSeekHandle"></div></div>' +
         '<div class="yt-time"><span id="ytCur">0:00</span> / <span id="ytDur">0:00</span></div>' +
       '</div>';
