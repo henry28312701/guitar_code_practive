@@ -1,12 +1,312 @@
+
+Claude가 응답을 완료했습니다
+
+SCDC-G.html
+html
+
+이 프로그램의 노래 연습 코너에서 각 노래 별 음원 재생이 가능하게 하고 싶어. 방법을 알려줘
+
+오후 2:07
+
+대용량 파일 구조를 파악하고 노래 연습 섹션을 분석했다
+대용량 파일 구조를 파악하고 노래 연습 섹션을 분석했다
+이 파일은 꽤 큰 웹앱이네요. 노래 연습 코너 부분의 구조를 먼저 파악하겠습니다.
+
+
+노래 선택 기능과 음원 재생 메커니즘을 분석했습니다
+노래 선택 기능과 음원 재생 메커니즘을 분석했습니다
+노래 코너의 상세 구조와 selectSong 함수를 살펴보겠습니다.
+
+
+음원 파일 위치 파악하려 궁리 중
+음원 파일 위치 파악하려 궁리 중
+이제 개별 노래 영역(song-area)의 구조를 보겠습니다.
+
+
+데이터 기반 구현 설계 중입니다
+데이터 기반 구현 설계 중입니다
+노래 섹션 CSS와 헤더 구조를 확인하겠습니다.
+
+
+음원 플레이어 구현 방식을 설계하고 코드를 작성했다
+음원 플레이어 구현 방식을 설계하고 코드를 작성했다
+성가 노래 영역(nalmada)도 같은 구조인지 확인합니다.
+
+
+구문 유효성 검증하고 오류 확인 중
+구문 유효성 검증하고 오류 확인 중
+구조를 모두 파악했습니다. 모든 노래 영역이 .song-header-block을 첫 요소로 갖고 있어서, 데이터 기반(data-driven) 방식으로 깔끔하게 구현할 수 있습니다. 노래 키만 채워 넣으면 자동으로 플레이어가 생기는 구조로 만들겠습니다.
+
+먼저 편집할 수 있도록 작업 폴더로 복사합니다.
+
+
+읽기전용 업로드 파일을 작업 폴더로 복사
+읽기전용 업로드 파일을 작업 폴더로 복사
+이제 세 군데를 수정하겠습니다. ① 플레이어 CSS 추가:
+
+
+노래 음원 플레이어 CSS 추가
+노래 음원 플레이어 CSS 추가
+② 음원 데이터 맵 + 플레이어 생성 함수 추가 (SONG_CORNER 바로 다음):
+
+
+음원 데이터 맵과 플레이어 렌더링 함수 추가
+음원 데이터 맵과 플레이어 렌더링 함수 추가
+③ selectSong에서 플레이어 생성, backToSongList에서 음원 정지:
+
+
+음원 재생 기능 구현을 위해 코드 검증했습니다
+음원 재생 기능 구현을 위해 코드 검증했습니다
+세 군데 수정이 모두 반영됐습니다. 마지막으로 변경 내용이 올바른지 확인하겠습니다.
+
+
+스크립트 검증하고 최종 확인했다
+스크립트 검증하고 최종 확인했다
+노드로 JS 문법까지 최종 검증하겠습니다.
+
+
+메인 스크립트 노드 문법 검사
+메인 스크립트 노드 문법 검사
+문법 검증까지 완료됐습니다. 완성된 파일을 전달합니다.
+
+
+Presented file
+Presented file
+노래 코너에 곡별 음원 플레이어를 넣었습니다. 곡을 선택하면 헤더 바로 아래에 플레이어가 자동으로 생기고, "← 곡 목록으로" 누르면 재생이 멈춥니다.
+
+작동 방식
+핵심은 곡을 추가할 때마다 HTML을 손대지 않도록 데이터 맵 한 곳만 채우면 되게 만든 점입니다. 스크립트 안의 SONG_AUDIO를 찾아 빈 따옴표만 채우면 됩니다:
+
+js
+const SONG_AUDIO = {
+  firstlove: '',
+  ive:       '',
+  ...
+};
+세 가지 방식 중 하나를 넣으면 됩니다.
+
+① 오디오 파일 (mp3 등) — HTML 옆에 audio 폴더를 만들어 파일을 두고 경로를 적습니다:
+
+js
+firstlove: 'audio/firstlove.mp3',
+네이티브 재생바(▶ ⏸ 볼륨)가 나타납니다. 인터넷 없이도 재생돼서 연습용으로 가장 깔끔합니다.
+
+② 유튜브 — 공식 영상 링크나 영상 ID를 넣습니다:
+
+js
+ive: { yt: 'https://youtu.be/AbcdEfghIjk' },
+16:9 영상이 박스로 들어갑니다. 전체 URL·단축 URL·11자리 ID 모두 인식합니다.
+
+③ 비워두기 — 그대로 두면 "음원이 아직 등록되지 않았어요"가 표시돼서 플레이어가 깨지지 않습니다.
+
+어떤 방식을 권하나
+수록곡이 대부분 IVE·로제·저스틴 비버 같은 상업 가요라, mp3 파일을 직접 올려 배포하면 저작권 문제가 생길 수 있습니다. 각 곡의 공식 유튜브 영상을 { yt: '...' }로 연결하는 방식이 법적으로도 안전하고 따로 파일을 준비할 필요도 없어 가장 무난합니다. 성가(날마다 숨 쉬는 순간마다)처럼 직접 녹음한 연습 음원이 있으면 그건 mp3 파일 방식으로 넣으셔도 좋습니다.
+
+수정은 CSS 1곳, JS 2곳뿐이라 기존 코드(기타 사운드 엔진·튜너·퀴즈 등)에는 영향이 없습니다. 곡 키가 9개(firstlove, ive, baby, toxic, nakwon, you, youandi, polaroid, nalmada) 모두 들어가 있으니 원하는 곡부터 채워서 테스트해 보세요.
+
+
+Scdc g
+코드 · HTML 
+내가 각각의 유튜브 주소를 정리해서 올려줄게. 그러면 저 html파일에 넣어서 마저 작성해주고, 노래 재생, 정지 버튼, 러닝타임을 타내면서 손으로 재생 타임을 끌어서 조정할 수 있는 기능도 만들어줘
+
+오후 2:14
+알겠습니다. 유튜브 주소를 올려주시면 SONG_AUDIO 맵에 채워 넣겠습니다.
+
+다만 한 가지 미리 짚어둘 점이 있어요. 요청하신 재생/정지 버튼 + 러닝타임 표시 + 손으로 끌어 구간 이동(seek)하는 커스텀 컨트롤은, 음원이 유튜브일 경우와 mp3 파일일 경우 구현 방식이 완전히 다릅니다.
+
+mp3 파일이면 — HTML5 <audio>를 쓰므로 재생시간·현재위치·seek를 자바스크립트로 자유롭게 제어할 수 있어서, 원하시는 커스텀 재생바를 그대로 만들 수 있습니다.
+
+유튜브면 — 유튜브는 보안상 페이지가 직접 오디오 데이터에 접근하지 못하게 막혀 있습니다. 대신 YouTube IFrame Player API를 통해 재생/정지/구간이동/시간조회를 명령으로 보낼 수 있어서, 영상은 숨기고 우리가 만든 커스텀 컨트롤(▶ ⏸, 1:23 / 3:45, 드래그 시크바)로 조작하는 건 가능합니다. 단, 인터넷 연결이 필요하고 유튜브 정책상 영상을 100% 숨기진 못해 작게라도 보이게 둬야 안정적입니다.
+
+어느 쪽으로 만들지 정해야 코드 구조가 결정되는데, 올려주실 음원이 유튜브 주소라고 하셨으니 YouTube IFrame API 기반 커스텀 플레이어로 만들면 될 것 같습니다. 이렇게 진행할까요?
+
+질문: 커스텀 재생바(▶/⏸ · 러닝타임 · 드래그 시크)를 어떤 음원 기준으로 만들까요?
+답변: 유튜브 기반 (IFrame API)
+
+질문: 유튜브로 할 경우, 작은 영상 화면도 같이 보이게 할까요?
+답변: 영상도 보이게 (가장 안정적)
+
+오후 2:18
+좋습니다. 유튜브 IFrame API 기반 + 작은 영상 화면도 같이 보이는 방식으로 커스텀 재생바를 만들겠습니다.
+
+이제 유튜브 주소를 올려주시면, 곡별로 정리해서 다음 기능을 완성해 드리겠습니다.
+
+▶ / ⏸ 재생·정지 토글 버튼
+러닝타임 표시 (1:23 / 3:45 형식, 재생하면서 실시간 갱신)
+드래그 시크바 — 손으로 끌어서 원하는 지점으로 이동
+작은 영상 화면 동시 표시
+곡 목록으로 돌아가면 자동 정지
+주소는 곡과 매칭되게 적어주시면 가장 정확합니다. 예를 들면:
+
+첫사랑(백아) — https://youtu.be/...
+I AM(IVE) — https://...
+Baby(Justin Bieber) — https://...
+...
+이런 식으로요. 11자리 영상 ID만 적으셔도 되고, 전체 URL·단축 URL 다 인식하니 편한 형식으로 올려주세요. 곡 9개(첫사랑·I AM·Baby·toxic till the end·소문의 낙원·YOU·You & I·Polaroid Love·날마다 숨 쉬는 순간마다) 전부 올려주셔도 되고, 가진 것만 먼저 주셔도 나머지는 빈칸으로 둘 수 있습니다.
+
+첫사랑: https://youtu.be/vVrFyMDMrlM?si=umSGSnkBgPqWMA7n
+IAM: https://youtu.be/y7JPgbLfpfA?si=qfxTTerOLvuvy-bX
+Baby: https://youtu.be/kffacxfA7G4?si=WKmtHaXQX4eqGgaz
+toxic till the end: https://youtu.be/saofySnR4z4?si=oMCEN8W8Kpp3bGSP
+소문의 낙원:https://youtu.be/D54StAZFUrc?si=p67E3lqYG8OgBHIm
+YOU: https://youtu.be/B6mI1mVMAB4?si=3z9Gv9NzG_MX79H5
+YOU&I: https://youtu.be/YUE3QBM0Mrc?si=7dkkViNuE-cUGFkd
+polaroid love: https://youtu.be/NU5mFeTcJSo?si=BwzxOgw-XH_0sTb4
+ 이게 유튜브 주소야
+
+더 보기
+오후 2:18
+
+YouTube API 네트워크 접근성 검토 중입니다
+YouTube API 네트워크 접근성 검토 중입니다
+영상 ID를 정리했습니다. 8곡 모두 받았고, 성가(날마다)는 비워두겠습니다.
+
+곡	영상 ID
+첫사랑	vVrFyMDMrlM
+I AM	y7JPgbLfpfA
+Baby	kffacxfA7G4
+toxic till the end	saofySnR4z4
+소문의 낙원	D54StAZFUrc
+YOU	B6mI1mVMAB4
+You & I	YUE3QBM0Mrc
+Polaroid Love	NU5mFeTcJSo
+이제 유튜브 IFrame API 기반 커스텀 플레이어로 전체를 다시 작성하겠습니다. 현재 코드 상태를 먼저 확인합니다.
+
+
+현재 음원 CSS 블록 확인
+현재 음원 CSS 블록 확인
+① CSS 교체 — 커스텀 플레이어(영상 + ▶/⏸ + 시크바 + 시간) 스타일로:
+
+
+유튜브 커스텀 플레이어 CSS로 교체
+유튜브 커스텀 플레이어 CSS로 교체
+② 음원 데이터 맵 + 플레이어 로직 전체 교체 — 영상 ID를 채우고, IFrame API 기반 커스텀 컨트롤을 구현합니다. 먼저 현재 블록을 확인합니다.
+
+
+파일 조회함, 파일 수정됨
+파일 조회함, 파일 수정됨
+③ backToSongList에서 플레이어 완전 정리 — 현재 상태 확인 후 수정:
+
+
+YouTube API 유효성 검사 및 구문 확인을 진행했습니다
+YouTube API 유효성 검사 및 구문 확인을 진행했습니다
+이제 JS 문법을 검증하겠습니다.
+
+
+영상 ID 8개 모두 검증 완료했습니다
+영상 ID 8개 모두 검증 완료했습니다
+모든 검증을 통과했습니다. 영상 ID 8개가 정확히 들어갔는지 최종 확인합니다.
+
+
+등록된 8곡 영상 ID 최종 확인
+등록된 8곡 영상 ID 최종 확인
+8곡 모두 정확히 등록됐습니다. 완성된 파일을 전달합니다.
+
+
+Presented file
+Presented file
+완성했습니다. 노래 8곡에 유튜브 IFrame API 기반 커스텀 플레이어가 들어갔습니다.
+
+구현된 기능
+곡을 선택하면 헤더 아래에 다음이 표시됩니다.
+
+작은 영상 화면 (16:9) — 영상도 같이 보이게 한 버전입니다
+▶ / ⏸ 토글 버튼 — 재생 중이면 ⏸, 멈추면 ▶로 자동 전환
+드래그 시크바 — 손가락이나 마우스로 끌어서 원하는 지점으로 이동 (모바일 터치도 지원)
+러닝타임 — 1:23 / 3:45 형식으로 현재시간/전체길이를 0.25초마다 실시간 갱신
+"← 곡 목록으로" 누르면 영상이 완전히 정지·정리됨
+성가(날마다 숨 쉬는 순간마다)는 주소를 안 주셔서 "음원이 아직 등록되지 않았어요"로 비워뒀습니다. 나중에 주소가 생기면 코드의 SONG_AUDIO 맵에서 nalmada: '', 부분을 nalmada: { yt: '영상ID' },로 바꾸면 동일하게 작동합니다.
+
+알아두실 점
+작동 원리상 인터넷 연결이 필요합니다. 유튜브 API 스크립트(youtube.com/iframe_api)를 불러와 영상을 제어하기 때문에, 오프라인에서는 재생되지 않습니다.
+
+또 유튜브 정책상 영상이 처음 한 번은 사용자가 ▶를 눌러야 재생됩니다(자동재생 차단). 시크바의 시간 정보는 영상이 로딩(onReady)된 직후 채워지므로, 곡을 막 열었을 때 잠깐 0:00 / 0:00으로 보이다가 갱신됩니다.
+
+혹시 영상 화면을 더 작게 하거나 위치를 바꾸고 싶으시면 말씀해 주세요. CSS의 .yt-video만 조정하면 됩니다.
+
+
+Scdc g
+코드 · HTML 
+1781673777196_image.png
+오류나
+
+오후 2:23
+
+YouTube 오류 153 해결책 제시 중입니다
+YouTube 오류 153 해결책 제시 중입니다
+오류 153 ("동영상 플레이어 구성 오류")의 정확한 원인을 확인하기 위해 검색해보겠습니다.
+
+
+유튜브 오류 원인을 파악하고 해결책을 구상했다
+유튜브 오류 원인을 파악하고 해결책을 구상했다
+원인을 정확히 찾았습니다. 이건 인터넷 속도나 코드 버그 문제가 아니라, 2025년 말부터 유튜브가 임베드 정책을 강화하면서 생긴 "Error 153" 입니다. 유튜브 임베드 플레이어(IFrame API 포함)는 HTTP Referer 헤더로 신원을 전달해야 하는데, Referer 값이 차단되면 이 오류가 발생합니다. 
+Simon Willison
+
+핵심 원인이 두 가지일 수 있습니다.
+
+첫째, 화면 우측 하단을 보니 파일을 다운로드해서 더블클릭으로 직접 여신 것(file://) 같은데, 이 경우 브라우저가 유튜브에 referrer 정보를 전혀 보내지 않아 유튜브가 재생을 거부합니다. 이게 가장 유력한 원인입니다.
+
+둘째, referrer 정책이 막혀 있는 경우인데, 이건 파일 안에서 고칠 수 있습니다.
+
+먼저 파일 안에서 할 수 있는 수정(referrer 메타태그 + 쿠키 없는 도메인)을 적용하겠습니다.
+
+
+파일 조회함, 파일 수정됨
+파일 조회함, 파일 수정됨
+이제 플레이어를 **쿠키 없는 도메인(youtube-nocookie.com)**으로 생성하도록 수정합니다.
+
+
+오류 해결 및 설명 준비 완료
+오류 해결 및 설명 준비 완료
+수정 완료했습니다. 파일을 전달합니다.
+
+
+Presented file
+Presented file
+파일 안에서 할 수 있는 두 가지 수정(referrer 메타태그 + 쿠키 없는 도메인)을 적용했습니다. 새 파일로 먼저 테스트해 보세요.
+
+다만 솔직하게 말씀드리면, 파일을 더블클릭해서 직접 여신 경우(file://)에는 이 수정만으로 해결되지 않을 가능성이 높습니다. 위 메타태그 방식은 주로 서버에 올라간 사이트(워드프레스, Django 등)에서 referrer가 막혔을 때 듣는 해법인데, 로컬 파일은 애초에 referrer를 보낼 "주소"가 없어서 유튜브가 계속 거부할 수 있거든요.
+
+확실한 해결책: 작은 로컬 서버로 열기
+file:// 대신 http://localhost 주소로 열면 referrer가 정상적으로 전달돼서 오류가 사라집니다. 파일이 있는 폴더에서 아래 중 하나를 쓰면 됩니다.
+
+파이썬이 깔려 있다면 (가장 간단) — 파일이 있는 폴더에서 명령창을 열고:
+
+python -m http.server 8000
+그다음 브라우저에서 http://localhost:8000/SCDC-G.html 로 접속하면 됩니다.
+
+VS Code를 쓰신다면 — "Live Server" 확장을 설치하고 파일에서 우클릭 → "Open with Live Server".
+
+더 권하는 방법: 온라인에 올리기
+주일학교 학생들이 각자 휴대폰으로도 쓸 거라면, 로컬 서버보다 웹에 무료로 호스팅하는 게 훨씬 편합니다. 이러면 file:// 문제도 근본적으로 사라지고 링크만 공유하면 누구나 접속할 수 있어요.
+
+Netlify Drop (netlify.com/drop) — 파일을 끌어다 놓기만 하면 바로 주소가 생깁니다. 회원가입도 거의 필요 없어요.
+GitHub Pages — 깃허브 계정이 있으면 무료로 페이지를 만들 수 있습니다.
+이 방식이 가장 깔끔합니다. 혹시 Netlify나 GitHub Pages로 올리는 과정을 단계별로 안내해 드릴까요? 아니면 우선 로컬 서버로 테스트해 보시고 오류가 사라지는지 확인해 보셔도 좋습니다.
+
+
+Scdc g
+코드 · HTML 
+
+
+
+
+
+Claude는 AI이며 실수할 수 있습니다. 인용된 출처를 다시 한번 확인해 주세요.
+
+
+raw
+Scdc g · HTML
 <!DOCTYPE html>
 <html lang="ko"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>🏠수성성당 주일학교🏠</title>
 <script>
   /* standalone build: PWA disabled */
   </script>
-
+ 
 <style>
 /* ═══════════════════════════════════════════════════════════
    GUITAR CLASS — v2 RENEWAL
@@ -28,7 +328,7 @@
   --ink-mute: #B5A585;
   --line: #E5D9C0;
   --line-soft: #EFE5D0;
-
+ 
   /* Accents */
   --sage: #7A8B5C;        --sage-bg: #DCE3CC;        --sage-text: #3D4A28;
   --walnut: #8B6F47;      --walnut-bg: #D9C9B0;      --walnut-text: #5A4530;
@@ -36,17 +336,17 @@
   --terracotta: #A85742;  --terracotta-bg: #E5BFB0;  --terracotta-text: #6B3525;
   --rust: #B8704F;        --rust-bg: #E3C5A8;        --rust-text: #6B3F1F;
   --pine: #5C7A6F;        --pine-bg: #C4D1C5;        --pine-text: #2F4A3E;
-
+ 
   /* Fonts */
   --font-serif: Georgia, 'Nanum Myeongjo', 'Apple SD Gothic Neo', serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
   --font-mono: 'SF Mono', Menlo, Consolas, monospace;
-
+ 
   /* Shape */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-
+ 
   /* Spacing scale (8pt) */
   --s-1: 4px;
   --s-2: 8px;
@@ -57,13 +357,13 @@
   --s-7: 32px;
   --s-8: 40px;
   --s-9: 56px;
-
+ 
   /* Motion */
   --ease: cubic-bezier(.4, 0, .2, 1);
   --t-fast: 140ms;
   --t-base: 200ms;
 }
-
+ 
 /* ═══════════════════════════════
    BASE
 ═══════════════════════════════ */
@@ -79,7 +379,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+ 
 /* Focus: consistent, subtle */
 :focus-visible {
   outline: 2px solid var(--espresso);
@@ -87,7 +387,7 @@ body {
   border-radius: var(--radius-sm);
 }
 button { font-family: inherit; }
-
+ 
 /* Utility: mono eyebrow label */
 .eyebrow {
   font-family: var(--font-mono);
@@ -97,7 +397,7 @@ button { font-family: inherit; }
   text-transform: uppercase;
   color: var(--ink-soft);
 }
-
+ 
 /* ═══════════════════════════════
    HEADER
 ═══════════════════════════════ */
@@ -135,7 +435,7 @@ header p {
   text-transform: uppercase;
   font-weight: 500;
 }
-
+ 
 /* ═══════════════════════════════
    BACK BAR + CORNER NAV
 ═══════════════════════════════ */
@@ -187,7 +487,7 @@ header p {
 .back-btn:active { transform: scale(0.98); }
 /* HTML already contains "← 홈으로" text; just hide the CSS arrow to avoid dup */
 .back-btn::before { display: none; }
-
+ 
 .corner-title-badge {
   font-family: var(--font-serif);
   font-size: 1.05rem;
@@ -201,7 +501,7 @@ header p {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+ 
 .corner-nav {
   display: flex;
   gap: 6px;
@@ -231,7 +531,7 @@ header p {
 .corner-nav-btn:hover { transform: translateY(-1px); }
 .corner-nav-btn:active { transform: translateY(0); }
 .corner-nav-btn.nav-current { cursor: default; }
-
+ 
 /* ═══════════════════════════════
    HOME SCREEN
 ═══════════════════════════════ */
@@ -240,7 +540,7 @@ header p {
   max-width: 980px;
   margin: 0 auto;
 }
-
+ 
 .home-intro {
   text-align: center;
   margin-bottom: var(--s-8);
@@ -273,7 +573,7 @@ header p {
   max-width: 28ch;
   line-height: 1.55;
 }
-
+ 
 .corner-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -285,7 +585,7 @@ header p {
 @media (max-width: 560px) {
   .corner-grid { grid-template-columns: 1fr; gap: var(--s-3); }
 }
-
+ 
 /* ── Corner card — refined hierarchy ── */
 .corner-card {
   position: relative;
@@ -401,7 +701,7 @@ header p {
   .corner-card:hover { transform: none; background: var(--paper); }
 }
 .corner-card:active { transform: translateY(0); }
-
+ 
 /* Per-corner accent coloring */
 .card-basics         { color: var(--sage); }
 .card-basics .card-title { color: var(--sage-text); }
@@ -410,7 +710,7 @@ header p {
 .card-basics .tag        { background: var(--sage-bg); color: var(--sage-text); }
 .card-basics .go-btn     { border-color: var(--sage); color: var(--sage-text); }
 .card-basics .go-btn:hover{ background: var(--sage); color: var(--paper); }
-
+ 
 .card-beginner       { color: var(--walnut); }
 .card-beginner .card-title { color: var(--walnut-text); }
 .card-beginner .card-sub   { color: var(--walnut); }
@@ -418,7 +718,7 @@ header p {
 .card-beginner .tag        { background: var(--walnut-bg); color: var(--walnut-text); }
 .card-beginner .go-btn     { border-color: var(--walnut); color: var(--walnut-text); }
 .card-beginner .go-btn:hover{ background: var(--walnut); color: var(--paper); }
-
+ 
 .card-beginner-plus  { color: var(--mustard); }
 .card-beginner-plus .card-title { color: var(--mustard-text); }
 .card-beginner-plus .card-sub   { color: var(--mustard); }
@@ -426,7 +726,7 @@ header p {
 .card-beginner-plus .tag        { background: var(--mustard-bg); color: var(--mustard-text); }
 .card-beginner-plus .go-btn     { border-color: var(--mustard); color: var(--mustard-text); }
 .card-beginner-plus .go-btn:hover{ background: var(--mustard); color: var(--paper); }
-
+ 
 .card-advanced       { color: var(--terracotta); }
 .card-advanced .card-title { color: var(--terracotta-text); }
 .card-advanced .card-sub   { color: var(--terracotta); }
@@ -434,7 +734,7 @@ header p {
 .card-advanced .tag        { background: var(--terracotta-bg); color: var(--terracotta-text); }
 .card-advanced .go-btn     { border-color: var(--terracotta); color: var(--terracotta-text); }
 .card-advanced .go-btn:hover{ background: var(--terracotta); color: var(--paper); }
-
+ 
 .card-songs          { color: var(--rust); }
 .card-songs .card-title { color: var(--rust-text); }
 .card-songs .card-sub   { color: var(--rust); }
@@ -442,7 +742,7 @@ header p {
 .card-songs .tag        { background: var(--rust-bg); color: var(--rust-text); }
 .card-songs .go-btn     { border-color: var(--rust); color: var(--rust-text); }
 .card-songs .go-btn:hover{ background: var(--rust); color: var(--paper); }
-
+ 
 .card-tuner          { color: var(--pine); }
 .card-tuner .card-title { color: var(--pine-text); }
 .card-tuner .card-sub   { color: var(--pine); }
@@ -450,7 +750,7 @@ header p {
 .card-tuner .tag        { background: var(--pine-bg); color: var(--pine-text); }
 .card-tuner .go-btn     { border-color: var(--pine); color: var(--pine-text); }
 .card-tuner .go-btn:hover{ background: var(--pine); color: var(--paper); }
-
+ 
 /* ═══════════════════════════════
    BASICS ITEMS
 ═══════════════════════════════ */
@@ -510,7 +810,7 @@ header p {
   background: linear-gradient(to top, var(--sage-bg) 0 35%, transparent 35% 100%);
   padding: 0 2px;
 }
-
+ 
 /* ═══════════════════════════════
    TUNER
 ═══════════════════════════════ */
@@ -522,7 +822,7 @@ header p {
   align-items: stretch;
   gap: var(--s-5);
 }
-
+ 
 .tuner-mode-toggle {
   display: flex;
   background: var(--paper);
@@ -548,7 +848,7 @@ header p {
   letter-spacing: 0.1px;
 }
 .mode-toggle-btn.active { background: var(--pine); color: var(--paper); }
-
+ 
 .string-btns {
   display: flex;
   gap: 10px;
@@ -581,7 +881,7 @@ header p {
 .str-btn:hover { background: var(--pine-bg); border-color: var(--pine); transform: translateY(-1px); }
 .str-btn.active { background: var(--pine); border-color: var(--pine); color: var(--paper); transform: none; }
 .str-btn.active span { color: rgba(255,255,255,0.88); }
-
+ 
 .tuner-gauge-panel {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -607,10 +907,10 @@ header p {
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-
+ 
 .gauge-svg-wrap { position: relative; width: 100%; }
 .gauge-svg-wrap svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
-
+ 
 .tuner-status-row {
   display: flex;
   justify-content: center;
@@ -633,10 +933,10 @@ header p {
 .tuner-label.flat   { background: var(--mustard-bg); color: var(--mustard-text); border-color: var(--mustard); }
 .tuner-label.sharp  { background: var(--terracotta-bg); color: var(--terracotta-text); border-color: var(--terracotta); }
 .tuner-label.intune { background: var(--sage-bg); color: var(--sage-text); border-color: var(--sage); }
-
+ 
 .string-btns.auto-mode .str-btn { opacity: 0.35; cursor: default; pointer-events: none; }
 .string-btns.auto-mode .str-btn.active { opacity: 1; }
-
+ 
 .tuner-start-btn {
   min-height: 48px;
   padding: 13px var(--s-8);
@@ -655,7 +955,7 @@ header p {
 .tuner-start-btn:hover { background: var(--pine-text); border-color: var(--pine-text); }
 .tuner-start-btn:active { transform: scale(0.98); }
 .tuner-start-btn.active { background: var(--terracotta); border-color: var(--terracotta); }
-
+ 
 .tuner-tip {
   font-size: 0.82rem;
   color: var(--ink-soft);
@@ -665,12 +965,12 @@ header p {
   max-width: 32em;
   margin: 0 auto;
 }
-
+ 
 /* ═══════════════════════════════
    CORNER SCREEN + TABS
 ═══════════════════════════════ */
 #cornerScreen { display: none; }
-
+ 
 .corner-tabs-bar {
   display: flex;
   justify-content: center;
@@ -723,12 +1023,12 @@ header p {
   letter-spacing: 0.6px;
   text-transform: uppercase;
 }
-
+ 
 /* ── Section ── */
 .section { display: none; padding: var(--s-6) var(--s-4) var(--s-8); max-width: 980px; margin: 0 auto; }
 .section.active { display: block; animation: section-fade var(--t-base) var(--ease); }
 @keyframes section-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
+ 
 /* ── Section banner ── */
 .section-banner {
   position: relative;
@@ -784,7 +1084,7 @@ header p {
   line-height: 1.55;
   text-wrap: pretty;
 }
-
+ 
 /* ═══════════════════════════════
    CHORD GRID + CARD
 ═══════════════════════════════ */
@@ -837,7 +1137,7 @@ header p {
   letter-spacing: -0.4px;
   line-height: 1;
 }
-
+ 
 /* ═══════════════════════════════
    DETAIL PANEL
 ═══════════════════════════════ */
@@ -884,7 +1184,7 @@ header p {
   line-height: 1.55;
   margin: 0;
 }
-
+ 
 .finger-guide {
   list-style: none;
   border-top: 1px solid var(--line);
@@ -916,7 +1216,7 @@ header p {
   flex-shrink: 0;
   transform: translateY(3px);
 }
-
+ 
 .barre-badge {
   display: inline-block;
   background: var(--terracotta-bg);
@@ -931,7 +1231,7 @@ header p {
   vertical-align: middle;
   line-height: 1.4;
 }
-
+ 
 .tip-box {
   background: transparent;
   border: 1px solid var(--mustard);
@@ -955,10 +1255,10 @@ header p {
   font-weight: 600;
 }
 .tip-box > :first-child { /* emoji in text becomes redundant; leave */ }
-
+ 
 .diagram-wrap { flex: 0 0 auto; }
 .diagram-wrap svg { display: block; }
-
+ 
 /* ── Strum mode bar ── */
 .strum-mode-bar {
   display: flex;
@@ -1000,7 +1300,7 @@ header p {
   color: var(--paper);
   border-color: var(--espresso);
 }
-
+ 
 /* ═══════════════════════════════
    QUIZ
 ═══════════════════════════════ */
@@ -1149,7 +1449,7 @@ header p {
   letter-spacing: 0.1px;
 }
 .restart-btn:hover { background: var(--espresso); color: var(--paper); }
-
+ 
 .mode-select {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -1185,7 +1485,7 @@ header p {
 .mode-btn.active { background: var(--espresso); border-color: var(--espresso); color: var(--paper); }
 .quiz-open-mode  .mode-btn.active { background: var(--sage); border-color: var(--sage); color: var(--paper); }
 .quiz-barre-mode .mode-btn.active { background: var(--mustard); border-color: var(--mustard); color: var(--mustard-text); }
-
+ 
 /* ═══════════════════════════════
    SONG CORNER
 ═══════════════════════════════ */
@@ -1255,7 +1555,7 @@ header p {
 }
 .gayo-pick   .song-pick-badge { background: var(--rust-bg); color: var(--rust-text); }
 .sungga-pick .song-pick-badge { background: var(--mustard-bg); color: var(--mustard-text); }
-
+ 
 /* Song detail header */
 .song-back-btn {
   min-height: 36px;
@@ -1275,7 +1575,7 @@ header p {
 .gayo-back:hover   { background: var(--rust); }
 .sungga-back { border-color: var(--mustard); color: var(--mustard-text); }
 .sungga-back:hover { background: var(--mustard); }
-
+ 
 .song-header-block {
   position: relative;
   border-radius: var(--radius-md);
@@ -1325,7 +1625,7 @@ header p {
 }
 .gayo-song-header   .song-header-badge { background: var(--rust); color: var(--paper); }
 .sungga-song-header .song-header-badge { background: var(--mustard); color: var(--paper); }
-
+ 
 /* Song sections (verse/chorus blocks) */
 .song-section-block {
   border: 1px solid var(--line);
@@ -1356,6 +1656,109 @@ header p {
   color: var(--ink-soft);
   margin-bottom: var(--s-3);
 }
+/* Song audio player (음원 재생) */
+.song-audio-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.song-audio-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.song-audio-block audio {
+  width: 100%;
+  height: 40px;
+}
+.song-audio-empty { font-size: 0.82rem; color: var(--ink-mute); }
+/* YouTube 커스텀 플레이어 */
+.yt-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #000;
+}
+.yt-video iframe, .yt-video > div { width: 100%; height: 100%; border: 0; display: block; }
+.yt-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: 2px;
+}
+.yt-play-btn {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--espresso);
+  background: var(--espresso);
+  color: var(--paper);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease);
+  line-height: 1;
+}
+.yt-play-btn:hover { opacity: 0.88; }
+.yt-play-btn:active { transform: scale(0.94); }
+.yt-seek {
+  flex: 1 1 auto;
+  position: relative;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
+}
+.yt-seek::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sand-deep);
+}
+.yt-seek-fill {
+  position: absolute;
+  left: 0;
+  height: 4px;
+  width: 0;
+  border-radius: 2px;
+  background: var(--espresso);
+  pointer-events: none;
+}
+.yt-seek-handle {
+  position: absolute;
+  left: 0;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--espresso);
+  border: 2px solid var(--paper);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.yt-time {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
 .chord-token-row {
   display: flex;
   flex-wrap: wrap;
@@ -1382,7 +1785,7 @@ header p {
 }
 .chord-token:hover  { filter: brightness(0.94); }
 .chord-token:active { transform: scale(0.95); }
-
+ 
 .section-divider-label {
   font-size: 0.78rem;
   color: var(--ink-soft);
@@ -1390,7 +1793,7 @@ header p {
   font-style: italic;
   line-height: 1.55;
 }
-
+ 
 /* ═══════════════════════════════
    SOUND BUTTON (legacy class)
 ═══════════════════════════════ */
@@ -1413,7 +1816,7 @@ header p {
 }
 .sound-btn:hover  { background: var(--sand); }
 .sound-btn:active { background: var(--sand-deep); }
-
+ 
 /* ═══════════════════════════════
    RESPONSIVE
 ═══════════════════════════════ */
@@ -1421,42 +1824,42 @@ header p {
   header { padding: var(--s-5) var(--s-4) var(--s-4); }
   header h1 { font-size: 1.5rem; }
   header p { font-size: 0.62rem; letter-spacing: 2px; margin-top: 8px; }
-
+ 
   #homeScreen { padding: var(--s-6) var(--s-3) var(--s-8); }
   .home-intro { margin-bottom: var(--s-6); }
   .home-intro h2 { font-size: 1.4rem; }
-
+ 
   .corner-card { padding: var(--s-4) var(--s-4) var(--s-4); min-height: 0; }
   .corner-card .card-title { font-size: 1.35rem; }
-
+ 
   .section { padding: var(--s-5) var(--s-3) var(--s-7); }
   .section-banner { padding: var(--s-3) var(--s-4); gap: var(--s-3); }
   .section-banner h2 { font-size: 1.08rem; }
   .section-banner p { font-size: 0.78rem; }
-
+ 
   .chord-grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 10px; }
   .chord-card { padding: 12px 8px 8px; }
   .chord-card h3 { font-size: 1.25rem; }
-
+ 
   .detail-panel { padding: var(--s-5) var(--s-4); gap: var(--s-4); }
   .detail-panel.active { flex-direction: column; align-items: center; }
   .detail-text { min-width: 0; width: 100%; }
-
+ 
   .corner-tabs-bar { gap: 6px; padding: 10px; }
   .tab-btn { padding: 8px 12px; font-size: 0.82rem; }
-
+ 
   .quiz-card { padding: var(--s-5) var(--s-4); }
   .quiz-chord-name { font-size: 2.6rem; }
   .ans-btn { font-size: 1.05rem; padding: 12px; }
-
+ 
   .back-bar-top { padding: 10px var(--s-4) 8px; }
 }
-
+ 
 @media (max-width: 400px) {
   .corner-grid { gap: 10px; }
   .chord-grid { grid-template-columns: repeat(auto-fill, minmax(98px, 1fr)); }
 }
-
+ 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1464,10 +1867,10 @@ header p {
     animation-duration: 0ms !important;
   }
 }
-
+ 
 </style></head>
-
-
+ 
+ 
 <body>
  
 <!-- ══════════════ 공통 헤더 ══════════════ -->
@@ -1509,7 +1912,7 @@ header p {
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
-
+ 
     <!-- 기타 입문 -->
     <div class="corner-card card-beginner" onclick="enterCorner('beginner')">
       <div class="card-icon">🎵</div>
@@ -1576,7 +1979,7 @@ header p {
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
-
+ 
     <!-- 기타 튜너 -->
     <div class="corner-card card-tuner" onclick="enterCorner('tuner')">
       <div class="card-icon">🎛️</div>
@@ -1592,7 +1995,7 @@ header p {
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
-
+ 
   </div>
 </div>
  
@@ -1638,7 +2041,7 @@ header p {
       </div>
     </div>
   </div>
-
+ 
   <!-- ── 오픈 코드 배우기 ── -->
   <div id="learn-open" class="section">
     <div class="section-banner open-style">
@@ -1712,7 +2115,7 @@ header p {
     <div class="chord-grid" id="ckeyGrid"></div>
     <div class="detail-panel" id="ckeyDetailPanel"></div>
   </div>
-
+ 
   <!-- ── G키 소리가 예쁜 코드 ── -->
   <div id="learn-gkey" class="section">
     <div class="section-banner gkey-style">
@@ -1725,7 +2128,7 @@ header p {
     <div class="chord-grid" id="gkeyGrid"></div>
     <div class="detail-panel" id="gkeyDetailPanel"></div>
   </div>
-
+ 
   <!-- ── 바렛 코드 배우기 ── -->
   <div id="learn-barre" class="section">
     <div class="section-banner barre-style">
@@ -1760,8 +2163,8 @@ header p {
       <div id="barreResultBox" class="result-box"></div>
     </div>
   </div>
-
-
+ 
+ 
     <!-- ── 기타 튜너 ── -->
   <div id="tuner-section" class="section">
     <div class="section-banner tuner-style">
@@ -1772,13 +2175,13 @@ header p {
       </div>
     </div>
     <div class="tuner-wrap">
-
+ 
       <!-- 모드 선택 -->
       <div class="tuner-mode-toggle">
         <button class="mode-toggle-btn active" id="modeManualBtn" onclick="setTunerMode('manual')">직접 선택</button>
         <button class="mode-toggle-btn" id="modeAutoBtn" onclick="setTunerMode('auto')">자동 감지</button>
       </div>
-
+ 
       <!-- 줄 선택 -->
       <div class="string-btns" id="stringBtns">
         <button class="str-btn" onclick="selectString(5)">E<span>6번줄</span></button>
@@ -1788,7 +2191,7 @@ header p {
         <button class="str-btn" onclick="selectString(1)">B<span>2번줄</span></button>
         <button class="str-btn" onclick="selectString(0)">e<span>1번줄</span></button>
       </div>
-
+ 
       <!-- 게이지 패널 -->
       <div class="tuner-gauge-panel">
         <div class="tuner-target-info">
@@ -1815,7 +2218,7 @@ header p {
           <div class="tuner-label" id="tunerLabel">마이크 대기</div>
         </div>
       </div>
-
+ 
       <!-- 시작/정지 -->
       <button class="tuner-start-btn" id="tunerStartBtn" onclick="toggleTuner()">🎙️ 튜닝 시작</button>
       <p class="tuner-tip">자동 감지: 튜닝 시작 후 기타를 연주하면 줄이 자동으로 감지돼요.<br>직접 선택: 줄을 먼저 선택하고 연주하면 정확도가 올라가요.<br>바늘이 가운데(0)에 오면 정확한 튜닝이에요!</p>
@@ -1831,7 +2234,7 @@ header p {
         <p>연습할 곡을 선택하세요!</p>
       </div>
     </div>
-
+ 
     <!-- 곡 선택 목록 -->
     <div id="gayoSongList" class="song-list-view">
       <div class="song-pick-card gayo-pick" onclick="selectSong('firstlove')">
@@ -1883,11 +2286,11 @@ header p {
         </div>
       </div>
     </div>
-
+ 
     <!-- 선택된 곡 코드 영역 -->
     <div id="gayoSongDetail" style="display:none">
       <button class="song-back-btn gayo-back" onclick="backToSongList('gayo')">← 곡 목록으로</button>
-
+ 
       <!-- 첫사랑 -->
       <div id="firstloveArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -1900,7 +2303,7 @@ header p {
         <div class="chord-grid" id="gayoChordGrid"></div>
         <div class="detail-panel" id="gayoChordDetail"></div>
       </div>
-
+ 
       <!-- I AM -->
       <div id="iveArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -1910,7 +2313,7 @@ header p {
           </div>
           <span class="song-header-badge">Am · C · G · D · Em</span>
         </div>
-
+ 
         <!-- Verse -->
         <div class="song-section-block gayo-section-block" style="border-radius:14px;padding:14px 16px 4px;margin-bottom:14px;">
           <div class="song-section-label">Verse</div>
@@ -1926,7 +2329,7 @@ header p {
           <div class="chord-grid" id="iveVerseGrid"></div>
           <div class="detail-panel" id="iveVerseDetail"></div>
         </div>
-
+ 
         <!-- Chorus -->
         <div class="song-section-block gayo-section-block" style="border-radius:14px;padding:14px 16px 4px;margin-bottom:14px;">
           <div class="song-section-label">Chorus</div>
@@ -1943,7 +2346,7 @@ header p {
           <div class="detail-panel" id="iveChorusDetail"></div>
         </div>
       </div>
-
+ 
       <!-- Baby -->
       <div id="babyArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -1960,7 +2363,7 @@ header p {
         <div class="chord-grid" id="babyV2ChordGrid"></div>
         <div class="detail-panel" id="babyV2ChordDetail"></div>
       </div>
-
+ 
       <!-- toxic till the end -->
       <div id="toxicArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -1973,7 +2376,7 @@ header p {
         <div class="chord-grid" id="toxicChordGrid"></div>
         <div class="detail-panel" id="toxicChordDetail"></div>
       </div>
-
+ 
       <!-- 소문의 낙원 -->
       <div id="nakwonArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -1986,7 +2389,7 @@ header p {
         <div class="chord-grid" id="nakwonChordGrid"></div>
         <div class="detail-panel" id="nakwonChordDetail"></div>
       </div>
-
+ 
       <!-- YOU -->
       <div id="youArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -1999,7 +2402,7 @@ header p {
         <div class="chord-grid" id="youChordGrid"></div>
         <div class="detail-panel" id="youChordDetail"></div>
       </div>
-
+ 
       <!-- You & I -->
       <div id="youandiArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -2012,7 +2415,7 @@ header p {
         <div class="chord-grid" id="youandiChordGrid"></div>
         <div class="detail-panel" id="youandiChordDetail"></div>
       </div>
-
+ 
       <!-- Polaroid Love -->
       <div id="polaroidArea" class="song-area" style="display:none">
         <div class="song-header-block gayo-song-header">
@@ -2027,7 +2430,7 @@ header p {
       </div>
     </div>
   </div>
-
+ 
   <!-- ── 성가 ── -->
   <div id="songs-sungga" class="section">
     <div class="section-banner sungga-style">
@@ -2037,7 +2440,7 @@ header p {
         <p>연습할 곡을 선택하세요!</p>
       </div>
     </div>
-
+ 
     <!-- 곡 선택 목록 -->
     <div id="sunggaSongList" class="song-list-view">
       <div class="song-pick-card sungga-pick" onclick="selectSong('nalmada')">
@@ -2047,11 +2450,11 @@ header p {
         </div>
       </div>
     </div>
-
+ 
     <!-- 선택된 곡 코드 영역 -->
     <div id="sunggaSongDetail" style="display:none">
       <button class="song-back-btn sungga-back" onclick="backToSongList('sungga')">← 곡 목록으로</button>
-
+ 
       <!-- 날마다 -->
       <div id="nalmadaArea" class="song-area" style="display:none">
         <div class="song-header-block sungga-song-header">
@@ -2066,7 +2469,7 @@ header p {
       </div>
     </div>
   </div>
-
+ 
 </div><!-- /cornerScreen -->
  
 <script>
@@ -2254,7 +2657,7 @@ const CKEY_CHORDS = [
     guide:['1번 손가락 → 1번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
     tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
 ];
-
+ 
 // ─── G키 쉽고 소리가 예쁜 코드 ───
 const GKEY_CHORDS = [
   { name:'G(2형)', type:'open',
@@ -2336,11 +2739,11 @@ const GKEY_CHORDS = [
     guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
     tip:'5,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
 ];
-
+ 
 // ═══════════════════════════════════════════════════
 //  노래 데이터
 // ═══════════════════════════════════════════════════
-
+ 
 // ─── 첫사랑 — 백아 ───
 const CHORDS_FIRSTLOVE = [
   { name:'FM7', type:'open',
@@ -2368,7 +2771,7 @@ const CHORDS_FIRSTLOVE = [
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3·5번 줄은 개방'],
     tip:'5,4,3,2번 줄로 아르페지오 후 퍼커시브!!' },
 ];
-
+ 
 // ─── 날마다 숨 쉬는 순간마다 (나주노 190) ───
 const CHORDS_NALMADA = [
   { name:'E(1형)', type:'open',
@@ -2396,7 +2799,7 @@ const CHORDS_NALMADA = [
     guide:['3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
     tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
 ];
-
+ 
 // ─── I AM — IVE · Verse (Am-C-G-D) ───
 const CHORDS_IVE_VERSE = [
   { name:'Am', type:'open',  frets:[0,1,2,2,0,-1], fingers:[[1,2,1],[2,4,2],[3,3,2]], open:[1,5], mute:[6],
@@ -2445,7 +2848,7 @@ const CHORDS_IVE_CHORUS = [
     guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
     tip:'6번 줄(E)부터 스트로크!!' },
 ];
-
+ 
 // ─── Baby — Justin Bieber · Ver.1 (3 Capo) C-Am-FM7-G ───
 const CHORDS_BABY_V1 = [
   { name:'C', type:'open',
@@ -2479,7 +2882,7 @@ const CHORDS_BABY_V1 = [
     guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
     tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
 ];
-
+ 
 // ─── Baby — Justin Bieber · Ver.2 (1 Capo) D-Bm7-G-A ───
 const CHORDS_BABY_V2 = [
   { name:'D', type:'open',
@@ -2513,7 +2916,7 @@ const CHORDS_BABY_V2 = [
     guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 2프렛','1·5번 줄 개방'],
     tip:'5번 줄(A)부터 스트로크!! 손가락 3개를 세로로 가지런히.' },
 ];
-
+ 
 // ─── toxic till the end — ROSÉ (C-D-G2-Em7_2) ───
 const CHORDS_TOXIC = [
   { name:'C', type:'open', frets:[0,1,0,2,3,-1], fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3], mute:[6],
@@ -2532,7 +2935,7 @@ const CHORDS_TOXIC = [
     guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·6번 줄은 개방'],
     tip:'6번 줄(E)부터 스트로크!! 중지는 생략해도 좋아요!!' },
 ];
-
+ 
 // ─── 소문의 낙원 — AKMU (C-Dm-D7-FM7-G-A-Am7) ───
 const CHORDS_NAKWON = [
   { name:'C', type:'open', frets:[0,1,0,2,3,-1], fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3], mute:[6],
@@ -2557,7 +2960,7 @@ const CHORDS_NAKWON = [
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3·5번 줄은 개방'],
     tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
 ];
-
+ 
 // ─── YOU — BOL4 (3 Capo: FM7-G-Em7-Am7) ───
 const CHORDS_YOU = [
   { name:'FM7', type:'open',
@@ -2585,7 +2988,7 @@ const CHORDS_YOU = [
     guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3·5번 줄은 개방'],
     tip:'5,4,3,2번 줄로 연주하기!!' },
 ];
-
+ 
 // ─── You & I — 박봄 (1 Capo: G-D-Em7-Cadd9) ───
 const CHORDS_YOUANDI = [
   { name:'G', type:'open', frets:[3,3,0,0,2,3], fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]], open:[3,4], mute:[],
@@ -2601,7 +3004,7 @@ const CHORDS_YOUANDI = [
     guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
     tip:'5번 줄(A)부터 스트로크!! 검지는 생략해도 좋아요!!' },
 ];
-
+ 
 // ─── Polaroid Love — ENHYPEN (Am7-D-G-Em7) ───
 const CHORDS_POLAROID = [
   { name:'Am7', type:'open',
@@ -2626,7 +3029,7 @@ const CHORDS_POLAROID = [
     guide:['2번 손가락 → 5번 줄 2프렛','1·2·3·4·6번 줄 개방'],
     tip:'6번 줄(E)부터 모든 줄을 연주하기!!' },
 ];
-
+ 
 // ═══════════════════════════════════════════════════
 //  코너 설정
 // ═══════════════════════════════════════════════════
@@ -2707,7 +3110,7 @@ const CORNER_NAV_STYLE = {
   tuner:       { bg:'#5C7A6F', color:'#FBF6EC', border:'#3F5950' },
   songs:       { bg:'#B8704F', color:'#FBF6EC', border:'#8E5538' },
 };
-
+ 
 function renderCornerNav(currentKey) {
   const nav = document.getElementById('cornerNav');
   nav.innerHTML = Object.entries(CORNERS).map(([key, corner]) => {
@@ -2723,18 +3126,18 @@ function renderCornerNav(currentKey) {
             </button>`;
   }).join('');
 }
-
+ 
 function enterCorner(cornerKey) {
   const corner = CORNERS[cornerKey];
   currentCorner = cornerKey;
-
+ 
   // 화면 전환
   document.getElementById('homeScreen').style.display   = 'none';
   document.getElementById('cornerScreen').style.display = 'block';
   const backBar = document.getElementById('backBar');
   backBar.classList.add('visible');
   document.getElementById('cornerTitleBadge').textContent = corner.label;
-
+ 
   // 코너 이동 버튼 렌더링
   renderCornerNav(cornerKey);
  
@@ -2897,7 +3300,7 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
  
 const _selectedChord = {};
 let _lastShowDetailTime = 0;
-
+ 
 function showDetail(name, sectionType) {
   const now = Date.now();
   if (now - _lastShowDetailTime < 400) return;
@@ -2909,7 +3312,7 @@ function showDetail(name, sectionType) {
   const gridId  = meta.gridId;
   const panelId = meta.panelId;
   const panel   = document.getElementById(panelId);
-
+ 
   // 이미 선택된 코드를 다시 누르면 패널 닫기
   if (_selectedChord[sectionType] === name && panel.classList.contains('active')) {
     _selectedChord[sectionType] = null;
@@ -2917,7 +3320,7 @@ function showDetail(name, sectionType) {
     panel.classList.remove('active');
     return;
   }
-
+ 
   _selectedChord[sectionType] = name;
   renderGrid(chords, gridId, name, sectionType);
   panel.innerHTML = `
@@ -2959,25 +3362,230 @@ const SONG_RENDER = {
   nalmada:   () => renderGrid(CHORDS_NALMADA,   'sunggaChordGrid',   null, 'nalmada'),
 };
 const SONG_CORNER = { firstlove:'gayo', ive:'gayo', baby:'gayo', toxic:'gayo', nakwon:'gayo', you:'gayo', youandi:'gayo', polaroid:'gayo', nalmada:'sungga' };
-
+ 
+// ═══════════════════════════════════════════════════
+//  노래별 음원 (아래 빈 값을 채우면 자동으로 플레이어가 생깁니다)
+//  · 오디오 파일:  'audio/firstlove.mp3'  또는  'https://.../song.mp3'
+//  · 유튜브:       { yt: '유튜브주소 또는 영상ID' }   예) { yt: 'https://youtu.be/AbcdEfghIjk' }
+//  · 비워두면 "음원이 아직 등록되지 않았어요" 표시
+// ═══════════════════════════════════════════════════
+const SONG_AUDIO = {
+  firstlove: { yt: 'vVrFyMDMrlM' },
+  ive:       { yt: 'y7JPgbLfpfA' },
+  baby:      { yt: 'kffacxfA7G4' },
+  toxic:     { yt: 'saofySnR4z4' },
+  nakwon:    { yt: 'D54StAZFUrc' },
+  you:       { yt: 'B6mI1mVMAB4' },
+  youandi:   { yt: 'YUE3QBM0Mrc' },
+  polaroid:  { yt: 'NU5mFeTcJSo' },
+  nalmada:   '',
+};
+ 
+// 유튜브 영상 ID 추출 (전체 URL / 단축 URL / 11자리 ID 모두 허용)
+function _ytId(v) {
+  if (!v) return '';
+  const m = String(v).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+  if (m) return m[1];
+  return /^[\w-]{11}$/.test(String(v).trim()) ? String(v).trim() : '';
+}
+ 
+// ── YouTube IFrame API 로드 ──────────────────────────────
+let _ytApiReady = false;
+let _ytPendingId = null;     // API 준비 전 선택된 영상 ID 보관
+let _ytPlayer    = null;     // 현재 플레이어 인스턴스 (한 번에 1개)
+let _ytTimer     = null;     // 시간/시크바 갱신 타이머
+let _ytSeeking   = false;    // 사용자가 시크바를 드래그 중인지
+ 
+(function _loadYtApi() {
+  if (window.YT && window.YT.Player) { _ytApiReady = true; return; }
+  if (document.getElementById('yt-iframe-api')) return;
+  const tag = document.createElement('script');
+  tag.id  = 'yt-iframe-api';
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+ 
+window.onYouTubeIframeAPIReady = function () {
+  _ytApiReady = true;
+  if (_ytPendingId) { _createYtPlayer(_ytPendingId); _ytPendingId = null; }
+};
+ 
+// 초 → "m:ss" 포맷
+function _fmtTime(s) {
+  s = Math.max(0, Math.floor(s || 0));
+  const m = Math.floor(s / 60), sec = s % 60;
+  return m + ':' + String(sec).padStart(2, '0');
+}
+ 
+function _startYtTimer() {
+  _stopYtTimer();
+  _ytTimer = setInterval(() => {
+    if (!_ytPlayer || _ytSeeking || !_ytPlayer.getCurrentTime) return;
+    const cur = _ytPlayer.getCurrentTime() || 0;
+    const dur = _ytPlayer.getDuration()   || 0;
+    const curEl = document.getElementById('ytCur');
+    const durEl = document.getElementById('ytDur');
+    if (curEl) curEl.textContent = _fmtTime(cur);
+    if (durEl && dur) durEl.textContent = _fmtTime(dur);
+    if (dur > 0) _setSeekUI(cur / dur, false);
+  }, 250);
+}
+function _stopYtTimer() { if (_ytTimer) { clearInterval(_ytTimer); _ytTimer = null; } }
+ 
+// 시크바 채움/핸들 위치 갱신 (ratio: 0~1). updateTime=true면 시간 라벨도 함께
+function _setSeekUI(ratio, updateTime) {
+  ratio = Math.max(0, Math.min(1, ratio));
+  const fill   = document.getElementById('ytSeekFill');
+  const handle = document.getElementById('ytSeekHandle');
+  if (fill)   fill.style.width  = (ratio * 100) + '%';
+  if (handle) handle.style.left = (ratio * 100) + '%';
+  if (updateTime && _ytPlayer && _ytPlayer.getDuration) {
+    const curEl = document.getElementById('ytCur');
+    if (curEl) curEl.textContent = _fmtTime(ratio * (_ytPlayer.getDuration() || 0));
+  }
+}
+ 
+// ▶/⏸ 토글
+function _ytToggle() {
+  if (!_ytPlayer || !_ytPlayer.getPlayerState) return;
+  const st = _ytPlayer.getPlayerState();   // 1=재생중
+  if (st === 1) _ytPlayer.pauseVideo();
+  else          _ytPlayer.playVideo();
+}
+ 
+// 시크바 드래그(마우스+터치 공용) 설정
+function _setupYtSeek() {
+  const bar = document.getElementById('ytSeek');
+  if (!bar) return;
+  const ratioFromX = (clientX) => {
+    const r = bar.getBoundingClientRect();
+    return Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+  };
+  bar.addEventListener('pointerdown', (e) => {
+    _ytSeeking = true;
+    try { bar.setPointerCapture(e.pointerId); } catch (_) {}
+    _setSeekUI(ratioFromX(e.clientX), true);
+  });
+  bar.addEventListener('pointermove', (e) => {
+    if (_ytSeeking) _setSeekUI(ratioFromX(e.clientX), true);
+  });
+  const finish = (e) => {
+    if (!_ytSeeking) return;
+    _ytSeeking = false;
+    const ratio = ratioFromX(e.clientX);
+    _setSeekUI(ratio, true);
+    if (_ytPlayer && _ytPlayer.seekTo) {
+      _ytPlayer.seekTo(ratio * (_ytPlayer.getDuration() || 0), true);
+    }
+  };
+  bar.addEventListener('pointerup', finish);
+  bar.addEventListener('pointercancel', finish);
+}
+ 
+function _createYtPlayer(videoId) {
+  if (!document.getElementById('ytPlayerHost')) return;
+  _ytPlayer = new YT.Player('ytPlayerHost', {
+    videoId,
+    host: 'https://www.youtube-nocookie.com',
+    playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+    events: {
+      onReady: (e) => {
+        // Error 153 대비: 생성된 iframe에 referrerpolicy 명시
+        try { e.target.getIframe().setAttribute('referrerpolicy', 'strict-origin-when-cross-origin'); } catch (_) {}
+        const durEl = document.getElementById('ytDur');
+        if (durEl) durEl.textContent = _fmtTime(e.target.getDuration() || 0);
+        _setupYtSeek();
+        _startYtTimer();
+      },
+      onStateChange: (e) => {
+        const btn = document.getElementById('ytPlayBtn');
+        if (btn) {
+          const playing = (e.data === 1);
+          btn.textContent = playing ? '⏸' : '▶';
+          btn.setAttribute('aria-label', playing ? '정지' : '재생');
+        }
+        if (e.data === 1) _startYtTimer();          // 재생 시작 → 타이머 보장
+        if (e.data === 0) _setSeekUI(1, true);       // 끝까지 재생됨
+      }
+    }
+  });
+}
+ 
+function _destroyYtPlayer() {
+  _stopYtTimer();
+  _ytSeeking   = false;
+  _ytPendingId = null;
+  if (_ytPlayer && _ytPlayer.destroy) { try { _ytPlayer.destroy(); } catch (_) {} }
+  _ytPlayer = null;
+}
+ 
+// 활성 노래 영역에 음원 플레이어 삽입/갱신
+function renderSongAudio(songKey) {
+  _destroyYtPlayer();                        // 이전 플레이어 정리
+  const area = document.getElementById(`${songKey}Area`);
+  if (!area) return;
+  const old = area.querySelector('.song-audio-block');   // 중복 방지
+  if (old) old.remove();
+ 
+  const src  = SONG_AUDIO[songKey];
+  const ytId = (src && typeof src === 'object') ? _ytId(src.yt) : _ytId(src);
+ 
+  const block = document.createElement('div');
+  block.className = 'song-audio-block';
+ 
+  if (ytId) {
+    block.innerHTML =
+      '<div class="song-audio-label">🎧 음원 듣기</div>' +
+      '<div class="yt-video"><div id="ytPlayerHost"></div></div>' +
+      '<div class="yt-controls">' +
+        '<button class="yt-play-btn" id="ytPlayBtn" onclick="_ytToggle()" aria-label="재생">▶</button>' +
+        '<div class="yt-seek" id="ytSeek"><div class="yt-seek-fill" id="ytSeekFill"></div><div class="yt-seek-handle" id="ytSeekHandle"></div></div>' +
+        '<div class="yt-time"><span id="ytCur">0:00</span> / <span id="ytDur">0:00</span></div>' +
+      '</div>';
+  } else if (typeof src === 'string' && src.trim()) {
+    block.innerHTML =
+      '<div class="song-audio-label">🎧 음원 듣기</div>' +
+      `<audio controls preload="none" src="${src.trim()}">브라우저가 오디오 재생을 지원하지 않습니다.</audio>`;
+  } else {
+    block.innerHTML =
+      '<div class="song-audio-label">🎧 음원</div>' +
+      '<div class="song-audio-empty">음원이 아직 등록되지 않았어요.</div>';
+  }
+ 
+  // 헤더 블록 바로 아래에 삽입
+  const header = area.querySelector('.song-header-block');
+  if (header) header.insertAdjacentElement('afterend', block);
+  else        area.insertBefore(block, area.firstChild);
+ 
+  // 플레이어 생성 (DOM 삽입 이후에)
+  if (ytId) {
+    if (_ytApiReady && window.YT && window.YT.Player) _createYtPlayer(ytId);
+    else _ytPendingId = ytId;
+  }
+}
+ 
 function selectSong(songKey) {
   const corner = SONG_CORNER[songKey];
   document.getElementById(`${corner}SongList`).style.display   = 'none';
   document.getElementById(`${corner}SongDetail`).style.display = 'block';
   document.querySelectorAll(`#${corner}SongDetail .song-area`).forEach(el => el.style.display = 'none');
   document.getElementById(`${songKey}Area`).style.display = 'block';
+  renderSongAudio(songKey);
   SONG_RENDER[songKey]();
 }
-
+ 
 function backToSongList(corner) {
   const listEl   = document.getElementById(`${corner}SongList`);
   const detailEl = document.getElementById(`${corner}SongDetail`);
   if (listEl)   listEl.style.display   = 'block';
   if (detailEl) detailEl.style.display = 'none';
+  // 재생 중인 음원 정지 (오디오 + 유튜브)
+  _destroyYtPlayer();
+  if (detailEl) detailEl.querySelectorAll('.song-audio-block').forEach(b => b.remove());
   // 상세 패널 초기화
   if (detailEl) detailEl.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
 }
-
+ 
 // ═══════════════════════════════════════════════════
 //  퀴즈
 // ═══════════════════════════════════════════════════
@@ -3075,7 +3683,7 @@ function checkAnswer(btn, chosen, correct, pool) {
   nextBtn.style.display = 'inline-block';
 }
 function nextQuestion(pool) { quizState[pool].idx++; renderQuestion(pool); }
-
+ 
    // ═══════════════════════════════════════════════════
 //  기타 튜너
 // ═══════════════════════════════════════════════════
@@ -3087,7 +3695,7 @@ const STRINGS = [
   { note:'A', octave:2, freq:110.00, strNum:5 },
   { note:'E', octave:2, freq:82.41,  strNum:6 },
 ];
-
+ 
 let tunerActive    = false;
 let tunerStream    = null;
 let tunerCtx       = null;
@@ -3095,24 +3703,24 @@ let tunerAnalyser  = null;
 let tunerAnimId    = null;
 let selectedStr    = 5; // 기본: 6번줄(E2)
 let tunerAutoMode  = false;
-
+ 
 function initTunerUI() {
   selectString(5);
 }
-
+ 
 function setTunerMode(mode) {
   tunerAutoMode = (mode === 'auto');
   document.getElementById('modeManualBtn').classList.toggle('active', !tunerAutoMode);
   document.getElementById('modeAutoBtn').classList.toggle('active', tunerAutoMode);
   document.getElementById('stringBtns').classList.toggle('auto-mode', tunerAutoMode);
 }
-
+ 
 function updateStringHighlight(idx) {
   document.querySelectorAll('.str-btn').forEach((b, i) => {
     b.classList.toggle('active', i === 5 - idx);
   });
 }
-
+ 
 function selectString(idx) {
   selectedStr = idx;
   updateStringHighlight(idx);
@@ -3123,7 +3731,7 @@ function selectString(idx) {
   document.getElementById('tunerLabel').className   = 'tuner-label';
   document.getElementById('tunerLabel').textContent  = tunerActive ? '연주해보세요' : '마이크 대기';
 }
-
+ 
 async function toggleTuner() {
   if (tunerActive) {
     stopTuner();
@@ -3131,7 +3739,7 @@ async function toggleTuner() {
     await startTuner();
   }
 }
-
+ 
 async function startTuner() {
   try {
     tunerStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
@@ -3151,7 +3759,7 @@ async function startTuner() {
   document.getElementById('tunerLabel').textContent = '연주해보세요';
   detectLoop();
 }
-
+ 
 function stopTuner() {
   tunerActive = false;
   if (tunerAnimId) cancelAnimationFrame(tunerAnimId);
@@ -3165,7 +3773,7 @@ function stopTuner() {
   document.getElementById('tunerLabel').className   = 'tuner-label';
   document.getElementById('tunerLabel').textContent  = '마이크 대기';
 }
-
+ 
 function detectLoop() {
   if (!tunerActive) return;
   const buf  = new Float32Array(tunerAnalyser.fftSize);
@@ -3205,7 +3813,7 @@ function detectLoop() {
   }
   tunerAnimId = requestAnimationFrame(detectLoop);
 }
-
+ 
 // 오토코릴레이션 피치 검출
 function autoCorrelate(buf, sampleRate) {
   let SIZE = buf.length;
@@ -3213,19 +3821,19 @@ function autoCorrelate(buf, sampleRate) {
   for (let i = 0; i < SIZE; i++) rms += buf[i] * buf[i];
   rms = Math.sqrt(rms / SIZE);
   if (rms < 0.01) return -1; // 너무 조용함
-
+ 
   let r1 = 0, r2 = SIZE - 1;
   const thres = 0.2;
   for (let i = 0; i < SIZE / 2; i++) { if (Math.abs(buf[i]) < thres) { r1 = i; break; } }
   for (let i = 1; i < SIZE / 2; i++) { if (Math.abs(buf[SIZE - i]) < thres) { r2 = SIZE - i; break; } }
   buf = buf.slice(r1, r2);
   SIZE = buf.length;
-
+ 
   const c = new Array(SIZE).fill(0);
   for (let i = 0; i < SIZE; i++)
     for (let j = 0; j < SIZE - i; j++)
       c[i] += buf[j] * buf[j + i];
-
+ 
   let d = 0;
   while (d < SIZE && c[d] > c[d + 1]) d++;
   let maxval = -1, maxpos = -1;
@@ -3239,7 +3847,7 @@ function autoCorrelate(buf, sampleRate) {
   if (a) T0 -= b / (2 * a);
   return sampleRate / T0;
 }
-
+ 
 // SVG 바늘 회전 (−50cent = −90°, 0 = 0°, +50cent = +90°)
 function setNeedle(cents) {
   const angle   = (cents / 50) * 90; // −90 ~ +90도
@@ -3260,14 +3868,14 @@ function setNeedle(cents) {
 // ═══════════════════════════════════════════════════════════════
 //  통기타 사운드 엔진 (Web Audio API)
 // ═══════════════════════════════════════════════════════════════
-
+ 
 // 개방현 주파수: frets 배열 인덱스 0=1번줄(e4) ~ 5=6번줄(E2)
 const STRING_OPEN_FREQS = [329.63, 246.94, 196.00, 146.83, 110.00, 82.41];
-
+ 
 let _chordCtx      = null;  // 전역 AudioContext (재사용)
 let _chordReverb   = null;  // 리버브 컨볼버 (컨텍스트당 1개)
 let _activeSources = [];    // 현재 재생 중인 오실레이터 노드
-
+ 
 function _getChordCtx() {
   if (!_chordCtx || _chordCtx.state === 'closed') {
     _chordCtx    = new (window.AudioContext || window.webkitAudioContext)();
@@ -3275,7 +3883,7 @@ function _getChordCtx() {
   }
   return _chordCtx;
 }
-
+ 
 // iOS/Android 오디오 잠금 해제 — 매 제스처마다 컨텍스트 상태 확인
 function _unlockAudio() {
   const ctx = _getChordCtx();
@@ -3291,7 +3899,7 @@ document.addEventListener('touchstart',  _unlockAudio, { passive: true });
 document.addEventListener('touchend',    _unlockAudio, { passive: true });
 document.addEventListener('pointerdown', _unlockAudio, { passive: true });
 document.addEventListener('click',       _unlockAudio);
-
+ 
 // 합성 리버브 임펄스 응답 생성 (외부 파일 없음)
 function _getChordReverb(ctx) {
   if (!_chordReverb) {
@@ -3309,13 +3917,13 @@ function _getChordReverb(ctx) {
   }
   return _chordReverb;
 }
-
+ 
 // 이미 재생 중인 소리 즉시 중단
 function _stopActiveSound() {
   _activeSources.forEach(n => { try { n.stop(0); } catch (e) {} });
   _activeSources = [];
 }
-
+ 
 // 단일 현(줄) 소리 합성 — 오실레이터 + 배음 + 코러스 + 엔벨로프
 // [배음차수, 파형, 게인, 어택(s), 감쇠비율, detune(null=랜덤 ±1.5cents / 숫자=고정cents)]
 const _STRING_PARTIALS = [
@@ -3325,7 +3933,7 @@ const _STRING_PARTIALS = [
   [4, 'sine',     0.05, 0.008, 1.00, null],
   [1, 'sine',     0.07, 0.012, 0.75,    8], // 코러스 보이스 (+8 cents)
 ];
-
+ 
 function _pluckString(ctx, freq, t, decay, dryBus, wetBus) {
   const lpf = ctx.createBiquadFilter();
   lpf.type            = 'lowpass';
@@ -3333,18 +3941,18 @@ function _pluckString(ctx, freq, t, decay, dryBus, wetBus) {
   lpf.Q.value         = 0.7;
   lpf.connect(dryBus);
   lpf.connect(wetBus);
-
+ 
   _STRING_PARTIALS.forEach(([mult, type, amp, atk, decMult, fixedDetune]) => {
     const osc = ctx.createOscillator();
     osc.type            = type;
     osc.frequency.value = freq * mult;
     osc.detune.value    = fixedDetune !== null ? fixedDetune : (Math.random() - 0.5) * 3;
-
+ 
     const env = ctx.createGain();
     env.gain.setValueAtTime(0, t);
     env.gain.linearRampToValueAtTime(amp, t + atk);
     env.gain.exponentialRampToValueAtTime(0.0001, t + decay * decMult);
-
+ 
     osc.connect(env);
     env.connect(lpf);
     osc.start(t);
@@ -3352,48 +3960,48 @@ function _pluckString(ctx, freq, t, decay, dryBus, wetBus) {
     _activeSources.push(osc);
   });
 }
-
+ 
 // 스트로크 모드: 'fast'=15ms, 'arpeggio'=100ms (기본값)
 let _strumGap = 0.300;
-
+ 
 function setStrumMode(mode) {
   _strumGap = mode === 'fast' ? 0.015 : 0.300;
   document.getElementById('strumBtnFast').classList.toggle('active', mode === 'fast');
   document.getElementById('strumBtnArpeggio').classList.toggle('active', mode === 'arpeggio');
 }
-
+ 
 function setStrumModeAndPlay(mode, chordName, sectionType) {
   _unlockAudio();
   setStrumMode(mode);
   playChordSoundByName(chordName, sectionType);
 }
-
+ 
 // 코드 전체 재생 — 6번줄→1번줄 순서로 스트로크
 function playChordSound(chord) {
   if (!chord || !chord.frets) return;
-
+ 
   const ctx = _getChordCtx();
   _stopActiveSound();
-
+ 
   // iOS/Android: resume을 제스처 내에서 동기 호출 후 충분한 딜레이로 스케줄링
   const wasSuspended = ctx.state !== 'running';
   if (wasSuspended) ctx.resume().catch(() => {});
-
+ 
   const dryGain = ctx.createGain();
   dryGain.gain.value = 0.78;
   dryGain.connect(ctx.destination);
-
+ 
   const wetGain = ctx.createGain();
   wetGain.gain.value = 0.22;
   const reverb = _getChordReverb(ctx);
   wetGain.connect(reverb);
   reverb.connect(ctx.destination);
-
+ 
   const DECAY      = 2.5;
   const STRUM_GAP  = _strumGap;
   // 컨텍스트가 suspended였으면 300ms 여유, 이미 실행 중이면 100ms
   const startDelay = wasSuspended ? 0.30 : 0.10;
-
+ 
   let t = ctx.currentTime + startDelay;
   for (let i = 5; i >= 0; i--) {
     const fret = chord.frets[i];
@@ -3402,19 +4010,19 @@ function playChordSound(chord) {
     _pluckString(ctx, freq, t, DECAY, dryGain, wetGain);
     t += STRUM_GAP;
   }
-
+ 
   // 소리가 완전히 감쇠된 후 버스 노드 연결 해제 (audio graph 누적 방지)
   const cleanupMs = (DECAY + STRUM_GAP * 6 + startDelay + 0.3) * 1000;
   setTimeout(() => { dryGain.disconnect(); wetGain.disconnect(); }, cleanupMs);
 }
-
+ 
 // sectionType 기반 코드 검색 후 재생 (카드·상세 패널용)
 function playChordSoundByName(name, sectionType) {
   const meta  = SECTION_META[sectionType];
   const chord = meta ? meta.chordsRef().find(c => c.name === name) : null;
   if (chord) playChordSound(chord);
 }
-
+ 
 // 코드명으로 전체 데이터에서 검색 (노래 chord-token용)
 // SECTION_META를 단일 출처로 사용하므로 새 코드 풀 추가 시 자동 반영됨
 function _findChordByName(name) {
@@ -3424,7 +4032,7 @@ function _findChordByName(name) {
   }
   return null;
 }
-
+ 
 // 노래 코너 chord-token 클릭 → 소리 재생 (이벤트 위임)
 document.addEventListener('click', function (e) {
   const token = e.target.closest('.chord-token');
@@ -3432,9 +4040,9 @@ document.addEventListener('click', function (e) {
   const chord = _findChordByName(token.textContent.trim());
   if (chord) playChordSound(chord);
 });
-
+ 
 // ─── 사운드 엔진 끝 ──────────────────────────────────────────
-
+ 
 function showResult(pool) {
   const st = quizState[pool];
   document.getElementById(`${pool}QuizCard`).innerHTML = '';
@@ -3451,6 +4059,6 @@ function showResult(pool) {
   rb.style.display = 'block';
 }
 </script>
-
-
+ 
+ 
 </body></html>
