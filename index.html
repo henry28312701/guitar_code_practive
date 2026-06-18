@@ -62,6 +62,7 @@
   --terracotta: #A85742;  --terracotta-bg: #E5BFB0;  --terracotta-text: #6B3525;
   --rust: #B8704F;        --rust-bg: #E3C5A8;        --rust-text: #6B3F1F;
   --pine: #5C7A6F;        --pine-bg: #C4D1C5;        --pine-text: #2F4A3E;
+  --slate: #6B7A8B;    --slate-bg: #C8CDD8;    --slate-text: #2A3A55;
 
   /* Fonts */
   --font-serif: Georgia, 'Nanum Myeongjo', 'Apple SD Gothic Neo', serif;
@@ -477,6 +478,14 @@ header p {
 .card-tuner .go-btn     { border-color: var(--pine); color: var(--pine-text); }
 .card-tuner .go-btn:hover{ background: var(--pine); color: var(--paper); }
 
+.card-fingering          { color: var(--slate); }
+.card-fingering .card-title { color: var(--slate-text); }
+.card-fingering .card-sub   { color: var(--slate); }
+.card-fingering .item-dot   { background: var(--slate); }
+.card-fingering .tag        { background: var(--slate-bg); color: var(--slate-text); }
+.card-fingering .go-btn     { border-color: var(--slate); color: var(--slate-text); }
+.card-fingering .go-btn:hover{ background: var(--slate); color: var(--paper); }
+
 /* ═══════════════════════════════
    BASICS ITEMS
 ═══════════════════════════════ */
@@ -739,6 +748,7 @@ header p {
 .tab-btn.gkey-tab.active   { background: var(--walnut); border-color: var(--walnut); color: var(--paper); }
 .tab-btn.gayo-tab.active   { background: var(--rust); border-color: var(--rust); color: var(--paper); }
 .tab-btn.sungga-tab.active { background: var(--mustard); border-color: var(--mustard); color: var(--mustard-text); }
+.tab-btn.fingering-tab.active { background: var(--slate); border-color: var(--slate); color: var(--paper); }
 .tab-label {
   display: block;
   font-family: var(--font-mono);
@@ -788,6 +798,7 @@ header p {
 .section-banner.tuner-style      { color: var(--pine); }
 .section-banner.gayo-style       { color: var(--rust); }
 .section-banner.sungga-style     { color: var(--mustard); }
+.section-banner.fingering-style  { color: var(--slate); }
 .section-banner .banner-icon {
   font-size: 1.6rem;
   line-height: 1;
@@ -844,7 +855,8 @@ header p {
 .chord-card.selected-ckey   { border-color: var(--sage);       background: var(--sage-bg); }
 .chord-card.selected-gkey   { border-color: var(--walnut);     background: var(--walnut-bg); }
 .chord-card.selected-gayo   { border-color: var(--rust);       background: var(--rust-bg); }
-.chord-card.selected-sungga { border-color: var(--mustard);    background: var(--mustard-bg); }
+.chord-card.selected-sungga    { border-color: var(--mustard);  background: var(--mustard-bg); }
+.chord-card.selected-fingering { border-color: var(--slate);    background: var(--slate-bg); }
 .chord-card .chord-type {
   font-family: var(--font-mono);
   font-size: 0.58rem;
@@ -1618,6 +1630,45 @@ header p {
   }
 }
 
+
+/* ═══════════════════════════════
+   코드별 운지법 — 루트 선택기
+═══════════════════════════════ */
+.root-picker {
+  margin-bottom: var(--s-5);
+}
+.root-picker-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+}
+.root-picker-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.root-pick-btn {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  letter-spacing: -0.2px;
+}
+.root-pick-btn:hover { background: var(--sand); border-color: var(--wood); transform: translateY(-1px); }
+.root-pick-btn:active { transform: translateY(0); }
+.root-pick-btn.active { background: var(--slate); border-color: var(--slate); color: var(--paper); }
+
 </style></head>
 
 
@@ -1714,7 +1765,24 @@ header p {
       </div>
       <button class="go-btn">입장하기 →</button>
     </div>
-     
+
+    <!-- 코드별 운지법 -->
+    <div class="corner-card card-fingering" onclick="enterCorner('fingering')">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">코드별 운지법</div>
+      <div class="card-sub">코드를 선택하고 모든 운지법 보기</div>
+      <ul class="card-items">
+        <li><span class="item-dot"></span>C, D, E, G, A, B 코드</li>
+        <li><span class="item-dot"></span>단조 코드 (m, m7)</li>
+        <li><span class="item-dot"></span>다양한 변형 코드들</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">C</span><span class="tag">Dm</span><span class="tag">Em</span>
+        <span class="tag">Am</span><span class="tag">Bm</span><span class="tag">F#m</span>
+      </div>
+      <button class="go-btn">입장하기 →</button>
+    </div>
+
     <!-- 노래 -->
     <div class="corner-card card-songs" onclick="enterCorner('songs')">
       <div class="card-icon">🎤</div>
@@ -2220,6 +2288,42 @@ header p {
     </div>
   </div>
 
+
+  <!-- ── 코드별 운지법 ── -->
+  <div id="learn-fingering" class="section">
+    <div class="section-banner fingering-style">
+      <div class="banner-icon">🎯</div>
+      <div>
+        <h2>코드별 운지법</h2>
+        <p>코드를 선택하면 이 프로그램에 수록된 모든 운지법을 확인할 수 있어요!</p>
+      </div>
+    </div>
+    <div class="root-picker">
+      <div class="root-picker-label">코드 선택</div>
+      <div class="root-picker-btns" id="rootPickerBtns">
+        <button class="root-pick-btn active" data-root="C"   onclick="selectFingeringRoot('C')">C</button>
+        <button class="root-pick-btn"        data-root="Cm"  onclick="selectFingeringRoot('Cm')">Cm</button>
+        <button class="root-pick-btn"        data-root="C#m" onclick="selectFingeringRoot('C#m')">C#m</button>
+        <button class="root-pick-btn"        data-root="D"   onclick="selectFingeringRoot('D')">D</button>
+        <button class="root-pick-btn"        data-root="Dm"  onclick="selectFingeringRoot('Dm')">Dm</button>
+        <button class="root-pick-btn"        data-root="E"   onclick="selectFingeringRoot('E')">E</button>
+        <button class="root-pick-btn"        data-root="Em"  onclick="selectFingeringRoot('Em')">Em</button>
+        <button class="root-pick-btn"        data-root="F"   onclick="selectFingeringRoot('F')">F</button>
+        <button class="root-pick-btn"        data-root="Fm"  onclick="selectFingeringRoot('Fm')">Fm</button>
+        <button class="root-pick-btn"        data-root="F#m" onclick="selectFingeringRoot('F#m')">F#m</button>
+        <button class="root-pick-btn"        data-root="G"   onclick="selectFingeringRoot('G')">G</button>
+        <button class="root-pick-btn"        data-root="Gm"  onclick="selectFingeringRoot('Gm')">Gm</button>
+        <button class="root-pick-btn"        data-root="G#m" onclick="selectFingeringRoot('G#m')">G#m</button>
+        <button class="root-pick-btn"        data-root="A"   onclick="selectFingeringRoot('A')">A</button>
+        <button class="root-pick-btn"        data-root="Am"  onclick="selectFingeringRoot('Am')">Am</button>
+        <button class="root-pick-btn"        data-root="B"   onclick="selectFingeringRoot('B')">B</button>
+        <button class="root-pick-btn"        data-root="Bm"  onclick="selectFingeringRoot('Bm')">Bm</button>
+      </div>
+    </div>
+    <div class="chord-grid" id="fingeringGrid"></div>
+    <div class="detail-panel" id="fingeringDetailPanel"></div>
+  </div>
+
 </div><!-- /cornerScreen -->
  
 <script>
@@ -2284,6 +2388,170 @@ const CHORDS = [
  
 const OPEN_CHORDS  = CHORDS.filter(c => c.type === 'open');
 const BARRE_CHORDS = CHORDS.filter(c => c.type === 'barre');
+
+// ─── 코드별 운지법 — 루트별 전체 수록 운지법 ───
+const CHORD_BY_ROOT = {
+  C: [
+    { name:'C', type:'open', frets:[0,1,0,2,3,-1], fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3], mute:[6],
+      guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','1·3번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+    { name:'Cadd9', type:'open', frets:[3,3,0,2,3,-1], fingers:[[1,4,2],[2,5,3],[3,2,3],[4,1,3]], open:[3], mute:[6],
+      guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+    { name:'Cadd9(2형)', type:'open', frets:[0,3,0,2,3,-1], fingers:[[1,4,2],[2,5,3],[3,2,3]], open:[3], mute:[6],
+      guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 5번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','3번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 1번 손가락 생략 버전' },
+  ],
+  Cm: [
+    { name:'Cm', type:'barre', frets:[3,4,5,5,3,-1], fingers:[[1,5,3],[1,4,3],[1,3,3],[1,2,3],[1,1,3],[2,2,4],[3,4,5],[4,3,5]], open:[], mute:[6],
+      barre:{finger:1,fret:3,from:1,to:5},
+      guide:['1번 손가락 → 3프렛 바렛(1~5번 줄)','2번 손가락 → 2번 줄 4프렛','3번 손가락 → 4번 줄 5프렛','4번 손가락 → 3번 줄 5프렛'],
+      tip:'Am 코드 폼을 3프렛 위로 이동한 형태!! 5번 줄(A)부터 스트로크!! 6번 줄은 뮤트.' },
+  ],
+  'C#m': [
+    { name:'C#m7', type:'open', frets:[0,0,6,6,4,-1], fingers:[[1,5,4],[3,4,6],[4,3,6]], open:[1,2], mute:[6],
+      guide:['1번 손가락 → 5번 줄 4프렛','3번 손가락 → 4번 줄 6프렛','4번 손가락 → 3번 줄 6프렛','1·2번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+  ],
+  D: [
+    { name:'D', type:'open', frets:[2,3,2,0,-1,-1], fingers:[[1,3,2],[2,1,2],[3,2,3]], open:[4], mute:[5,6],
+      guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+      tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+    { name:'Dadd9', type:'open', frets:[0,3,2,0,-1,-1], fingers:[[1,3,2],[3,2,3]], open:[1,4], mute:[5,6],
+      guide:['1번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','1·4번 줄은 개방'],
+      tip:'4번 줄(D)부터 스트로크!! 1번 줄 개방으로 소리가 예쁜 D 코드!' },
+    { name:'Dsus4', type:'open', frets:[3,3,2,0,-1,-1], fingers:[[1,3,2],[3,2,3],[4,1,3]], open:[4], mute:[5,6],
+      guide:['1번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','4번 줄 개방'],
+      tip:'4번 줄(D)부터 스트로크!!' },
+    { name:'Dsus4(2형)', type:'open', frets:[3,3,0,0,-1,-1], fingers:[[3,2,3],[4,1,3]], open:[3,4], mute:[5,6],
+      guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+      tip:'4,3,2,1번 줄로 아르페지오 할 때 소리가 이쁜 코드!!' },
+    { name:'D/F#', type:'open', frets:[3,3,0,-1,-1,2], fingers:[[1,6,2],[3,2,3],[4,1,3]], open:[3], mute:[4,5],
+      guide:['1번 손가락 → 6번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+      tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!! (G키 경과음)' },
+    { name:'D7', type:'open', frets:[2,1,2,0,-1,-1], fingers:[[1,2,1],[2,1,2],[3,3,2]], open:[4], mute:[5,6],
+      guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','4번 줄 개방'],
+      tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  ],
+  Dm: [
+    { name:'Dm', type:'open', frets:[1,3,2,0,-1,-1], fingers:[[1,1,1],[2,3,2],[3,2,3]], open:[4], mute:[5,6],
+      guide:['1번 손가락 → 1번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+      tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  ],
+  E: [
+    { name:'E', type:'open', frets:[0,0,1,2,2,0], fingers:[[1,3,1],[2,5,2],[3,4,2]], open:[1,2,6], mute:[],
+      guide:['1번 손가락 → 3번 줄 1프렛','2번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 2프렛','1·2·6번 줄 개방'],
+      tip:'6줄 모두 스트로크!!!' },
+    { name:'E(2형)', type:'open', frets:[0,0,9,9,7,0], fingers:[[1,5,7],[3,4,9],[4,3,9]], open:[1,2,6], mute:[],
+      guide:['1번 손가락 → 5번 줄 7프렛','3번 손가락 → 4번 줄 9프렛','4번 손가락 → 3번 줄 9프렛','1·2·6번 줄은 개방'],
+      tip:'6번 줄(E)부터 스트로크!! 개방현 활용 하이포지션 E코드' },
+  ],
+  Em: [
+    { name:'Em', type:'open', frets:[0,0,0,2,2,0], fingers:[[2,4,2],[3,5,2]], open:[1,2,3,6], mute:[],
+      guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
+      tip:'6줄 모두 스트로크!!' },
+    { name:'Em7', type:'open', frets:[0,0,0,0,2,0], fingers:[[2,5,2]], open:[1,2,3,4,6], mute:[],
+      guide:['2번 손가락 → 5번 줄 2프렛','1·2·3·4·6번 줄 개방'],
+      tip:'6번 줄(E)부터 모든 줄을 연주!! 손가락 하나로 잡는 가장 쉬운 Em7' },
+    { name:'Em7(2형)', type:'open', frets:[3,3,0,2,2,0], fingers:[[1,5,2],[2,4,2],[3,2,3],[4,1,3]], open:[3,6], mute:[],
+      guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·6번 줄은 개방'],
+      tip:'6번 줄(E)부터 스트로크!! (Toxic·You&I·Polaroid Love 스타일)' },
+    { name:'Em7(3형)', type:'open', frets:[3,3,0,0,-1,0], fingers:[[3,2,3],[4,1,3]], open:[3,4,6], mute:[5],
+      guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
+      tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+    { name:'Em7(4형)', type:'open', frets:[0,3,0,4,-1,0], fingers:[[1,2,3],[2,4,4],[3,5,5]], open:[1,3,6], mute:[5],
+      guide:['1번 손가락 → 2번 줄 3프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 5번 줄 5프렛','1·3·6번 줄은 개방'],
+      tip:'6,4,3,2,1번 줄로 아르페지오 할 때 소리가 이쁜 코드!!' },
+  ],
+  F: [
+    { name:'F', type:'barre', frets:[1,1,2,3,3,1], fingers:[[1,1,1],[1,2,1],[1,6,1],[2,3,2],[3,5,3],[4,4,3]], open:[], mute:[],
+      barre:{finger:1,fret:1,from:1,to:6},
+      guide:['1번 손가락 → 1프렛 전체 바렛(1~6번 줄)','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 5번 줄 3프렛','4번 손가락 → 4번 줄 3프렛'],
+      tip:'E 코드 폼을 1프렛 위로 이동한 형태!! 6번 줄(E)부터 스트로크!!' },
+    { name:'FM7', type:'open', frets:[0,1,2,3,-1,-1], fingers:[[1,2,1],[2,3,2],[3,4,3]], open:[1], mute:[5,6],
+      guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 4번 줄 3프렛','1번 줄은 개방'],
+      tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!! (첫사랑·Baby·소문의 낙원)' },
+    { name:'Fadd9', type:'open', frets:[3,3,0,-1,-1,1], fingers:[[1,6,1],[3,2,3],[4,1,3]], open:[3], mute:[4,5],
+      guide:['1번 손가락 → 6번 줄 1프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3번 줄은 개방'],
+      tip:'6,3,2,1번 줄로 아르페지오할 때 쓰는 코드 (C키)' },
+  ],
+  Fm: [
+    { name:'Fm', type:'barre', frets:[1,1,1,3,3,1], fingers:[[1,1,1],[1,2,1],[1,3,1],[1,6,1],[3,5,3],[4,4,3]], open:[], mute:[],
+      barre:{finger:1,fret:1,from:1,to:6},
+      guide:['1번 손가락 → 1프렛 전체 바렛','3번 손가락 → 5번 줄 3프렛','4번 손가락 → 4번 줄 3프렛'],
+      tip:'Em 코드 폼을 1프렛 위로 이동한 형태!! 6번 줄(E)부터 스트로크!!' },
+  ],
+  'F#m': [
+    { name:'F#m7', type:'open', frets:[0,0,2,2,-1,2], fingers:[[1,6,2],[2,4,2],[3,3,2]], open:[1,2], mute:[5],
+      guide:['1번 손가락 → 6번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2번 줄은 개방'],
+      tip:'6번 줄(E)부터 스트로크!! 검지로 5번 줄을 가볍게 뮤트!!' },
+  ],
+  G: [
+    { name:'G', type:'open', frets:[3,0,0,0,2,3], fingers:[[2,6,3],[3,5,2],[4,1,3]], open:[2,3,4], mute:[],
+      guide:['2번 손가락 → 6번 줄 3프렛','3번 손가락 → 5번 줄 2프렛','4번 손가락 → 1번 줄 3프렛','2·3·4번 줄 개방'],
+      tip:'6줄 모두 스트로크!! 새끼손가락으로 1번 줄을 누르면 편해요.' },
+    { name:'G(2형)', type:'open', frets:[3,3,0,0,2,3], fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]], open:[3,4], mute:[],
+      guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+      tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
+    { name:'G(3형)', type:'open', frets:[-1,0,0,0,-1,3], fingers:[[3,6,3]], open:[2,3,4], mute:[1,5],
+      guide:['3번 손가락 → 6번 줄 3프렛','2·3·4번 줄은 개방'],
+      tip:'6,4,3,2번 줄로 아르페지오 후 퍼커시브!! (첫사랑·YOU 스타일)' },
+    { name:'G/B', type:'open', frets:[3,3,0,0,2,-1], fingers:[[1,5,2],[3,2,3],[4,1,3]], open:[3,4], mute:[6],
+      guide:['1번 손가락 → 5번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! (C키 경과음)' },
+  ],
+  Gm: [
+    { name:'Gm', type:'barre', frets:[3,3,3,5,5,3], fingers:[[1,1,3],[1,2,3],[1,3,3],[1,6,3],[3,5,5],[4,4,5]], open:[], mute:[],
+      barre:{finger:1,fret:3,from:1,to:6},
+      guide:['1번 손가락 → 3프렛 전체 바렛','3번 손가락 → 5번 줄 5프렛','4번 손가락 → 4번 줄 5프렛'],
+      tip:'Em 코드 폼을 3프렛 위로 이동한 형태!! 6번 줄(E)부터 스트로크!!' },
+  ],
+  'G#m': [
+    { name:'G#m7', type:'open', frets:[0,0,4,4,-1,4], fingers:[[1,6,4],[2,4,4],[3,3,4]], open:[1,2], mute:[5],
+      guide:['1번 손가락 → 6번 줄 4프렛','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
+      tip:'6번 줄(E)부터 스트로크!! E/G#에도 적용할 수 있어요!! 검지로 5번 줄을 가볍게 뮤트!!' },
+  ],
+  A: [
+    { name:'A', type:'open', frets:[0,2,2,2,0,-1], fingers:[[1,4,2],[2,3,2],[3,2,2]], open:[1,5], mute:[6],
+      guide:['1번 손가락 → 4번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 2프렛','1·5번 줄 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 손가락 3개를 세로로 가지런히.' },
+    { name:'Aadd9', type:'open', frets:[0,0,2,2,0,-1], fingers:[[2,4,2],[3,3,2]], open:[1,2,4,5], mute:[6],
+      guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+  ],
+  Am: [
+    { name:'Am', type:'open', frets:[0,1,2,2,0,-1], fingers:[[1,2,1],[2,4,2],[3,3,2]], open:[1,5], mute:[6],
+      guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·5번 줄 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+    { name:'Am7', type:'open', frets:[0,1,0,2,0,-1], fingers:[[1,2,1],[2,4,2]], open:[1,3,5], mute:[6],
+      guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+    { name:'Am7(2형)', type:'open', frets:[3,3,0,-1,0,-1], fingers:[[3,2,3],[4,1,3]], open:[5], mute:[4,6],
+      guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','5번 줄은 개방'],
+      tip:'5,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
+  ],
+  B: [
+    { name:'B', type:'barre', frets:[2,4,4,4,2,-1], fingers:[[1,5,2],[1,4,2],[1,3,2],[1,2,2],[1,1,2],[2,4,4],[3,3,4],[4,2,4]], open:[], mute:[6],
+      barre:{finger:1,fret:2,from:1,to:5},
+      guide:['1번 손가락 → 2프렛 바렛(1~5번 줄)','2번 손가락 → 4번 줄 4프렛','3번 손가락 → 3번 줄 4프렛','4번 손가락 → 2번 줄 4프렛'],
+      tip:'A 코드 폼을 2프렛 위로 이동한 형태!! 5번 줄(A)부터 스트로크!! 6번 줄은 뮤트.' },
+    { name:'Bsus4', type:'open', frets:[0,0,4,4,2,-1], fingers:[[1,5,2],[3,4,4],[4,3,4]], open:[1,2], mute:[6],
+      guide:['1번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 6번 줄은 mute!!' },
+    { name:'Bsus4(2형)', type:'open', frets:[0,0,4,4,-1,-1], fingers:[[3,4,4],[4,3,4]], open:[1,2], mute:[5,6],
+      guide:['3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛','1·2번 줄은 개방'],
+      tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
+  ],
+  Bm: [
+    { name:'Bm', type:'barre', frets:[2,3,4,4,2,-1], fingers:[[1,5,2],[1,4,2],[1,3,2],[1,2,2],[1,1,2],[2,2,3],[3,4,4],[4,3,4]], open:[], mute:[6],
+      barre:{finger:1,fret:2,from:1,to:5},
+      guide:['1번 손가락 → 2프렛 바렛(1~5번 줄)','2번 손가락 → 2번 줄 3프렛','3번 손가락 → 4번 줄 4프렛','4번 손가락 → 3번 줄 4프렛'],
+      tip:'Am 코드 폼을 3프렛 위로 이동한 형태!! 5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+    { name:'Bm7', type:'open', frets:[-1,3,2,0,2,-1], fingers:[[1,5,2],[2,3,2],[3,2,3]], open:[4], mute:[1,6],
+      guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 3번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
+      tip:'5번 줄(A)부터 스트로크!! 1·6번 줄은 mute!!' },
+  ],
+};
  
 // ─── A키 쉬운 코드 ───
 const AKEY_CHORDS = [
@@ -2388,13 +2656,13 @@ const CKEY_CHORDS = [
     open:[1,2,3,6], mute:[],
     guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
     tip:'가장 쉬운 코드!' },
-  { name:'Em7(2형)', type:'open',
+  { name:'Em7(3형)', type:'open',
     frets:[3,3,0,0,-1,0],
     fingers:[[3,2,3],[4,1,3]],
     open:[3,4,6], mute:[5],
     guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
     tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
-  { name:'Em7(3형)', type:'open',
+  { name:'Em7(4형)', type:'open',
     frets:[0,3,0,4,-1,0],
     fingers:[[1,2,3],[2,4,4],[3,5,5]],
     open:[1,3,6], mute:[5],
@@ -2428,13 +2696,13 @@ const GKEY_CHORDS = [
     open:[1,2,3,6], mute:[],
     guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 5번 줄 2프렛','1·2·3·6번 줄 개방'],
     tip:'가장 쉬운 코드!' },
-  { name:'Em7(2형)', type:'open',
+  { name:'Em7(3형)', type:'open',
     frets:[3,3,0,0,-1,0],
     fingers:[[3,2,3],[4,1,3]],
     open:[3,4,6], mute:[5],
     guide:['3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4·6번 줄은 개방'],
     tip:'6,3,2,1번 줄로 아르페지오 할 때 쓰는 코드!!' },
-  { name:'Em7(3형)', type:'open',
+  { name:'Em7(4형)', type:'open',
     frets:[0,3,0,4,-1,0],
     fingers:[[1,2,3],[2,4,4],[3,5,5]],
     open:[1,3,6], mute:[5],
@@ -2515,28 +2783,28 @@ const CHORDS_FIRSTLOVE = [
     guide:['3번 손가락 → 6번 줄 3프렛','2·3·4번 줄은 개방'],
     tip:'6,4,3,2번 줄로 아르페지오 후 퍼커시브!!' },
   { name:'Am7', type:'open',
-    frets:[-1,1,0,2,0,-1],
+    frets:[0,1,0,2,0,-1],
     fingers:[[1,2,1],[2,4,2]],
-    open:[3,5], mute:[1,6],
-    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3·5번 줄은 개방'],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3·5번 줄은 개방'],
     tip:'5,4,3,2번 줄로 아르페지오 후 퍼커시브!!' },
 ];
 
 // ─── 날마다 숨 쉬는 순간마다 (나주노 190) ───
 const CHORDS_NALMADA = [
-  { name:'E(1형)', type:'open',
+  { name:'E', type:'open',
     frets:[0,0,1,2,2,0],
     fingers:[[1,3,1],[2,5,2],[3,4,2]],
     open:[1,2,6], mute:[],
     guide:['1번 손가락 → 3번 줄 1프렛','2번 손가락 → 5번 줄 2프렛','3번 손가락 → 4번 줄 2프렛','1·2·6번 줄 개방'],
     tip:'6번 줄(E)부터 스트로크!!' },
   { name:'Aadd9', type:'open',
-    frets:[0,0,2,2,0,0],
+    frets:[0,0,2,2,0,-1],
     fingers:[[2,4,2],[3,3,2]],
-    open:[1,2,5,6], mute:[],
-    guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5·6번 줄은 개방'],
-    tip:'6번 줄(E)부터 스트로크!! 5번 줄(A)부터 치면 조금 더 깔끔해요!!' },
-  { name:'Bsus4(1형)', type:'open',
+    open:[1,2,5], mute:[6],
+    guide:['2번 손가락 → 4번 줄 2프렛','3번 손가락 → 3번 줄 2프렛','1·2·5번 줄은 개방'],
+    tip:'5번 줄(A)부터 스트로크!! 6번 줄은 뮤트!!' },
+  { name:'Bsus4', type:'open',
     frets:[0,0,4,4,2,-1],
     fingers:[[1,5,2],[3,4,4],[4,3,4]],
     open:[1,2], mute:[6],
@@ -2686,6 +2954,7 @@ const CHORDS_TOXIC = [
     tip:'6번 줄(E)부터 스트로크!! 중지는 생략해도 좋아요!!' },
 ];
 
+
 // ─── 소문의 낙원 — AKMU (C-Dm-D7-FM7-G-A-Am7) ───
 const CHORDS_NAKWON = [
   { name:'C', type:'open', frets:[0,1,0,2,3,-1], fingers:[[1,2,1],[2,4,2],[3,5,3]], open:[1,3], mute:[6],
@@ -2732,10 +3001,10 @@ const CHORDS_YOU = [
     guide:['2번 손가락 → 5번 줄 2프렛','1·2·3·4·6번 줄 개방'],
     tip:'6번 줄(E)부터 모든 줄을 연주하기!!' },
   { name:'Am7', type:'open',
-    frets:[-1,1,0,2,0,-1],
+    frets:[0,1,0,2,0,-1],
     fingers:[[1,2,1],[2,4,2]],
-    open:[3,5], mute:[1,6],
-    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3·5번 줄은 개방'],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3·5번 줄은 개방'],
     tip:'5,4,3,2번 줄로 연주하기!!' },
 ];
 
@@ -2747,7 +3016,7 @@ const CHORDS_YOUANDI = [
   { name:'D', type:'open', frets:[2,3,2,0,-1,-1], fingers:[[1,3,2],[2,1,2],[3,2,3]], open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
     tip:'4번 줄(D)부터 스트로크!! 5·6번 줄은 mute!!' },
-  { name:'Em7', type:'open', frets:[3,3,0,2,2,0], fingers:[[1,5,2],[2,4,2],[3,2,3],[4,1,3]], open:[3,6], mute:[],
+  { name:'Em7(2형)', type:'open', frets:[3,3,0,2,2,0], fingers:[[1,5,2],[2,4,2],[3,2,3],[4,1,3]], open:[3,6], mute:[],
     guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·6번 줄은 개방'],
     tip:'6번 줄(E)부터 스트로크!! 중지는 생략해도 좋아요!!' },
   { name:'Cadd9', type:'open', frets:[3,3,0,2,3,-1], fingers:[[1,4,2],[2,5,3],[3,2,3],[4,1,3]], open:[3], mute:[6],
@@ -2758,10 +3027,10 @@ const CHORDS_YOUANDI = [
 // ─── Polaroid Love — ENHYPEN (Am7-D-G-Em7) ───
 const CHORDS_POLAROID = [
   { name:'Am7', type:'open',
-    frets:[-1,1,0,2,0,-1],
+    frets:[0,1,0,2,0,-1],
     fingers:[[1,2,1],[2,4,2]],
-    open:[3,5], mute:[1,6],
-    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','3·5번 줄은 개방'],
+    open:[1,3,5], mute:[6],
+    guide:['1번 손가락 → 2번 줄 1프렛','2번 손가락 → 4번 줄 2프렛','1·3·5번 줄은 개방'],
     tip:'5,4,3,2번 줄로 연주하기!!' },
   { name:'D', type:'open', frets:[2,3,2,0,-1,-1], fingers:[[1,3,2],[2,1,2],[3,2,3]], open:[4], mute:[5,6],
     guide:['1번 손가락 → 3번 줄 2프렛','2번 손가락 → 1번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 줄 개방'],
@@ -2769,7 +3038,7 @@ const CHORDS_POLAROID = [
   { name:'G', type:'open', frets:[3,3,0,0,2,3], fingers:[[1,5,2],[2,6,3],[3,2,3],[4,1,3]], open:[3,4], mute:[],
     guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 6번 줄 3프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·4번 줄은 개방'],
     tip:'6번 줄(E)부터 스트로크!! 검지는 생략해도 좋아요!!' },
-  { name:'Em7', type:'open', frets:[3,3,0,2,2,0], fingers:[[1,5,2],[2,4,2],[3,2,3],[4,1,3]], open:[3,6], mute:[],
+  { name:'Em7(2형)', type:'open', frets:[3,3,0,2,2,0], fingers:[[1,5,2],[2,4,2],[3,2,3],[4,1,3]], open:[3,6], mute:[],
     guide:['1번 손가락 → 5번 줄 2프렛','2번 손가락 → 4번 줄 2프렛','3번 손가락 → 2번 줄 3프렛','4번 손가락 → 1번 줄 3프렛','3·6번 줄은 개방'],
     tip:'6번 줄(E)부터 스트로크!! 중지는 생략해도 좋아요!!' },
   { name:'Em7', type:'open',
@@ -2846,10 +3115,35 @@ const CORNERS = {
       backToSongList('gayo');
       backToSongList('sungga');
     }
+  },
+  fingering: {
+    label: '🎯 코드별 운지법',
+    tabs: [
+      { id:'learn-fingering', label:'🎯 코드별 운지법', sub:'C D E G A B · m m7', cls:'fingering-tab' },
+    ],
+    onEnter: () => {
+      selectFingeringRoot(_fingeringRoot);
+    }
   }
 };
  
 let currentCorner = null;
+let _fingeringRoot = 'C';
+
+function selectFingeringRoot(root) {
+  _fingeringRoot = root;
+  SECTION_META.fingering.desc = root + ' 코드 — 이 프로그램에 수록된 모든 운지법';
+  // 루트 버튼 활성화 업데이트
+  document.querySelectorAll('.root-pick-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.root === root);
+  });
+  // 상세 패널 초기화
+  const panel = document.getElementById('fingeringDetailPanel');
+  if (panel) panel.classList.remove('active');
+  _selectedChord['fingering'] = null;
+  // 코드 그리드 렌더링
+  renderGrid(CHORD_BY_ROOT[root] || [], 'fingeringGrid', null, 'fingering');
+}
  
 // 코너별 버튼 스타일 정보 (따뜻한 아날로그 톤)
 const CORNER_NAV_STYLE = {
@@ -2859,6 +3153,7 @@ const CORNER_NAV_STYLE = {
   advanced:    { bg:'#A85742', color:'#FBF6EC', border:'#854231' },
   tuner:       { bg:'#5C7A6F', color:'#FBF6EC', border:'#3F5950' },
   songs:       { bg:'#B8704F', color:'#FBF6EC', border:'#8E5538' },
+  fingering:   { bg:'#6B7A8B', color:'#FBF6EC', border:'#4A5870' },
 };
 
 function renderCornerNav(currentKey) {
@@ -3034,6 +3329,7 @@ const SECTION_META = {
   youandi:    { chordsRef:()=>CHORDS_YOUANDI,    selClass:'selected-gayo',    desc:'You & I (박봄) — 1 Capo 코드 연습',               gridId:'youandiChordGrid',  panelId:'youandiChordDetail'  },
   polaroid:   { chordsRef:()=>CHORDS_POLAROID,   selClass:'selected-gayo',    desc:'Polaroid Love (ENHYPEN) — 코드 연습',             gridId:'polaroidChordGrid', panelId:'polaroidChordDetail' },
   nalmada:    { chordsRef:()=>CHORDS_NALMADA,    selClass:'selected-sungga',  desc:'날마다 숨 쉬는 순간마다 (나주노 190) — 코드 연습', gridId:'sunggaChordGrid',   panelId:'sunggaChordDetail'   },
+  fingering:  { chordsRef:()=>CHORD_BY_ROOT[_fingeringRoot]||[], selClass:'selected-fingering', desc:'코드별 운지법 — 모든 운지법 모음', gridId:'fingeringGrid', panelId:'fingeringDetailPanel' },
 };
  
 function renderGrid(chords, gridId, selectedName, sectionType) {
