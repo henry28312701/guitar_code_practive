@@ -3516,11 +3516,11 @@ const SECTION_META = {
   fingering:  { chordsRef:()=>(CHORD_BY_ROOT[_fingeringRoot]||{})[_fingeringMode]||[], selClass:'selected-fingering', desc:'코드별 운지법 — 모든 운지법 모음', gridId:'fingeringGrid', panelId:'fingeringDetailPanel' },
 };
  
-function renderGrid(chords, gridId, selectedName, sectionType) {
+function renderGrid(chords, gridId, selectedIdx, sectionType) {
   const meta = SECTION_META[sectionType];
-  document.getElementById(gridId).innerHTML = chords.map(c => `
-    <div class="chord-card ${selectedName === c.name ? meta.selClass : ''}"
-         onclick="showDetail('${c.name}','${sectionType}')">
+  document.getElementById(gridId).innerHTML = chords.map((c, i) => `
+    <div class="chord-card ${selectedIdx === i ? meta.selClass : ''}"
+         onclick="showDetail(${i},'${sectionType}')">
       <div class="chord-type">${c.type === 'open' ? 'Open Chord' : 'Barre Chord'}</div>
       <h3>${c.name}</h3>
       <div>${buildDiagram(c, 100)}</div>
@@ -3531,28 +3531,28 @@ function renderGrid(chords, gridId, selectedName, sectionType) {
 const _selectedChord = {};
 let _lastShowDetailTime = 0;
 
-function showDetail(name, sectionType) {
+function showDetail(idx, sectionType) {
   const now = Date.now();
   if (now - _lastShowDetailTime < 400) return;
   _lastShowDetailTime = now;
   const meta   = SECTION_META[sectionType];
   const chords = meta.chordsRef();
-  const c      = chords.find(x => x.name === name);
+  const c      = chords[idx];
   if (!c) return;
   const gridId  = meta.gridId;
   const panelId = meta.panelId;
   const panel   = document.getElementById(panelId);
 
   // 이미 선택된 코드를 다시 누르면 패널 닫기
-  if (_selectedChord[sectionType] === name && panel.classList.contains('active')) {
+  if (_selectedChord[sectionType] === idx && panel.classList.contains('active')) {
     _selectedChord[sectionType] = null;
     renderGrid(chords, gridId, null, sectionType);
     panel.classList.remove('active');
     return;
   }
 
-  _selectedChord[sectionType] = name;
-  renderGrid(chords, gridId, name, sectionType);
+  _selectedChord[sectionType] = idx;
+  renderGrid(chords, gridId, idx, sectionType);
   panel.innerHTML = `
     <div class="diagram-wrap">${buildDiagram(c, 200)}</div>
     <div class="detail-text">
@@ -3564,8 +3564,8 @@ function showDetail(name, sectionType) {
       <div class="tip-box">💡 ${c.tip}</div>
       <div class="strum-mode-bar">
         <span class="strum-mode-label">소리 듣기:</span>
-        <button class="strum-mode-btn${_strumGap === 0.015 ? ' active' : ''}" id="strumBtnFast" onclick="setStrumModeAndPlay('fast','${c.name}','${sectionType}')">스트로크</button>
-        <button class="strum-mode-btn${_strumGap !== 0.015 ? ' active' : ''}" id="strumBtnArpeggio" onclick="setStrumModeAndPlay('arpeggio','${c.name}','${sectionType}')">아르페지오</button>
+        <button class="strum-mode-btn${_strumGap === 0.015 ? ' active' : ''}" id="strumBtnFast" onclick="setStrumModeAndPlay('fast',${idx},'${sectionType}')">스트로크</button>
+        <button class="strum-mode-btn${_strumGap !== 0.015 ? ' active' : ''}" id="strumBtnArpeggio" onclick="setStrumModeAndPlay('arpeggio',${idx},'${sectionType}')">아르페지오</button>
       </div>
     </div>
   `;
@@ -4214,10 +4214,12 @@ function setStrumMode(mode) {
   document.getElementById('strumBtnArpeggio').classList.toggle('active', mode === 'arpeggio');
 }
 
-function setStrumModeAndPlay(mode, chordName, sectionType) {
+function setStrumModeAndPlay(mode, idx, sectionType) {
   _unlockAudio();
   setStrumMode(mode);
-  playChordSoundByName(chordName, sectionType);
+  const meta  = SECTION_META[sectionType];
+  const chord = meta ? meta.chordsRef()[idx] : null;
+  if (chord) playChordSound(chord);
 }
 
 // 코드 전체 재생 — 6번줄→1번줄 순서로 스트로크
